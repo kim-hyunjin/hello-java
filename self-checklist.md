@@ -5,7 +5,7 @@
 #### 컴퓨터와 소프트웨어
 
 - [o] 컴퓨터와 소프트웨어의 관계를 이해한다.
-- [o] 시스템 소프트웨어와 응용 소프트웨어를 구분할 수 있다. //시스템 소프트웨어 : 하드웨어를 동작, 접근하는 소프트웨어, 응용소프트웨어에 플랫폼 제공
+- [o] 시스템 소프트웨어와 응용 소프트웨어를 구분할 수 있다. `// 시스템 소프트웨어 : 하드웨어를 동작, 접근하는 소프트웨어, 응용소프트웨어에 플랫폼 제공`
 
 #### 프로그램의 구동 원리
 
@@ -16,12 +16,12 @@
 
 #### 중간 언어와 가상 머신
 
-- [o] 중간 언어와 가상 머신이 등장한 이유와 이점을 설명할 수 있다. // write once, run anywhere. 하드웨어나 운영체제에 맞춰 컴파일해야하는 불편함을 해결. 플랫폼에 독립적. 이식성을 높임.
+- [o] 중간 언어와 가상 머신이 등장한 이유와 이점을 설명할 수 있다. `// write once, run anywhere. 하드웨어나 운영체제에 맞춰 컴파일해야하는 불편함을 해결. 플랫폼에 독립적. 이식성을 높임.`
 - [o] VM과 인터프리터, 런타임, 플레이어, 엔진의 역할을 이해한다.
 - [o] JIT(Just-in-time)과 AOT(ahead-of-time)이 무엇이고 등장한 이유를 이해한다. //중간언어를 기계어로 바꿔 속도향상
 
 #### 자바 바이트코드와 자바 가상 머신
-자바 컴파일러로 바이트코드 생성. 자바 가상 머신을 통해 바이트코드를 기계어로 바꿈.
+`// 자바 컴파일러로 바이트코드 생성. 자바 가상 머신을 통해 바이트코드를 기계어로 바꿈.`
 
 - [o] 자바 바이트코드 실행 환경을 준비할 수 있다. OpenJDK 설치, JAVA_HOME 과 PATH 환경 변수 설정, Sublime 편집기 설치.
 - [o] 자바 바이트코드를 이해한다. `https://docs.oracle.com/javase/specs/jvms/se13/jvms13.pdf`
@@ -39,8 +39,7 @@
 #### 컴파일러와 인터프리터
 
 - [o] 인터프리트 방식 프로그래밍과 실행 과정을 이해한다.
-소스코드 -엔진(인터프리터)-> 기계어
-한줄씩 읽어서 문법 검사 후 실행
+`// 소스코드 -엔진(인터프리터)-> 기계어. 한줄씩 읽어서 문법 검사 후 실행`
 - [o] Node.js 자바스크립트 인터프리터를 준비할 수 있다. `https://nodejs.org/en/`
 - [o] 인터프리터(Node.js 기준)를 사용하여 소스 파일을 직접 실행하는 과정을 이해한다. `/hello.js`, `$ node hello.js`
 - [o] 컴파일 방식과 인터프리트 방식의 구동 원리를 이해한다.
@@ -56,20 +55,24 @@
 
 #### 소스 파일과 컴파일 결과 파일 분리
 
-- [ ] Maven 표준 디렉토리 구조를 만들 수 있다. Maven 표준 디렉토리 구조에 맞춰 폴더를 생성한다.
-- [ ] 각 디렉토리의 용도를 이해한다.
-- [ ] 프로젝트 디렉토리에서 소스 디렉토리에 있는 자바 소스 파일을 컴파일 할 수 있다. `src/main/java/Hello2.java`, `$ javac src/main/java/Hello2.java`
-- [ ] 컴파일 할 때 컴파일 결과로 생성된 클래스 파일을 별도 디렉토리에 분리할 수 있다. `src/main/java/Hello2.java`, `$ javac -d bin/main src/main/java/Hello2.java`
-- [ ] 다른 디렉토리에 있는 클래스 파일을 실행할 수 있다. `src/main/java/Hello2.java`, `$ java -classpath bin/main Hello2`
+- [o] Maven 표준 디렉토리 구조를 만들 수 있다. Maven 표준 디렉토리 구조에 맞춰 폴더를 생성한다.
+- [o] 각 디렉토리의 용도를 이해한다.
+- [o] 프로젝트 디렉토리에서 소스 디렉토리에 있는 자바 소스 파일을 컴파일 할 수 있다. `src/main/java/Hello2.java`, `$ javac src/main/java/Hello2.java`
+- [o] 컴파일 할 때 컴파일 결과로 생성된 클래스 파일을 별도 디렉토리에 분리할 수 있다. `src/main/java/Hello2.java`, `$ javac -d bin/main src/main/java/Hello2.java`
+- [o] 다른 디렉토리에 있는 클래스 파일을 실행할 수 있다. `src/main/java/Hello2.java`, `$ java -classpath bin/main Hello2`
 
 #### 패키지와 소스 파일
 
-- [ ] 패키지의 용도를 이해하고 패키지를 생성할 수 있다. `com.ohoracs.basic`, `src/main/java/com/ohoracs/basic 디렉토리 생성`
-- [ ] 소스 파일에 작성한 코드가 패키지에 소속되게 할 수 있다. `src/main/java/com/ohoracs/basic/Hello3.java`
-- [ ] 패키지에 소속된 소스 파일의 적절한 디렉토리 경로와 왜 그 위치에 놓아야 하는지 이해한다.
-- [ ] 컴파일 한 후 생성된 클래스 파일의 디렉토리 경로와 그 위치에 있어야 하는 이유를 안다.
-- [ ] 패키지에 소속된 클래스 파일을 실행할 수 있다. `src/main/java/com/ohoracs/basic/Hello3.java`, `$ java -cp bin/main com.ohoracs.basic.Hello3`
-- [ ] 패키지를 적용하지 않은 채로 그 소스 파일을 그냥 패키지 폴더에 둔다면 컴파일 할 때 어떤 문제가 발생하는지 안다. `src/main/java/com/ohoracs/basic/Hello4.java`
+- [o] 패키지의 용도를 이해하고 패키지를 생성할 수 있다. 
+:소스파일을 관리하기 위해
+`com.ohoracs.basic`, `src/main/java/com/ohoracs/basic 디렉토리 생성`
+- [o] 소스 파일에 작성한 코드가 패키지에 소속되게 할 수 있다. `src/main/java/com/ohoracs/basic/Hello3.java`
+- [o] 패키지에 소속된 소스 파일의 적절한 디렉토리 경로와 왜 그 위치에 놓아야 하는지 이해한다.
+- [o] 컴파일 한 후 생성된 클래스 파일의 디렉토리 경로와 그 위치에 있어야 하는 이유를 안다.
+`// bin/main 밑에 src폴더처럼 java를 만들지 않는 이유
+: java의 호환 언어 kotlin, groovy등은 컴파일 하면 똑같은 바이트코드 .class파일이 만들어지므로 구분이 무의미`
+- [o] 패키지에 소속된 클래스 파일을 실행할 수 있다. `src/main/java/com/ohoracs/basic/Hello3.java`, `$ java -cp bin/main com.ohoracs.basic.Hello3`
+- [o] 패키지를 적용하지 않은 채로 그 소스 파일을 그냥 패키지 폴더에 둔다면 컴파일 할 때 어떤 문제가 발생하는지 안다. `src/main/java/com/ohoracs/basic/Hello4.java`
 
 #### Gradle 빌드 도구
 
