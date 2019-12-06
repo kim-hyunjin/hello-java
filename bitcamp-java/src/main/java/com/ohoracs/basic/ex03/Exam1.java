@@ -21,11 +21,19 @@ public class Exam1 {
 
 
     // 부동소수점 리터럴
+    System.out.println(3.14); //고정소수점
+    System.out.println(0.314e1);  //부동소수점
+    System.out.println(31.4e-1);  //부동소수점
 
     // 논리 리터럴
+    System.out.println(true);
+    System.out.println(false);
 
-    // 문자 리터럴
+    // 한 문자 리터럴
+    System.out.println('A');  //single quatation
+    System.out.println('가');
 
-
+    // 문자열 리터럴
+    System.out.println("안녕하세요! 비트캠프!"); //문자열
   }
 }
