@@ -1,7 +1,7 @@
-package com.ohoracs.basic;
+package com.eomcs.ok;
 
 public class Hello3 {
   public static void main(String[] args) {
-    System.out.println("basic/Hello3!");
+    System.out.println("ok/Hello3!");
   }
 }

@@ -1,4 +1,4 @@
-package com.ohoracs.basic.ex01;
+package com.eomcs.basic.ex01;
 
 // 클래스 블록과 컴파일
 // 모든 명령은 function에 소속되어야 하고, 

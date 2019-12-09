@@ -1,4 +1,4 @@
-package com.ohoracs.basic.ex01;
+package com.eomcs.basic.ex01;
 
 // javac -encoding [utf-8 | utf-16 | ...] source_file_path
 // 오호라!
