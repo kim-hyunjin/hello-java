@@ -21,8 +21,10 @@ public class App3 {
     
     System.out.printf("번호: %d\n", number);
     System.out.printf("제목: %s\n", title);
-    System.out.printf("지출내역: %s원 - %s\n", pay, forWhat);
-    System.out.printf("총 지출: %s원", pay);
+    System.out.printf("지출내역: %d원 - %s\n", pay, forWhat);
+    System.out.printf("총 지출: %d원", pay);
+    
+    input.close();
     
   }
 }
