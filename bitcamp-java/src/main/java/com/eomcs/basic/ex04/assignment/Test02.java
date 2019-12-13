@@ -29,12 +29,13 @@ public class Test02 {
     System.out.printf("컴퓨터: %s\n", comRps);
 
     if (userRps.equals("가위")) {
-      if (comRps == "가위") {
-        System.out.println("=> 비겼습니다.");
-      } else if (comRps == "바위") {
-        System.out.println("=> 졌습니다.");
-      } else {
-        System.out.println("=> 이겼습니다.");
+      switch (comRps) {
+        case "가위": System.out.println("=> 비겼습니다.");
+        break;
+        case "바위": System.out.println("=> 졌습니다.");
+        break;
+        case "보": System.out.println("=> 이겼습니다.");
+        break;
       }
     } else if (userRps.equals("바위")) {
         switch (comRps) {

@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class App {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
-    
     System.out.print("번호를 입력하세요 : ");
     int number = keyboard.nextInt();
     

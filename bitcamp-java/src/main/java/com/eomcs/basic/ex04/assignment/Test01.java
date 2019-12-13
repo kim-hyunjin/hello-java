@@ -22,22 +22,33 @@ public class Test01 {
     System.out.print("연산자(+,-,*,/)? ");
     String s = keyboard.next();
 
-    switch (s) {
-      case "+": a = a + b;
+    keyboard.close();
+    
+    double result = 0;
+    
+    switch (s) {                //연산자에 따른 계산결과를 변수 result에 할당
+      case "+": result = a + b;
       break;
-      case "-": a = a - b;
+      case "-": result = a - b;
       break;
-      case "*": a = a * b;
+      case "*": result = a * b;
       break;
-      case "/": a = a / b;
+      case "/": result = a / b;
       break;
-    }
-    if (a == (long)a) {
-      System.out.printf("=> a %s b = %d", s, (long)a);
-    } else {
-      System.out.printf("=> a %s b = %12.4f", s, a);
+      default : s = ""; 
+      break;
     }
     
-
+    if (s.equals("")) {
+      System.out.println("\n!!사용할 수 없는 연산자입니다!!");
+    } else {
+      if (result == (long)result) {    //소수점이 없으면 long으로 출력.
+        System.out.printf("\n==> %d %s %d = %d", (long)a, s, (long)b, (long)result);
+      } else {
+        System.out.printf("\n==> %f %s %f = %12.4f", a, s, b, result);  //소수점 이하 4자리까지만 출력.
+      }
+    }
+    
+    System.out.println("\n\n****어플리케이션을 종료합니다****");
   }
 }
