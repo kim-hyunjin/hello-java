@@ -16,6 +16,13 @@ public class Exam06_3 {
         //    => i = 7 실행
         //    => 다시 i는 8에서 7로 바뀌었다.
 
+        /*
+         위 문장은 다음과 같이 실행된다.
+         int temp = i;
+         i = i + 1;
+         i = temp;
+         */
+        
         System.out.println(i);
 
     }
