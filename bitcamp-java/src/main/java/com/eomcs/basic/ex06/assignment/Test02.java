@@ -35,5 +35,6 @@ public class Test02 {
       System.out.println();
       count--;
     }
+    keyScan.close();
   }
 }
