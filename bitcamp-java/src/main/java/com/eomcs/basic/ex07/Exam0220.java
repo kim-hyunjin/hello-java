@@ -13,7 +13,7 @@ public class Exam0220 {
     // - 메서드를 실행할 때 생성되고 메서드 실행이 끝나면 제거된다.
     System.out.printf("%d살 %s님 반갑습니다.\n", age, name);
 
-    //System.out.println(name + "살 " + name + "님 반갑습니다.");
+    //System.out.println(age + "살 " + name + "님 반갑습니다.");
   }
 
   public static void main(String[] args) {
@@ -38,9 +38,9 @@ public class Exam0220 {
     System.out.println("main()44444");
 
     // 파라미터의 타입, 개수, 순서가 일치해야 한다.
-    //hello("윤봉길"); // 컴파일 오류!
-    //hello(20, "윤봉길"); // 컴파일 오류!
-    //String r = hello("안중근", 30); // 컴파일 오류!
+    //hello("윤봉길"); // 개수 다름. 컴파일 오류!
+    //hello(20, "윤봉길"); // 순서 다름. 컴파일 오류!
+    //String r = hello("안중근", 30); // hello()는 리턴 값 없음. 컴파일 오류!
     //void r = hello("안중근", 30); // 컴파일 오류!
   }
 }
