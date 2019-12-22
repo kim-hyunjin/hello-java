@@ -9,7 +9,7 @@ public class App {
     System.out.print("번호를 입력하세요 : ");
     int number = keyboard.nextInt();
     
-    keyboard.hasNextLine(); //nextInt() 후 남아있는 줄바꿈 기호 제거
+    keyboard.nextLine(); //nextInt() 후 남아있는 줄바꿈 기호 제거
     
     System.out.print("수업명을 입력하세요 : ");
     String classname = keyboard.nextLine();
@@ -18,17 +18,19 @@ public class App {
     String description = keyboard.nextLine();
     
     System.out.print("시작일을 입력하세요 : ");
-    String startDate = keyboard.next();
+    String startDate = keyboard.nextLine();
     
     System.out.print("종료일을 입력하세요 : ");
-    String endDate = keyboard.next();
+    String endDate = keyboard.nextLine();
     
     System.out.print("총수업시간을 입력하세요 : ");
     int totalHours = keyboard.nextInt();
+    keyboard.nextLine();
     
     System.out.print("일수업시간을 입력하세요 : ");
     int dayHours = keyboard.nextInt();
-    
+    keyboard.nextLine();
+
     System.out.println();
     
     System.out.printf("번호: %d\n", number);

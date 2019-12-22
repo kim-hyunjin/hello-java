@@ -11,21 +11,22 @@ public class App2 {
     
     System.out.print("번호를 입력하세요: ");
     int number = keyboard.nextInt();
+    keyboard.nextLine();
     
     System.out.print("이름을 입력하세요: ");
-    String name = keyboard.next();
+    String name = keyboard.nextLine();
     
     System.out.print("이메일을 입력하세요: ");
-    String email = keyboard.next();
+    String email = keyboard.nextLine();
     
     System.out.print("암호를 입력하세요: ");
-    String password = keyboard.next();
+    String password = keyboard.nextLine();
     
     System.out.print("사진을 입력하세요: ");
-    String photo = keyboard.next();
+    String photo = keyboard.nextLine();
     
     System.out.print("전화번호를 입력하세요: ");
-    String phoneNumber = keyboard.next();
+    String phoneNumber = keyboard.nextLine();
     
     Date today = new Date(System.currentTimeMillis());
     
