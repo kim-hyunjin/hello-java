@@ -1,40 +1,36 @@
-# 11 - 패키지로 클래스를 분류하기
+# 13 - 인스턴스 필드와 인스턴스 메서드가 필요한 이유
 
 ## 학습 목표
 
-- 패키지를 이용하여 역할에 따라 클래스를 분류할 수 있다.
+- 인스턴스 필드와 인스턴스 메서드를 사용할 수 있다.
+- 스태틱 필드와 인스턴스 필드의 차이점과 용도를 설명할 수 있다.
+- 스태틱 메서드와 인스턴스 메서드의 차이점과 용도를 설명할 수 있다.
 
 ## 실습 소스 및 결과
 
-- com.eomcs.lms.handler 패키지 추가
+- src/main/java/com/eomcs/lms/handler/BoardHandler.java 변경
 - src/main/java/com/eomcs/lms/handler/LessonHandler.java 변경
 - src/main/java/com/eomcs/lms/handler/MemberHandler.java 변경
-- src/main/java/com/eomcs/lms/handler/BoardHandler.java 변경
-- com.eomcs.lms.domain 패키지 추가
-- src/main/java/com/eomcs/lms/domain/Lesson.java 변경
-- src/main/java/com/eomcs/lms/domain/Member.java 변경
-- src/main/java/com/eomcs/lms/domain/Board.java 변경
+- src/main/java/com/eomcs/lms/handler/BoardHandler2.java 삭제
 - src/main/java/com/eomcs/lms/App.java 변경
 
 ## 실습
 
-### 작업1) 데이터 타입 클래스를 별도의 패키지로 분류하라.
+### 작업1) 인스턴스 멤버를 활용하여 새 게시판을 추가하라.
 
-- 도메인 패키지 생성
-    - `com.eomcs.lms.domain` 패키지 생성
-- 도메인 클래스를 `domain` 패키지로 이동
-    - `Lesson`, `Member`, `Board` 클래스를 `com.eomcs.lms.domain` 패키지로 옮긴다.
-    - 다른 패키지에서 변수에 접근할 수 있도록 접근 제어를 `public` 으로 변경
-- 핸들러 클래스에 import 문 추가
-    - `LessonHandler`, `MemberHandler`, `BoardHandler` 클래스를 변경한다.
+- BoardHandler.java
+    - 게시판 마다 게시글을 개별적으로 다룰 수 있도록 필드를 인스턴스 멤버로 전환한다.
+    - 인스턴스 필드를 다루기 위해 클래스 메서드를 인스턴스 메서드로 전환한다.
+- App.java (App.java.01)
+    - `BoardHandler` 클래스의 변화에 맞추어 코드를 변경한다.
+- BoardHandler2.java
+    - 삭제한다.
 
+### 작업2) 핸들러의 스태틱 멤버를 인스턴스 필드와 인스턴스 메서드로 전환하라.
 
-### 작업2) 사용자 명령을 처리하는 클래스를 별도의 패키지로 분류하라.
-
-- 핸들러 패키지 생성
-    - `com.eomcs.lms.handler` 패키지 생성
-- 핸들러 클래스를 `handler` 패키지로 이동
-    - `LessonHandler`, `MemberHandler`, `BoardHandler` 클래스를 `com.eomcs.lms.handler` 패키지로 옮긴다.
-    - 다른 패키지에서 변수에 접근할 수 있도록 접근 제어를 `public` 으로 변경
-- App.java 변경
-    - 핸들러 클래스에 대해 import 문 추가
+- LessonHandler.java
+    - 필드와 메서드를 인스턴스 멤버로 전환한다.
+- MemberHandler.java
+    - 필드와 메서드를 인스턴스 멤버로 전환한다.
+- App.java
+    - `LessonHandler`와 `MemberHandler` 클래스의 변화에 맞추어 코드를 변경한다.
