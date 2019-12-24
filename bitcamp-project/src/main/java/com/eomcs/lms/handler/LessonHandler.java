@@ -1,4 +1,4 @@
-package com.eomcs.lms;
+package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
@@ -16,9 +16,10 @@ public class LessonHandler {
   static final int LESSON_SIZE = 100;
   static Lesson[] lessons = new Lesson[LESSON_SIZE];
   static int lessonCount = 0;
-  static Scanner keyboard;
+//다른 패키지에 있는 클래스에서도 이 변수를 사용하게 하려면 공개해야 한다.
+  public static Scanner keyboard;
   
-  static void addLesson() {
+  public static void addLesson() {
     Lesson le = new Lesson(); 
 
     System.out.print("번호를 입력하세요 : ");
@@ -44,7 +45,7 @@ public class LessonHandler {
     System.out.println("저장되었습니다.");
   }
 
-  static void listLesson() {
+  public static void listLesson() {
     for (int i = 0; i < lessonCount; i++) {
       Lesson l = lessons[i];
       System.out.printf("%d, %s, %s ~ %s\n", 

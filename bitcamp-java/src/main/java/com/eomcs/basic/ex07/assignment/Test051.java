@@ -11,7 +11,7 @@ import java.util.Scanner;
 // ****
 // *****
 //
-public class Test05 {
+public class Test051 {
   public static void main(String[] args) {
     int base = 0;
     Scanner keyboard = new Scanner(System.in);
@@ -22,12 +22,12 @@ public class Test05 {
   }
 
   static void printTriangle(int base) {
-    if (base == 0) {
+    if (base == 0)
       return;
-    } else {
-      printTriangle(--base);
-    }
-    for (int i = 0; i < base + 1; i++) {
+    
+    printTriangle(base - 1);
+    
+    for (int i = 0; i < base; i++) {
       System.out.print("*");
     }
     System.out.println();
