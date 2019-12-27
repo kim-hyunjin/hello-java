@@ -5,7 +5,7 @@ public class Exam0150 {
     
     static class Student {
         // 모든 인스턴스가 공유하는 값을 저장할 때는 클래스 변수를 사용한다.
-        static int count; 
+        static int count; //학생 수
         
         // 인스턴스마다 개별적으로 관리해야 할 값은 인스턴스 변수에 저장한다.
         String name;
@@ -39,9 +39,11 @@ public class Exam0150 {
         // => 하지만 이렇게 사용하지 말라!
         // => 다른 개발자가 이 코드를 봤을 때, count가 인스턴스 변수라고 착각할 것이다.
         // "클래스 변수는 클래스 이름을 사용하여 접근하라!"
+        /*
         System.out.println(s1.count);
         System.out.println(s2.count);
         System.out.println(s3.count);
+        */
     }
 }
 
