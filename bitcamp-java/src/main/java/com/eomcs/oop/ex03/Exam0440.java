@@ -3,7 +3,7 @@ package com.eomcs.oop.ex03;
 
 class X {
     // 생성자의 접근 범위를 private으로 설정하면 외부에서 접근할 수 없기 때문에
-    // 결국은 생성자를 호출하지 못하는 상태로 만들 수 있다.
+    // 결국은 생성자를 호출할 수 없다.
     private X() {
         System.out.println("X()");
     }

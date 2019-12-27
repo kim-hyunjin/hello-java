@@ -11,8 +11,8 @@ public class Exam0530 {
         }
     }
     public static void main(String[] args) {
-        A obj1 = new A();
-        System.out.println(obj1.a);
+        A obj = new A();
+        System.out.println(obj.a);
     } 
 }
 
