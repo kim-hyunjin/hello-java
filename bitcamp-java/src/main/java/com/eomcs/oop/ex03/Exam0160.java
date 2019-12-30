@@ -10,9 +10,9 @@ public class Exam0160 {
         //    대문자로 선언하여 상수임을 표현하라!
         // => 조회 용도로만 사용하기로 했으면 문법적으로 값을 변경하는 것을 막아라!
         // => 보통 조회용으로 사용하는 변수는 공개해도 되기 때문에 public으로 선언한다!
-        public final static int GUEST = 0;
-        public final static int MEMBER = 1;
-        public final static int MANAGER = 2;
+        public static final int GUEST = 0;
+        public static final int MEMBER = 1;
+        public static final int MANAGER = 2;
         
         String id;
         String password;
