@@ -6,17 +6,14 @@ import com.eomcs.lms.domain.Lesson;
 
 public class LessonHandler {
   
-  LessonList lessonList;
+  Lesson[] lessons;
+  int lessonCount = 0;
+  static final int LESSON_SIZE = 100;
   public Scanner input;
   
   public LessonHandler(Scanner input) {
     this.input = input;
-    this.lessonList = new LessonList();
-  }
-  
-  public LessonHandler(Scanner input, int capacity) {
-    this.input = input;
-    this.lessonList = new LessonList(capacity);
+    this.lessons = new Lesson[LESSON_SIZE];
   }
   
   public void addLesson() {
@@ -41,14 +38,13 @@ public class LessonHandler {
     System.out.print("일수업시간을 입력하세요 : ");
     le.setDayHours(input.nextInt());
     input.nextLine();
-    
-    lessonList.add(le);
+    this.lessons[this.lessonCount++] = le;
     System.out.println("저장되었습니다.");
   }
 
   public void listLesson() {
-    Lesson[] lessons = lessonList.toArray();
-    for (Lesson l : lessons) {
+    for (int i = 0; i < this.lessonCount; i++) {
+      Lesson l = this.lessons[i];
       System.out.printf("%d, %s, %s ~ %s\n", 
           l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate());
     }

@@ -5,24 +5,28 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
-  /// 필드 ///
-  BoardList boardList;
+
+  Board[] boards;
+  int boardCount = 0;
   Scanner input;
+
+  static final int BOARD_SIZE = 100;
   
-  /// 생성자 ///
   public BoardHandler(Scanner input) {
     this.input = input;
-    this.boardList = new BoardList(); /// BoardList에서 Board 레퍼런스배열을 만들고 주소를 넘겨준다. 
+    this.boards = new Board[BOARD_SIZE];
   }
 
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    this.boardList = new BoardList(capacity);
+    if (capacity < BOARD_SIZE || capacity > 10000)
+      this.boards = new Board[BOARD_SIZE];
+    else
+      this.boards = new Board[capacity];
   }
 
-  /// 메서드 ///
   public void addBoard() {
-    Board board = new Board(); // 값을 입력받을 객체 생성
+    Board board = new Board();
     System.out.print("번호? ");
     board.setNo(input.nextInt());
     input.nextLine();
@@ -30,14 +34,13 @@ public class BoardHandler {
     board.setTitle(input.nextLine());
     board.setDate(new Date(System.currentTimeMillis()));
     board.setViewCount(0);
-    
-    this.boardList.add(board); // 값을 넣은 객체를 레퍼런스배열에 저장
+    this.boards[this.boardCount++] = board;
     System.out.println("저장되었습니다.");
   }
 
   public void listBoard() {
-    Board[] boards = this.boardList.toArray(); // 값이 저장된 객체들을 배열로 받기
-    for (Board b : boards) {
+    for (int i = 0; i < this.boardCount; i++) {
+      Board b = this.boards[i];
       System.out.printf("%d, %s, %s, %d\n", 
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }
@@ -47,9 +50,13 @@ public class BoardHandler {
     System.out.print("게시물 번호? ");
     int no = input.nextInt();
     input.nextLine();
-    
-    Board board = this.boardList.findBoard(no);
-    
+    Board board = null;
+    for (int i = 0; i < this.boardCount; i++) {
+      if (this.boards[i].getNo() == no) {
+        board = this.boards[i];
+        break;
+      }
+    }
     if (board == null) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
       return;
