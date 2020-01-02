@@ -5,17 +5,17 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 
 public class MemberHandler {
-  MemberList memberList;
+  ArrayList memberList;
   public Scanner input;
   
   public MemberHandler(Scanner input) {
     this.input = input;
-    this.memberList = new MemberList(); 
+    this.memberList = new ArrayList(); 
   }
   
   public MemberHandler(Scanner input, int capacity) {
     this.input = input;
-    this.memberList = new MemberList(capacity); 
+    this.memberList = new ArrayList(capacity); 
   }
   
   public void addMember() {
@@ -41,8 +41,9 @@ public class MemberHandler {
   }
 
   public void listMember() {
-    Member[] members = memberList.toArray();
-    for (Member m : members) {
+    Object[] arr = memberList.toArray();
+    for (Object obj : arr) {
+      Member m = (Member) obj;
       System.out.printf("%d, %s, %s, %s, %s\n", 
           m.getNo(), m.getName(), m.getEmail(), m.getTel(), m.getDate());
     }

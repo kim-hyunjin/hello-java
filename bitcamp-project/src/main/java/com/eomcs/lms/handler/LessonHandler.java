@@ -6,17 +6,17 @@ import com.eomcs.lms.domain.Lesson;
 
 public class LessonHandler {
   
-  LessonList lessonList;
+  ArrayList lessonList;
   public Scanner input;
   
   public LessonHandler(Scanner input) {
     this.input = input;
-    this.lessonList = new LessonList();
+    this.lessonList = new ArrayList();
   }
   
   public LessonHandler(Scanner input, int capacity) {
     this.input = input;
-    this.lessonList = new LessonList(capacity);
+    this.lessonList = new ArrayList(capacity);
   }
   
   public void addLesson() {
@@ -47,8 +47,9 @@ public class LessonHandler {
   }
 
   public void listLesson() {
-    Lesson[] lessons = lessonList.toArray();
-    for (Lesson l : lessons) {
+    Object[] arr = lessonList.toArray();
+    for (Object obj : arr) {
+      Lesson l = (Lesson)obj; 
       System.out.printf("%d, %s, %s ~ %s\n", 
           l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate());
     }

@@ -6,18 +6,18 @@ import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
   /// 필드 ///
-  BoardList boardList;
+  ArrayList boardList;
   Scanner input;
   
   /// 생성자 ///
   public BoardHandler(Scanner input) {
     this.input = input;
-    this.boardList = new BoardList(); /// BoardList에서 Board 레퍼런스배열을 만들고 주소를 넘겨준다. 
+    this.boardList = new ArrayList(); /// BoardList에서 Board 레퍼런스배열을 만들고 주소를 넘겨준다. 
   }
 
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    this.boardList = new BoardList(capacity);
+    this.boardList = new ArrayList(capacity);
   }
 
   /// 메서드 ///
@@ -36,22 +36,23 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board[] boards = this.boardList.toArray(); // 값이 저장된 객체들을 배열로 받기
-    for (Board b : boards) {
+    Object[] arr = this.boardList.toArray(); // 값이 저장된 객체들을 배열로 받기
+    for (Object obj : arr) {
+      Board b = (Board)obj;
       System.out.printf("%d, %s, %s, %d\n", 
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }
   }
 
   public void detailBoard() {
-    System.out.print("게시물 번호? ");
-    int no = input.nextInt();
+    System.out.print("게시물 인덱스? ");
+    int index = input.nextInt();
     input.nextLine();
     
-    Board board = this.boardList.findBoard(no);
+    Board board = (Board)(this.boardList.get(index));
     
     if (board == null) {
-      System.out.println("게시물 번호가 유효하지 않습니다.");
+      System.out.println("게시물 인덱스가 유효하지 않습니다.");
       return;
     }
     System.out.printf("번호: %d\n", board.getNo());
