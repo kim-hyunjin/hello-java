@@ -49,10 +49,10 @@ public class BoardHandler {
     int index = input.nextInt();
     input.nextLine();
     
-    Board board = (Board)this.boardList.get(index);
+    Board board = (Board)(this.boardList.get(index));
     
     if (board == null) {
-      System.out.println("인덱스 번호가 유효하지 않습니다.");
+      System.out.println("게시물 인덱스가 유효하지 않습니다.");
       return;
     }
     System.out.printf("번호: %d\n", board.getNo());

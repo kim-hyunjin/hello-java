@@ -23,14 +23,14 @@ public class ArrayList {
   }
 
   /// 메서드 ///
-  public void add(Object board) {
+  public void add(Object obj) {
     if(this.size == this.list.length) {
       int oldCapacity = this.list.length;
       int newCapacity = oldCapacity + (oldCapacity >> 1);
       this.list = Arrays.copyOf(this.list, newCapacity);
-      System.out.printf("새 배열을 %d 개로 생성하였음!\n", newCapacity);
+      System.out.printf("배열크기 : %d ==> %d\n", oldCapacity, newCapacity);
     }
-    this.list[this.size++] = board;     // board 인스턴스를 레퍼런스 배열에 저장
+    this.list[this.size++] = obj;     // board 인스턴스를 레퍼런스 배열에 저장
 
   }
 
@@ -39,7 +39,7 @@ public class ArrayList {
   }
 
   public Object get(int idx) {
-    if (idx >= 0 && idx < this.list.length) {
+    if (idx >= 0 && idx < this.size) {
       return this.list[idx];
     } else {
       return null;

@@ -49,7 +49,7 @@ public class LessonHandler {
   public void listLesson() {
     Object[] arr = lessonList.toArray();
     for (Object obj : arr) {
-      Lesson l = (Lesson)obj;
+      Lesson l = (Lesson)obj; 
       System.out.printf("%d, %s, %s ~ %s\n", 
           l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate());
     }
