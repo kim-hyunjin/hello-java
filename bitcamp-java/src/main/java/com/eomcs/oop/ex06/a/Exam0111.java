@@ -1,7 +1,7 @@
 // 다형성 - 다형적 변수(polymorphic variables)
 package com.eomcs.oop.ex06.a;
 
-public class Exam01 {
+public class Exam0111 {
 
   public static void main(String[] args) {
     Vehicle v = new Vehicle();
@@ -21,24 +21,19 @@ public class Exam01 {
     v2 = b; // OK
     v2 = c; // OK
     v2 = s; // OK
+    v2 = t; // OK
 
-    Bike b2 = null;
-    //b2 = v; // 컴파일 오류!
-    //b2 = c; // 컴파일 오류!
-    //b2 = s; // 컴파일 오류!
-    //b2 = t; // 컴파일 오류!
+    // 이렇게 상위 클래스의 레퍼런스로 하위 클래스의 인스턴스를 가리킬 수 있는 이유는?
+    // => 하위 클래스의 인스턴스는 상위 클래스의 인스턴스 멤버를 가지고 있기 때문이다.
+    // => 그래서 상위 클래스의 레퍼런스로 상위 클래스의 인스턴스 멤버를 사용하는 것을 보장한다.
 
-    Car c2 = null;
-    //c2 = v; // 컴파일 오류!
-    //c2 = b; // 컴파일 오류!
-    c2 = s; // OK
-    c2 = t; // OK
+    // Vehicle 변수 v2에 Bike 객체를 가리킨다면, (v2 = b;)
+    // v2를 통해 Vehicle의 인스턴스 변수를 접근할 수 있다.
+    v2.model = "티코";
+    v2.capacity = 5;
 
-    Sedan s2 = null;
-    //s2 = a; // 컴파일 오류!
-    //s2 = b; // 컴파일 오류!
-    //s2 = c; // 컴파일 오류!
-    //s2 = t; // 컴파일 오류!
+    // why?
+    // ==> Bike인스턴스에는 수퍼 클래스 Vehicle의 인스턴스 변수가 있기 때문이다.
   }
 
 }

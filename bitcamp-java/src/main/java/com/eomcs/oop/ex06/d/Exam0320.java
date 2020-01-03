@@ -33,14 +33,10 @@ public class Exam0320 {
     public static void main(String[] args) {
         Member m1 = new Member("홍길동", 20);
         Member m2 = new Member("홍길동", 20);
-        
-        if (m1 == m2) {
-            System.out.println("m1 == m2");
-        } else {
-            System.out.println("m1 != m2");
-        }
+        Member m3 = new Member("홍길동", 21);
         
         System.out.println(m1.equals(m2));
+        System.out.println(m2.equals(m3));
     }
 }
 

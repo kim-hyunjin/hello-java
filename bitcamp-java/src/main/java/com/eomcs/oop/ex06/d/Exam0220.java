@@ -3,50 +3,51 @@ package com.eomcs.oop.ex06.d;
 
 public class Exam0220 {
 
-    static class Score {
-        String name;
-        int kor;
-        int eng;
-        int math;
-        int sum;
-        float aver;
-        
-        public Score(String name, int kor, int eng, int math) {
-            this.name = name;
-            this.kor = kor;
-            this.eng = eng;
-            this.math = math;
-            this.sum = kor + eng + math;
-            this.aver = this.sum / 3f;
-        }
-        
-        // 인스턴스가 다르더라도 값이 같으면 같은 해시 값을 리턴하도록 오버라이딩 해보자!
-        @Override
-        public int hashCode() {
-            // 가장 간단한 방법은 모든 값을 문자열로 만들어 붙인 다음에
-            // String 클래스에 있는 hashCode()를 사용하는 것이다.
-            // 왜? String 클래스에 있는 hashCode()는 문자열이 같은 경우 
-            //     같은 해시 값을 리턴하도록 이미 오버라이딩 되어 있기 때문이다.
-            String value = String.format("%s,%d,%d,%d,%d,%.1f", 
-                    this.name, this.kor, this.eng, this.math,
-                    this.sum, this.aver);
-            return value.hashCode();
-        }
+  static class Score {
+    String name;
+    int kor;
+    int eng;
+    int math;
+    int sum;
+    float aver;
+
+    public Score(String name, int kor, int eng, int math) {
+      this.name = name;
+      this.kor = kor;
+      this.eng = eng;
+      this.math = math;
+      this.sum = kor + eng + math;
+      this.aver = this.sum / 3f;
     }
-    
-    public static void main(String[] args) {
-        Score s1 = new Score("홍길동", 100, 100, 100);
-        Score s2 = new Score("홍길동", 100, 100, 100);
-        
-        // 같은 값을 가질 때 같은 해시값을 리턴하도록 
-        // hashCode()를 오버라이딩 했기 때문에
-        // 다음 출력은 같은 해시 값을 출력할 것이다.
-        System.out.printf("%d, %d\n", s1.hashCode(), s2.hashCode());
-        
-        // hashCode()의 리턴 값을 비교하여 두 인스턴스의 값이 같은지 알아낼 수도 있다.
-        System.out.println(s1.hashCode() == s2.hashCode());
-        
+
+    // hashCode() 를 오버라이딩하면 원하는 값을 리턴할 수 있다.
+    @Override
+    public int hashCode() {
+      // 무조건 모든 Score 인스턴스가 같은 해시코드를 갖게 하자.
+      return 1000;
     }
+  }
+
+  public static void main(String[] args) {
+    Score s1 = new Score("홍길동", 100, 100, 100);
+    Score s2 = new Score("임꺽정", 90, 80, 70);
+    Score s3 = new Score("김현진", 80, 70, 60);
+
+    // 같은 값을 가질 때 같은 해시값을 리턴하도록 
+    // hashCode()를 오버라이딩 했기 때문에
+    // 다음 출력은 같은 해시 값을 출력할 것이다.
+    System.out.printf("%d, %d, %d\n", s1.hashCode(), s2.hashCode(), s3.hashCode());
+
+    // 해시코드?
+    // => 데이터를 식별할 때 사용하는 고유 아이디이다.
+    // => 보통 특별한 공식(MD4, MD5, SHA-1, SHA-256 등)으로 계산해서 나온 정수값을
+    //    해시코드로 사용한다.
+    // => 해시코드를 디지털 지문이라고 부른다.
+    // hashCode()를 오버라이딩할 때?
+    // 인스턴스가 다르더라도 같은 값을 갖는 경우, 똑같이 취급하기 위해 이 메서드를 재정의한다.
+    // 따라서, 위의 예처럼 데이터가 같은지 따지지도 않고 모든 인스턴스에 대해 같은 해시코드를
+    // 리턴하는 것은 아무 의미가 없다.
+  }
 }
 
 

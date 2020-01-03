@@ -21,7 +21,6 @@ public class Exam0330 {
         // 그래서 Object의 equals()가 호출된 것이다.
         // Object의 equals()는 데이터가 같은지를 비교하는 것이 아니라,
         // 인스턴스가 같은지를 비교한다.
-        
     }
 }
 

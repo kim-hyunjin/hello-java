@@ -1,7 +1,7 @@
 // 오버라이딩(overriding) - 오버라이딩 문법이 없다면?
 package com.eomcs.oop.ex06.c;
 
-public class Exam02 {
+public class Exam0120 {
     public static void main(String[] args) {
         A2 obj1 = new A2();
         obj1.name = "홍길동";
@@ -27,7 +27,7 @@ public class Exam02 {
         // 안타깝게도 다른 이름으로 메서드를 만들어야 하기 때문에 
         // 개발자는 여러 개의 메서드를 암기해야 하는 번거로움이 생긴다.
         // => 이런 문제를 해결하기 위해 등장한 문법이 "오버라이딩(overriding)"이다!
-        // Exam03.java에서 계속...
+        // Exam0130.java에서 계속...
     }
 }
 

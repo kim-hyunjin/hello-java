@@ -1,7 +1,7 @@
 // 오버라이딩(overriding) - 오버라이딩 문법 사용!
 package com.eomcs.oop.ex06.c;
 
-public class Exam03 {
+public class Exam0130 {
     public static void main(String[] args) {
         A3 obj1 = new A3();
         obj1.name = "홍길동";
@@ -12,6 +12,9 @@ public class Exam03 {
         obj1.print();
     }
 }
+
+// 같은 기능을 하는 메서드를 동일 이름으로 정의할 수 있도록 하여 프로그래밍의 일관성을 확보
+// => 오버로딩
 
 // 오버라이딩(overrding)?
 // => 부모로부터 상속 받은 메서드 중에서 자신(서브클래스)의 역할에 맞지 않는 메서드가 있다면,

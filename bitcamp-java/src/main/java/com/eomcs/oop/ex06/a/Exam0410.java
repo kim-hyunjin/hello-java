@@ -1,7 +1,7 @@
 // 다형성 - 다형적 변수의 활용
 package com.eomcs.oop.ex06.a;
 
-public class Exam04 {
+public class Exam0410 {
 
     // Sedan과 Truck의 모델명과 cc를 출력하라!
     
