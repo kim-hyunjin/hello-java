@@ -1,17 +1,21 @@
 // 다형적 변수와 오버라이딩
-package com.eomcs.oop.ex07.c;
+package com.eomcs.oop.ex06.e;
 
 public class Exam01 {
     public static void main(String[] args) {
         A a = new A();
-        A2 a2 = new A2();
-        
         // A 객체 사용
         a.m();
+        //((A2)a).x();  //java.lang.ClassCastException
         
+        
+        A2 a2 = new A2();
         // A2 객체 사용
         a2.m(); // 이때 m()은 A2가 재정의한 메서드이다.
         a2.x();
+        
+        A a3 = new A2();
+        a3.m();
         
         // 다형적 변수와 오버라이딩 메서드
         A p = a2; // 수퍼 클래스의 래퍼런스는 서브 클래스의 객체 주소를 담을 수 있다.
