@@ -1,6 +1,5 @@
 package com.eomcs.lms.handler;
 
-import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.util.ArrayList;
@@ -46,8 +45,6 @@ public class LessonHandler {
   }
 
   public void listLesson() {
-    // 수업 객체 목록을 받을 배열을 준비하고, toArray()를 실행한다.
-    // toArray()의 리턴 값은 파라미터로 넘겨준 배열의 주소이다.
     Lesson[] arr = this.lessonList.toArray(new Lesson[this.lessonList.getSize()]);
     for (Lesson l : arr) {
       System.out.printf("%d, %s, %s ~ %s\n", 
@@ -56,18 +53,20 @@ public class LessonHandler {
   }
 
   public void updateLesson() {
-    System.out.print("강의 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
 
+    int index = indexOfLesson(no);
+    
     Lesson oldLesson = this.lessonList.get(index);
 
-    if (oldLesson == null) {
-      System.out.println("인덱스 번호가 유효하지 않습니다.");
+    if (index == -1) {
+      System.out.println("번호가 유효하지 않습니다.");
       return;
     }
 
     Lesson newLesson = new Lesson();
+    newLesson.setNo(oldLesson.getNo());
     System.out.println("--- 수정사항을 입력하세요 ---");
     System.out.print("수업명을 입력하세요 : ");
     String title = input.nextLine();
@@ -119,9 +118,10 @@ public class LessonHandler {
   }
   
   public void deleteLesson() {
-    System.out.print("강의 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
+
+    int index = indexOfLesson(no);
 
     Lesson oldLesson = this.lessonList.get(index);
 
@@ -132,6 +132,15 @@ public class LessonHandler {
     
     this.lessonList.remove(index);
     System.out.println("강의 정보를 삭제했습니다.");
+  }
+  
+  private int indexOfLesson(int no) {
+    for (int i = 0; i < this.lessonList.getSize(); i++) {
+      if (this.lessonList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
   
 }

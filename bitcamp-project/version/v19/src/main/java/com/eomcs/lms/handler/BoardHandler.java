@@ -1,3 +1,6 @@
+// 인덱스가 아닌 번호로 객체를 찾는 코드를 관리하기 쉽게 별도의 메서드로 분리한다.
+// => indexOfBoard(int) 메서드 추가
+//
 package com.eomcs.lms.handler;
 
 import java.sql.Date;
@@ -48,46 +51,49 @@ public class BoardHandler {
   }
 
   public void detailBoard() {
-    System.out.print("게시물 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
     
-    Board board = this.boardList.get(index);
+    // 게시글 번호로 객체를 찾는다.
+    int index = indexOfBoard(no);
     
-    if (board == null) {
-      System.out.println("인덱스 번호가 유효하지 않습니다.");
+    if (index == -1) {
+      System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
     }
-    System.out.printf("번호: %d\n", board.getNo());
-    System.out.printf("제목: %s\n", board.getTitle());
-    System.out.printf("등록일: %s\n", board.getDate());
-    System.out.printf("조회수: %d\n", board.getViewCount());
+    
+    Board b = this.boardList.get(index);
+    System.out.printf("번호: %d\n", b.getNo());
+    System.out.printf("제목: %s\n", b.getTitle());
+    System.out.printf("등록일: %s\n", b.getDate());
+    System.out.printf("조회수: %d\n", b.getViewCount());
   }
   
   public void updateBoard() {
-    System.out.print("게시물 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
     
-    Board oldBoard = this.boardList.get(index);
+    int index = indexOfBoard(no);
     
-    if (oldBoard == null) {
-      System.out.println("인덱스 번호가 유효하지 않습니다.");
+    if (index == -1) {
+      System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
     }
     
-    System.out.printf("내용(%s)? ", oldBoard.getTitle());
+    Board old = this.boardList.get(index);
+    
+    System.out.printf("내용(%s)? ", old.getTitle());
     String title = input.nextLine();
     
     if (title.length() == 0) {
-      System.out.println("게시물 변경을 취소하였습니다.");
+      System.out.println("게시글 변경을 취소하였습니다.");
       return;
     }
     
     Board newBoard = new Board();
-    newBoard.setNo(oldBoard.getNo());
+    newBoard.setNo(old.getNo());
     newBoard.setTitle(title);
-    newBoard.setViewCount(oldBoard.getViewCount());
+    newBoard.setViewCount(old.getViewCount());
     newBoard.setDate(new Date(System.currentTimeMillis()));
     
     this.boardList.set(index, newBoard);
@@ -95,18 +101,24 @@ public class BoardHandler {
   }
   
   public void deleteBoard() {
-    System.out.print("게시물 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
     
-    Board oldBoard = this.boardList.get(index);
-    
-    if (oldBoard == null) {
-      System.out.println("인덱스 번호가 유효하지 않습니다.");
+    int index = indexOfBoard(no);
+    if (index == -1) {
+      System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
     }
-    
     this.boardList.remove(index);
     System.out.println("게시글을 삭제했습니다.");
+  }
+  
+  private int indexOfBoard(int no) {
+    for (int i = 0; i < this.boardList.getSize(); i++) {
+      if (this.boardList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

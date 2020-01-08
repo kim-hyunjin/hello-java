@@ -2,7 +2,6 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
-import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.ArrayList;
 
@@ -53,9 +52,10 @@ public class MemberHandler {
   }
 
   public void updateMember() {
-    System.out.print("회원 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
+    
+    int index = indexOfMember(no);
 
     Member oldMember = this.memberList.get(index);
 
@@ -65,6 +65,7 @@ public class MemberHandler {
     }
 
     Member newMember = new Member();
+    newMember.setNo(oldMember.getNo());
     System.out.print("이름을 입력하세요: ");
     String name = input.nextLine();
     if (name.length() == 0) {
@@ -100,15 +101,17 @@ public class MemberHandler {
     } else {
       newMember.setTel(tel);
     }
+    newMember.setDate(oldMember.getDate());
 
     this.memberList.set(index, newMember);
     System.out.println("회원 정보를 변경했습니다.");
   }
 
   public void deleteMember() {
-    System.out.print("회원 인덱스? ");
-    int index = input.nextInt();
-    input.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(input.nextLine());
+    
+    int index = indexOfMember(no);
 
     Member oldMember = this.memberList.get(index);
 
@@ -119,6 +122,15 @@ public class MemberHandler {
 
     this.memberList.remove(index);
     System.out.println("회원 정보를 삭제했습니다.");
+  }
+  
+  private int indexOfMember(int no) {
+    for (int i = 0; i < this.memberList.getSize(); i++) {
+      if (this.memberList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
 }
 

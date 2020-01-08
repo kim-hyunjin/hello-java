@@ -44,7 +44,6 @@ public class ArrayList<E> { // 제네릭 E(Element)
     }
     this.size--;
     this.list[this.size] = null;
-    
     // 삭제한 항목을 리턴한다.
     return old;
   }
@@ -52,30 +51,6 @@ public class ArrayList<E> { // 제네릭 E(Element)
   public int getSize() {
     return this.size;
   }
-
-  ///* 의도한대로 동작하는지 확인
-  public static void main(String[] args) {
-    ArrayList<String> list = new ArrayList<>();
-    list.add("aaaa");
-    list.add("bbbb");
-    list.add("cccc");
-    list.add("dddd");
-    list.add("eeee");
-    
-    list.set(0, "0000");
-    list.set(2, "2222");
-    list.set(4, "4444");
-    list.set(-1, "zzzz");
-    list.set(5, "5555");
-    
-    list.remove(0);
-    
-    String[] arr = list.toArray(new String[] {});
-    for (String s : arr) {
-      System.out.println(s);
-    }
-  }
-  //*/
   
   public void add(E obj) {
     if(this.size == this.list.length) {
@@ -85,7 +60,24 @@ public class ArrayList<E> { // 제네릭 E(Element)
       System.out.printf("새 배열을 %d 개로 생성하였음!\n", newCapacity);
     }
     this.list[this.size++] = obj;
-
+  }
+  
+  public void add(int index, E e) {
+    if (index < 0 || index >= this.size) {
+      return;
+    }
+    if (this.size == this.list.length) {
+      int oldCapacity = this.list.length;
+      int newCapacity = oldCapacity + (oldCapacity >> 1);
+      this.list = Arrays.copyOf(this.list, newCapacity);
+      System.out.printf("새 배열을 %d 개로 생성하였음!\n", newCapacity);
+    }
+    
+    for (int i = this.size - 1; i >= index; i--)
+      this.list[i + 1] = this.list[i];
+    
+    this.list[index] = e;
+    this.size++;
   }
 
   public Object[] toArray() {
@@ -108,11 +100,37 @@ public class ArrayList<E> { // 제네릭 E(Element)
   }
 
   @SuppressWarnings("unchecked")
-  public E get(int idx) {
-    if (idx >= 0 && idx < this.list.length) {
-      return (E)this.list[idx];
+  public E get(int index) {
+    if (index >= 0 && index < this.list.length) {
+      return (E)this.list[index];
     } else {
       return null;
     }
   }
+  
+  
+
+  /* 의도한대로 동작하는지 확인
+  public static void main(String[] args) {
+    ArrayList<String> list = new ArrayList<>();
+    list.add("aaaa");
+    list.add("bbbb");
+    list.add("cccc");
+    list.add("dddd");
+    list.add("eeee");
+    
+    list.set(0, "0000");
+    list.set(2, "2222");
+    list.set(4, "4444");
+    list.set(-1, "zzzz");
+    list.set(5, "5555");
+    
+    list.remove(0);
+    
+    String[] arr = list.toArray(new String[] {});
+    for (String s : arr) {
+      System.out.println(s);
+    }
+  }
+  */
 }
