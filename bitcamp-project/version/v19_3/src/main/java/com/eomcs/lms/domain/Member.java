@@ -3,15 +3,16 @@ package com.eomcs.lms.domain;
 import java.sql.Date;
 
 public class Member {
+  
   private int no;
   private String name;
   private String email;
   private String password;
   private String photo;
   private String tel;
-  private Date date;
+  private Date registeredDate;
   
- 
+  
   
   @Override
   public int hashCode() {
@@ -22,6 +23,7 @@ public class Member {
     result = prime * result + no;
     result = prime * result + ((password == null) ? 0 : password.hashCode());
     result = prime * result + ((photo == null) ? 0 : photo.hashCode());
+    result = prime * result + ((registeredDate == null) ? 0 : registeredDate.hashCode());
     result = prime * result + ((tel == null) ? 0 : tel.hashCode());
     return result;
   }
@@ -55,6 +57,11 @@ public class Member {
       if (other.photo != null)
         return false;
     } else if (!photo.equals(other.photo))
+      return false;
+    if (registeredDate == null) {
+      if (other.registeredDate != null)
+        return false;
+    } else if (!registeredDate.equals(other.registeredDate))
       return false;
     if (tel == null) {
       if (other.tel != null)
@@ -99,10 +106,10 @@ public class Member {
   public void setTel(String tel) {
     this.tel = tel;
   }
-  public Date getDate() {
-    return date;
+  public Date getRegisteredDate() {
+    return registeredDate;
   }
-  public void setDate(Date date) {
-    this.date = date;
+  public void setRegisteredDate(Date registeredDate) {
+    this.registeredDate = registeredDate;
   }
 }

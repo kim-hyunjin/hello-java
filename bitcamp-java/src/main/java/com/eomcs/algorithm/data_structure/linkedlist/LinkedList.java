@@ -91,11 +91,16 @@ public class LinkedList<E> {
   public Object[] toArray() {
     Object[] arr = new Object[size];
     
-    Node<E> cursor = first;
+/*    Node<E> cursor = first;
     for (int i = 0; i < size; i++) {
       arr[i] = cursor.item;
       cursor = cursor.next;
     }
+    return arr;*/
+    
+    int i = 0;
+    for (Node<E> cursor = first; cursor != null; cursor = cursor.next)
+      arr[i++] = cursor.item;
     return arr;
   }
   
@@ -106,11 +111,19 @@ public class LinkedList<E> {
       arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), size);
     }
     
-    Node<E> cursor = first;
+    /*Node<E> cursor = first;
     for (int i = 0; i < size; i++) {
       arr[i] = cursor.item;
       cursor = cursor.next;
     }
+    return arr;*/
+    int i = 0;
+    for (Node<E> x = first; x != null; x = x.next)
+      arr[i++] = x.item;
+    
+    if (arr.length > size)
+      arr[size] = null;
+    
     return arr;
   }
   
