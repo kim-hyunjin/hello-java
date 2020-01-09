@@ -8,6 +8,48 @@ public class Board {
   private Date date;
   private int viewCount;
   
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((date == null) ? 0 : date.hashCode());
+    result = prime * result + no;
+    result = prime * result + ((title == null) ? 0 : title.hashCode());
+    result = prime * result + viewCount;
+    result = prime * result + ((writer == null) ? 0 : writer.hashCode());
+    return result;
+  }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Board other = (Board) obj;
+    if (date == null) {
+      if (other.date != null)
+        return false;
+    } else if (!date.equals(other.date))
+      return false;
+    if (no != other.no)
+      return false;
+    if (title == null) {
+      if (other.title != null)
+        return false;
+    } else if (!title.equals(other.title))
+      return false;
+    if (viewCount != other.viewCount)
+      return false;
+    if (writer == null) {
+      if (other.writer != null)
+        return false;
+    } else if (!writer.equals(other.writer))
+      return false;
+    return true;
+  }
+  
   public int getNo() {
     return no;
   }

@@ -1,7 +1,5 @@
 package com.eomcs.lms.domain;
 
-import java.sql.Date;
-
 public class Lesson {
   private int no;
   private String title;
@@ -10,6 +8,37 @@ public class Lesson {
   private String endDate;
   private int totalHours;
   private int dayHours;
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj.getClass() != Lesson.class)
+      return false;
+    
+    Lesson other = (Lesson) obj;
+    
+    if (this.no != other.no)
+      return false;
+    
+    if (!this.title.equals(other.title))
+      return false;
+    
+    if (!this.description.equals(other.description))
+      return false;
+    
+    if (!this.startDate.equals(other.startDate))
+      return false;
+    
+    if (!this.endDate.equals(other.endDate))
+      return false;
+    
+    if (this.totalHours != other.totalHours)
+      return false;
+    
+    if (this.dayHours != other.dayHours)
+      return false;
+    
+    return true;
+  }
   
   public int getNo() {
     return no;

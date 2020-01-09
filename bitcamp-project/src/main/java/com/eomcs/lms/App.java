@@ -4,15 +4,16 @@ import java.util.Scanner;
 import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.util.Prompt;
 
 public class App {
   static Scanner keyboard = new Scanner(System.in);
 
   public static void main(String[] args) {
-    
-    LessonHandler lessonHandler = new LessonHandler(keyboard);
-    MemberHandler memberHandler = new MemberHandler(keyboard);
-    BoardHandler boardHandler = new BoardHandler(keyboard);
+    Prompt prompt = new Prompt(keyboard);
+    LessonHandler lessonHandler = new LessonHandler(prompt);
+    MemberHandler memberHandler = new MemberHandler(prompt);
+    BoardHandler boardHandler = new BoardHandler(prompt);
     String command;
     
     do {
@@ -23,6 +24,8 @@ public class App {
         break;
         case "/lesson/list": lessonHandler.listLesson();
         break;
+        case "/lesson/detail": lessonHandler.detailLesson();
+        break;
         case "/lesson/update": lessonHandler.updateLesson();
         break;
         case "/lesson/delete": lessonHandler.deleteLesson();
@@ -30,6 +33,8 @@ public class App {
         case "/member/add": memberHandler.addMember();
         break;
         case "/member/list": memberHandler.listMember();
+        break;
+        case "/member/detail": memberHandler.detailMember();
         break;
         case "/member/update": memberHandler.updateMember();
         break;

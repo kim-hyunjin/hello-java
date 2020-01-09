@@ -1,45 +1,35 @@
 package com.eomcs.lms.handler;
 
-import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.util.ArrayList;
+import com.eomcs.util.Prompt;
 
 public class LessonHandler {
-
+  /// 필드 ///
   ArrayList<Lesson> lessonList;
-  public Scanner input;
-
-  public LessonHandler(Scanner input) {
-    this.input = input;
+  public Prompt prompt;
+  
+  /// 생성자 ///
+  public LessonHandler(Prompt prompt) {
+    this.prompt = prompt;
     this.lessonList = new ArrayList<>();
   }
 
-  public LessonHandler(Scanner input, int capacity) {
-    this.input = input;
+  public LessonHandler(Prompt prompt, int capacity) {
+    this.prompt = prompt;
     this.lessonList = new ArrayList<>(capacity);
   }
 
+  /// 메서드 ///
   public void addLesson() {
     Lesson le = new Lesson(); 
-
-    System.out.print("번호를 입력하세요 : ");
-    le.setNo(input.nextInt());
-    input.nextLine();
-    System.out.print("수업명을 입력하세요 : ");
-    le.setTitle(input.nextLine());
-    System.out.print("설명을 입력하세요 : ");
-    le.setDescription(input.nextLine());
-    System.out.print("시작일을 입력하세요 : ");
-    le.setStartDate(input.nextLine());
-    System.out.print("종료일을 입력하세요 : ");
-    le.setEndDate(input.nextLine());
-    System.out.print("총수업시간을 입력하세요 : ");
-    le.setTotalHours(input.nextInt());
-    input.nextLine();
-    System.out.print("일수업시간을 입력하세요 : ");
-    le.setDayHours(input.nextInt());
-    input.nextLine();
-
+    le.setNo(prompt.inputInt("번호? "));
+    le.setTitle(prompt.inputString("수업명? "));
+    le.setDescription(prompt.inputString("설명? "));
+    le.setStartDate(prompt.inputString("시작일? "));
+    le.setEndDate(prompt.inputString("종료일? "));
+    le.setTotalHours(prompt.inputInt("총수업시간? "));
+    le.setDayHours(prompt.inputInt("일수업시간? "));
     lessonList.add(le);
     System.out.println("저장되었습니다.");
   }
@@ -51,89 +41,64 @@ public class LessonHandler {
           l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate());
     }
   }
-
-  public void updateLesson() {
-    System.out.print("번호? ");
-    int no = Integer.parseInt(input.nextLine());
-
-    int index = indexOfLesson(no);
-    
-    Lesson oldLesson = this.lessonList.get(index);
-
+  
+  public void detailLesson() {
+    int index = indexOfLesson(prompt.inputInt("번호? "));
     if (index == -1) {
       System.out.println("번호가 유효하지 않습니다.");
       return;
     }
+    Lesson lesson = this.lessonList.get(index);
+    System.out.printf("번호: %d\n", lesson.getNo());
+    System.out.printf("수업명: %s\n", lesson.getTitle());
+    System.out.printf("설명: %s\n", lesson.getDescription());
+    System.out.printf("시작일: %s\n", lesson.getStartDate());
+    System.out.printf("종료일: %s\n", lesson.getEndDate());
+    System.out.printf("총수업시간: %d\n", lesson.getTotalHours());
+    System.out.printf("일수업시간: %d\n", lesson.getDayHours());
+  }
 
+  public void updateLesson() {
+    int index = indexOfLesson(prompt.inputInt("번호? "));
+    Lesson oldLesson = this.lessonList.get(index);
+    if (index == -1) {
+      System.out.println("번호가 유효하지 않습니다.");
+      return;
+    }
     Lesson newLesson = new Lesson();
     newLesson.setNo(oldLesson.getNo());
     System.out.println("--- 수정사항을 입력하세요 ---");
-    System.out.print("수업명을 입력하세요 : ");
-    String title = input.nextLine();
-    if (title.length() == 0) {
-      newLesson.setTitle(oldLesson.getTitle());
-    } else {
-      newLesson.setTitle(title);
-    }
-    System.out.print("설명을 입력하세요 : ");
-    String description = input.nextLine();
-    if (description.length() == 0) {
-      newLesson.setDescription(oldLesson.getDescription());
-    } else {
-      newLesson.setDescription(description);
-    }
-    System.out.print("시작일을 입력하세요 : ");
-    String start = input.nextLine();
-    if (start.length() == 0) {
-      newLesson.setStartDate(oldLesson.getStartDate());
-    } else {
-      newLesson.setStartDate(start);
-    }
-    System.out.print("종료일을 입력하세요 : ");
-    String end = input.nextLine();
-    if (end.length() == 0) {
-      newLesson.setEndDate(oldLesson.getEndDate());
-    } else {
-      newLesson.setEndDate(end);
-    }
-    System.out.print("총수업시간을 입력하세요 : ");
-    String temp = input.nextLine();
-    int totalHour = Integer.parseInt(temp);
-    if (temp.length() == 0) {
-      newLesson.setTotalHours(oldLesson.getTotalHours());
-    } else {
-      newLesson.setTotalHours(totalHour);
-    }
-    System.out.print("일수업시간을 입력하세요 : ");
-    String temp2 = input.nextLine();
-    int dayHour = Integer.parseInt(temp2);
-    if (temp2.length() == 0) {
-      newLesson.setDayHours(oldLesson.getDayHours());
-    } else {
-      newLesson.setDayHours(dayHour);
-    }
-    
+    newLesson.setTitle(prompt.inputString(
+        String.format("수업명(%s)? ", oldLesson.getTitle()), oldLesson.getTitle()));
+    newLesson.setDescription(prompt.inputString("설명? ", oldLesson.getDescription()));
+    newLesson.setStartDate(prompt.inputString(
+        String.format("시작일(%s)? ", oldLesson.getStartDate()), oldLesson.getStartDate()));
+    newLesson.setEndDate(prompt.inputString(
+        String.format("종료일(%s)? ", oldLesson.getEndDate()), oldLesson.getEndDate()));
+    newLesson.setTotalHours(prompt.inputInt(
+        String.format("총수업시간(%s)? ", oldLesson.getTotalHours()), oldLesson.getTotalHours()));
+    newLesson.setDayHours(prompt.inputInt(
+        String.format("일수업시간(%s)? ", oldLesson.getDayHours()), oldLesson.getDayHours()));
     this.lessonList.set(index, newLesson);
-    System.out.println("강의 정보를 변경했습니다.");
+    if (newLesson.equals(oldLesson)) {
+      System.out.println("수업 변경을 취소했습니다.");
+    } else {
+      System.out.println("강의 정보를 변경했습니다.");
+    }
   }
-  
+
   public void deleteLesson() {
-    System.out.print("번호? ");
-    int no = Integer.parseInt(input.nextLine());
-
-    int index = indexOfLesson(no);
-
+    int index = indexOfLesson(prompt.inputInt("번호? "));
     Lesson oldLesson = this.lessonList.get(index);
-
     if (oldLesson == null) {
-      System.out.println("인덱스 번호가 유효하지 않습니다.");
+      System.out.println("번호가 유효하지 않습니다.");
       return;
     }
-    
     this.lessonList.remove(index);
     System.out.println("강의 정보를 삭제했습니다.");
   }
-  
+
+  /// 리팩토링을 위해 만든 메서드 ///
   private int indexOfLesson(int no) {
     for (int i = 0; i < this.lessonList.getSize(); i++) {
       if (this.lessonList.get(i).getNo() == no) {
@@ -142,6 +107,6 @@ public class LessonHandler {
     }
     return -1;
   }
-  
 }
+
 
