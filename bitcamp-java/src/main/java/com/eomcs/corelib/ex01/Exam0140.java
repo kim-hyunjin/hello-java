@@ -13,23 +13,6 @@ public class Exam0140 {
     if (s1 == s2) { // 확인!
       System.out.println("s1 == s2");
     }
-
-    Object obj = new String("Hello"); // 인스턴스 주소가 100이라 가정하자;
-
-    String x1 = (String) obj; // x1 = 100
-    String x2 = obj.toString(); // x2 = 100
-
-    x1.toLowerCase();
-    ((String) obj).toLowerCase();
-
-    x2.toLowerCase();
-    obj.toString().toLowerCase();
-
-    if (x1 == x2) {
-      System.out.println("x1 == x2");
-    }
-
-
   }
 }
 

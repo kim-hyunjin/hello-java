@@ -25,6 +25,7 @@ public class Exam0130 {
 
     // StringBuffer를 사용할 때 주의사항!
     // StringBuffer의 내용물을 비교할 때 equals() 사용해봐야 소용없다.
+    // 오버라이딩 되어있지 않다. 
     // == 연산자와 같은 결과를 출력한다.
     StringBuffer b1 = new StringBuffer("Hello");
     StringBuffer b2 = new StringBuffer("Hello");
