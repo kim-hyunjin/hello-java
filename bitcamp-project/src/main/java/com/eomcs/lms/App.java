@@ -5,11 +5,13 @@ import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
 import com.eomcs.util.Prompt;
+import com.eomcs.util.Queue;
 import com.eomcs.util.Stack;
 
 public class App {
   static Scanner keyboard = new Scanner(System.in);
   static Stack<String> commandStack = new Stack<String>();
+  static Queue<String> commandQueue = new Queue<>();
 
   public static void main(String[] args) {
     Prompt prompt = new Prompt(keyboard);
@@ -25,6 +27,7 @@ public class App {
         continue;
       } else {
         commandStack.push(command);
+        commandQueue.offer(command);
       }
       switch (command) {
         case "/lesson/add": lessonHandler.addLesson();
@@ -59,6 +62,8 @@ public class App {
         break;
         case "/history": printCommandHistory();
         break;
+        case "/history2": printCommandHistory2();
+        break;
         default:
           if(!command.equalsIgnoreCase("quit")) {
             System.out.println("잘못된 명령입니다.");
@@ -78,7 +83,23 @@ public class App {
       System.out.println(historyStack.pop());
       count++;
       if ((count % 5) == 0) {
-        System.out.println(":");
+        System.out.print(":");
+        String str = keyboard.nextLine();
+        if (str.equalsIgnoreCase("q")) {
+          break;
+        }
+      }
+    }
+  }
+  
+  private static void printCommandHistory2(){
+    Queue<String> historyQueue = commandQueue.clone();
+    int count = 0;
+    while(historyQueue.size() > 0) {
+      System.out.println(historyQueue.poll());
+      count++;
+      if ((count % 5) == 0) {
+        System.out.print(":");
         String str = keyboard.nextLine();
         if (str.equalsIgnoreCase("q")) {
           break;
