@@ -1,6 +1,6 @@
-package com.eomcs.algorithm.data_structure.linkedlist;
+package com.eomcs.algorithm.data_structure.linkedlist.practice;
 
-public class LinkedList08 {
+public class LinkedList07 {
   Node first;
   Node last;
   int size;
@@ -70,20 +70,6 @@ public class LinkedList08 {
     deleteNode.next = null;
     size--;
     return deleteNode.element;
-  }
-  
-  public Object set(int index, Object e) {
-    if (index < 0 || index >= size) {
-      return null;
-    }
-    Node cursor = first;
-    for (int i = 0; i < index; i++) {
-      cursor = cursor.next;
-    }
-    Object oldElement = cursor.element;
-    cursor.element = e;
-    
-    return oldElement;
   }
   
   static class Node {

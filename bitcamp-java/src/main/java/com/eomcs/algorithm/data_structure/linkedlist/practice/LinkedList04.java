@@ -1,4 +1,4 @@
-package com.eomcs.algorithm.data_structure.linkedlist;
+package com.eomcs.algorithm.data_structure.linkedlist.practice;
 
 public class LinkedList04 {
   

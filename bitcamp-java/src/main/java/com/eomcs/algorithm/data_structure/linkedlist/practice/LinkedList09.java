@@ -1,13 +1,13 @@
-package com.eomcs.algorithm.data_structure.linkedlist;
+package com.eomcs.algorithm.data_structure.linkedlist.practice;
 
-public class LinkedList07 {
+public class LinkedList09 {
   Node first;
   Node last;
   int size;
   
   public void add(Object element) {
     Node newNode = new Node();
-    newNode.element = element;
+    newNode.item = element;
     
     if (first == null) {
       last = first = newNode;
@@ -23,7 +23,7 @@ public class LinkedList07 {
       return;
     }
     Node newNode = new Node();
-    newNode.element = element;
+    newNode.item = element;
     
     Node cursor = first;
     for (int i = 0; i < index - 1; i++) {
@@ -48,7 +48,7 @@ public class LinkedList07 {
     for (int i = 0; i < index; i++) {
       cursor = cursor.next;
     }
-    return cursor.element;
+    return cursor.item;
   }
   
   public Object remove(int index) {
@@ -69,11 +69,36 @@ public class LinkedList07 {
     }
     deleteNode.next = null;
     size--;
-    return deleteNode.element;
+    return deleteNode.item;
+  }
+  
+  public Object set(int index, Object e) {
+    if (index < 0 || index >= size) {
+      return null;
+    }
+    Node cursor = first;
+    for (int i = 0; i < index; i++) {
+      cursor = cursor.next;
+    }
+    Object oldElement = cursor.item;
+    cursor.item = e;
+    
+    return oldElement;
+  }
+  
+  public Object[] toArray() {
+    Object[] arr = new Object[size];
+    
+    Node cursor = first;
+    for (int i = 0; i < size; i++) {
+      arr[i] = cursor.item;
+      cursor = cursor.next;
+    }
+    return arr;
   }
   
   static class Node {
-    Object element;
+    Object item;
     Node next;
   }
 }

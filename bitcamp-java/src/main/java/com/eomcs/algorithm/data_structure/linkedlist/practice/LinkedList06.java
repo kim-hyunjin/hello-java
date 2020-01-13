@@ -1,6 +1,6 @@
-package com.eomcs.algorithm.data_structure.linkedlist;
+package com.eomcs.algorithm.data_structure.linkedlist.practice;
 
-public class LinkedList05 {
+public class LinkedList06 {
   Node first;
   Node last;
   int size;
@@ -14,6 +14,27 @@ public class LinkedList05 {
     } else {
       last.next = newNode;
       last = newNode;
+    }
+    size++;
+  }
+  
+  public void add(int index, Object element) {
+    if (index < 0 || index >= size) {
+      return;
+    }
+    Node newNode = new Node();
+    newNode.element = element;
+    Node cursor = first;
+    for (int i = 0; i < index - 1; i++) {
+      cursor = cursor.next;
+    }
+    
+    if (index == 0) {
+      newNode.next = first;
+      first = newNode;
+    } else {
+      newNode.next = cursor.next;
+      cursor.next = newNode;
     }
     size++;
   }
