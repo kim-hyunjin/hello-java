@@ -2,8 +2,7 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.LinkedList;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
@@ -14,11 +13,11 @@ public class BoardHandler {
   // 대신 이 필드에 들어갈 객체는 생성자에서 파라미터로 받는다.
   // 이렇게 하면 ArrayList도 사용할 수 있고, LinkedList로도 사용할 수 있어
   // 선택의 폭이 넓어진다. 유지보수에 좋다.
-  AbstractList<Board> boardList;
+  List<Board> boardList;
   Prompt prompt;
 
   /// 생성자 ///
-  public BoardHandler(Prompt input, AbstractList<Board> list) {
+  public BoardHandler(Prompt input, List<Board> list) {
     this.prompt = input;
     this.boardList = list;
     // 이렇게 Handler가 사용할 List객체(의존객체)를 생성자에서 직접 만들지 않고

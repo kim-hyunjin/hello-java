@@ -1,8 +1,7 @@
 package com.eomcs.lms.handler;
 
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.util.LinkedList;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class LessonHandler {
@@ -13,11 +12,11 @@ public class LessonHandler {
   // 대신 이 필드에 들어갈 객체는 생성자에서 파라미터로 받는다.
   // 이렇게 하면 ArrayList도 사용할 수 있고, LinkedList로도 사용할 수 있어
   // 선택의 폭이 넓어진다. 유지보수에 좋다.
-  AbstractList<Lesson> lessonList;
+  List<Lesson> lessonList;
   public Prompt prompt;
   
   /// 생성자 ///
-  public LessonHandler(Prompt prompt, AbstractList<Lesson> list) {
+  public LessonHandler(Prompt prompt, List<Lesson> list) {
     this.prompt = prompt;
     this.lessonList = list;
     // 이렇게 Handler가 사용할 List객체(의존객체)를 생성자에서 직접 만들지 않고
