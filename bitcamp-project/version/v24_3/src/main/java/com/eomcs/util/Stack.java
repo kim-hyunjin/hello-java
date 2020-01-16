@@ -78,19 +78,9 @@ public class Stack<E> implements Cloneable {
   }
 
   public Iterator<E> iterator() {
-    // anonymous class : 인스턴스를 한개만 생성한다면 로컬 클래스를 익명 클래스로 정의하라.
-    return new Iterator<E>() { //인터페이스가 없다면 new Object, 객체를 만들어 주소 리턴
-      Stack<E> stack = (Stack<E>)Stack.this.clone();
-      @Override
-      public boolean hasNext() {
-        return !stack.empty();
-      }
-
-      @Override
-      public E next() {
-        return stack.pop();
-      }
-    };
+    // this = 인스턴스 주소
+    // inner class를 생성하려면 바깥 클래스의 인스턴스 주소를 앞쪽에 줘야 한다.
+    return this.new StackIterator<E>();
   }
 
   /// private method ///
@@ -106,7 +96,26 @@ public class Stack<E> implements Cloneable {
   public boolean empty() {
     return this.elementCount == 0;
   }
+  
+  /// non-static nested class = inner class ///
+  class StackIterator<T> implements Iterator<T> {
+    Stack<T> stack;
 
+    @SuppressWarnings("unchecked")
+    public StackIterator() {
+      // 스택은 값을 꺼내면 제거되기 때문에 clone()한다.
+      this.stack = (Stack<T>)Stack.this.clone();
+    }
 
+    @Override
+    public boolean hasNext() {
+      return !stack.empty();
+    }
+
+    @Override
+    public T next() {
+      return stack.pop();
+    }
+  }
 
 }//end public class

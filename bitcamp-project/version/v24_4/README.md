@@ -1,4 +1,4 @@
-# 24_5 - `Iterator` 구현체와 익명 클래스
+# 24_4 - `Iterator` 구현체와 로컬 클래스(local class)
 
 ## 학습 목표
 
@@ -14,17 +14,17 @@
 
 ## 실습
 
-### 훈련1. ListIterator 로컬 클래스를 익명 클래스로 만들라.
+### 훈련1. ListIterator 논스태택 중첩 클래스를 로컬 클래스로 만들라.
 
 - AbstractList.java
   - interator() 메서드를 변경한다.
 
-### 훈련2. QueueIterator 로컬 클래스를 익명 클래스로 만들라.
+### 훈련2. QueueIterator 논스태택 중첩 클래스를 로컬 클래스로 만들라.
 
 - Queue.java
   - interator() 메서드를 변경한다.
 
-### 훈련3. StackIterator 로컬 클래스를 익명 클래스로 만들라.
+### 훈련3. StackIterator 논스태택 중첩 클래스를 로컬 클래스로 만들라.
 
 - Stack.java
   - interator() 메서드를 변경한다.
