@@ -19,18 +19,20 @@ public class Exam0170 {
     class D {}
 
     // anonymous class
-    Object obj = new Object() {}; // 익명 클래스
+    Object obj = new Object() {};
     Object obj2 = new Object() {
-      int a;
+      int a; // 인스턴스 필드
       @Override
       public String toString() {
-        return "익명클래스!";
+        return "오호라! 익명 클래스";
       }
     };
     
-    Object[] arr = new Object[] {}; // 배열 레퍼런스
-    int[] intArr = new int[] {10, 20, 30};
+    
+    int[] arr = new int[] {};
+    int[] arr2 = new int[] {10, 20, 30};
   }
+
 }
 
 
