@@ -17,11 +17,12 @@ public class Test {
     System.out.println("----------------");
 
     // Car2 클래스의 생성자를 접근할 수 없기 때문에 호출할 수 없다.
-    //Car2 x1 = new Car2(); // 컴파일 오류!
+    //Car2 x = new Car2(); // 컴파일 오류!
 
     Car2 x1 = Car2.getInstance();
     Car2 x2 = Car2.getInstance();
     Car2 x3 = Car2.getInstance();
+    
     System.out.println(x1 == x2);
     System.out.println(x1 == x3);
     System.out.println(x2 == x3);

@@ -20,9 +20,9 @@ public class Exam0643 {
   public static void main(String[] args) throws Exception {
     // 클래스가 로딩되는 경우
 
-    // 1) 클래스 멤버(필드와 메서드)를 최초로 사용할 때  
+    // => 클래스 멤버(필드와 메서드)를 최초로 사용할 때  
     A.m();
-    System.out.println("종료");
+    System.out.println("종료!");
   }
 }
 

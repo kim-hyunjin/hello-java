@@ -1,4 +1,4 @@
-package com.eomcs.oop.ex01; 
+package com.eomcs.oop.ex01;
 
 //# 패키지 클래스 
 // - 별도의 파일로 정의한 클래스를 "패키지 클래스"라 부른다.
@@ -7,7 +7,7 @@ package com.eomcs.oop.ex01;
 //   main() {} 블록 안에 정의한 클래스는 
 //   main() {} 블록 안에서만 사용할 수 있다.
 // - 이렇게 별도의 파일로 정의 클래스는 
-//   다른 클래스에서도 사용할 수 있다.
+//   다른 클래스에서도 사용할 수 있다. 
 public class Score {
   public String name;
   public int kor;
@@ -15,4 +15,4 @@ public class Score {
   public int math;
   public int sum;
   public float aver;
-} 
+}

@@ -5,21 +5,22 @@ public class Exam0111 {
 
   public static void main(String[] args) throws Exception {
     // 생성자를 호출하여 문자열 인스턴스를 초기화시킨다.
-
-    // 문자열 리터럴을 사용하여 String 인스턴스를 초기화시키기
+    
+    // => 문자열 리터럴을 사용하여 String 인스턴스를 초기화시키기.
     String s1 = new String("Hello");
 
-    // char[]을 사용하여 String 인스턴스를 초기화시키기
+    // => char[] 을 사용하여 String 인스턴스 초기화시키기.
     char[] chars = new char[] {'H', 'e', 'l', 'l', 'o'};
     String s2 = new String(chars);
 
-    // 바이트 배열을 가지고 String 인스턴스 초기화시키기
-    // => '가각똘똥' 문자를 EUC-KR 코드 값으로 바이트 배열을 만든다.
-    byte[] bytes = {(byte)0x48, // h
-                    (byte)0x65, // e
-                    (byte)0x6c, // l
-                    (byte)0x6c, // l
-                    (byte)0x6f};// o
+    // => 바이트 배열을 가지고 String 인스턴스 초기화시키기
+    byte[] bytes = {
+        (byte)0x48, // H 
+        (byte)0x65, // e
+        (byte)0x6c, // l
+        (byte)0x6c, // l
+        (byte)0x6f  // o 
+    };
     String s3 = new String(bytes);
 
     System.out.printf("%s, %s, %s\n", s1, s2, s3);

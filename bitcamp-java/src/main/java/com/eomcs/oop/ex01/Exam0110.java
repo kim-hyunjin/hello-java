@@ -18,9 +18,7 @@ public class Exam0110 {
     eng = 90;
     math = 85;
     sum = kor + eng + math;
-    aver = (float)sum / 3;  // float/int = > float/float 암시적 형변환(type casting)
-                            // 변수 sum의 데이터타입을 int에서 float로 바꾸는 것이 아니라 
-                            // sum의 값을 float으로 던짐
+    aver = (float)sum / 3;
 
     System.out.printf("이름: %s\n", name);
     System.out.printf("국어: %d\n", kor);

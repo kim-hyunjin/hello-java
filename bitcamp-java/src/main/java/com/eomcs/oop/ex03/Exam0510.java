@@ -30,18 +30,20 @@ public class Exam0510 {
   public static void main(String[] args) {
 
     // 클래스 변수는 생성되는 순간 0으로 자동 초기화 된다.
-    // 정수(byte, short, int, long, char)는 0
-    // 부동소수점(float, double)은 0
-    // 논리(boolean)은 false
-    // 레퍼런스는 null
-    System.out.printf("%d %d %d %d %c %.1f %.1f %b %s %s\n", 
+    // => 정수(byte, short, int, long, char) : 0
+    // => 부동소수점(float, double) : 0.0
+    // => 논리(boolean) : false
+    //
+    System.out.printf(
+        "%d, %d, %d, %d, %c, %.1f, %.1f, %b, %s, %s\n",
         A.b, A.s, A.i, A.l, A.c, A.f, A.d, A.bool, A.str, A.date);
-
 
     // 인스턴스 변수도 클래스 변수와 마찬가지이다. 
     A obj = new A();
-    System.out.printf("%d %d %d %d %c %.1f %.1f %b %s %s\n", 
-        obj.b2, obj.s2, obj.i2, obj.l2, obj.c2, obj.f2, obj.d2, obj.bool2, obj.str2, obj.date2);
+    System.out.printf(
+        "%d, %d, %d, %d, %c, %.1f, %.1f, %b, %s, %s\n",
+        obj.b2, obj.s2, obj.i2, obj.l2, obj.c2, obj.f2, obj.d2, 
+        obj.bool2, obj.str2, obj.date2);
 
     // 로컬 변수는 자동 초기화되지 않는다.
     // 반드시 사용전에 값을 저장해야 한다.

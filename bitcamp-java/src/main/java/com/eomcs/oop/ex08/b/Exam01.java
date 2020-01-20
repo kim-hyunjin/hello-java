@@ -11,7 +11,10 @@ package com.eomcs.oop.ex08.b;
 // run()은 Sedan과 Truck이 서로 다르게 작업하기 때문에 오버라이딩 해야 한다.
 public class Exam01 {
 
-    public static void main(String[] args) {
-    }
+  public static void main(String[] args) {
+    Sedan s = new Sedan();
+    Truck t = new Truck();
+    Car c = new Car();
+  }
 
 }

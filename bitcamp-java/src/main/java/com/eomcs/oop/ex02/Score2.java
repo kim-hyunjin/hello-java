@@ -1,6 +1,6 @@
 package com.eomcs.oop.ex02;
 
-//# 사용자 정의 데이터 타입 -연산자를 static method 문법으로 정의
+//# 사용자 정의 데이터 타입 - 연산자를 static method 문법으로 정의
 //
 public class Score2 {
   String name;

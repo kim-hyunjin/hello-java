@@ -5,17 +5,16 @@ package com.eomcs.oop.ex01;
 public class Exam0460 {
   public static void main(String[] args) {
     java.lang.Integer obj1; // OK!
-    java.lang.System obj2;  // OK!
-    java.io.File obj3;      // OK!
-    // 다음 클래스는 자바에서 기본으로 제공하는 클래스이다.
-    // 패키지명을 명시하지 않아도 컴파일 오류가 발생하지 않는다.
-    Integer obj4;   // OK!
-    System obj5;    // OK!
-    //File obj6;      // 컴파일 오류!
-    // => java.lang 패키지 에 있는 클래스는 패키지를 지정하지 않아도 된다.
-    // 즉 패키지 명을 명시하지 않아도 컴파일 오류가 발생하지 않는다.
+    java.lang.System obj2; // OK!
+    java.io.File obj3; // OK!
     
-    // 그 외 다른 패키지의 클래스는 패키지명을 명시하지 않으면
+    Integer obj4; // OK!
+    System obj5; // OK!
+    //File obj6; // 컴파일 오류!
+    
+    // java.lang 패키지에 있는 클래스는 패키지를 지정하지 않아도 된다.
+    // 즉 패키지명을 명시하지 않아도 컴파일 오류가 발생하지 않는다.
+    // 그 외 다른 패키지의 클래스는 패키지명을 명시하지 않으면 
     // 컴파일 오류가 발생한다.
   }
 }

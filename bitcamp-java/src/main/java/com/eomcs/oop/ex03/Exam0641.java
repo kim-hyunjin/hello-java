@@ -24,7 +24,7 @@ public class Exam0641 {
     A obj1;
     A obj2;
 
-    System.out.println("종료");
+    System.out.println("종료!");
   }
 }
 
