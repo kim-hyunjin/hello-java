@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,11 +41,12 @@ public class App {
   static Scanner keyboard = new Scanner(System.in);
   static Deque<String> commandStack = new ArrayDeque<>();
   static Queue<String> commandQueue = new LinkedList<>();
-  static List<Lesson> lessonList;
-  static List<Member> memberList;
-  static List<Board> boardList;
+  static List<Lesson> lessonList = new ArrayList<>();
+  static List<Member> memberList = new LinkedList<>();
+  static List<Board> boardList = new LinkedList<>();
 
   public static void main(String[] args) {
+    // 파일에서 데이터 로딩하기
     loadLessonData();
     loadMemberData();
     loadBoardData();
@@ -104,6 +104,7 @@ public class App {
       }
     }
     keyboard.close();
+    // 데이터를 파일에 저장
     saveLessonData();
     saveMemberData();
     saveBoardData();
@@ -128,7 +129,10 @@ public class App {
   private static void loadLessonData() {
     File file = new File("./lesson.json");
     try (FileReader in = new FileReader(file);) {
-      lessonList = new ArrayList<>(Arrays.asList(new Gson().fromJson(in, Lesson[].class)));
+      Lesson[] lessons = new Gson().fromJson(in, Lesson[].class);
+      for (Lesson lesson : lessons) {
+        lessonList.add(lesson);
+      }
       System.out.printf("총 %d 개의 수업 데이터를 로딩했습니다.\n", lessonList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
@@ -148,7 +152,10 @@ public class App {
   private static void loadMemberData() {
     File file = new File("./member.json");
     try (FileReader in = new FileReader(file); Scanner dataScan = new Scanner(in);) {
-      memberList = new ArrayList<>(Arrays.asList(new Gson().fromJson(in, Member[].class)));
+      Member[] members = new Gson().fromJson(in, Member[].class);
+      for (Member member : members) {
+        memberList.add(member);
+      }
       System.out.printf("총 %d 개의 회원 데이터를 로딩했습니다.\n", memberList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
@@ -168,7 +175,11 @@ public class App {
   private static void loadBoardData() {
     File file = new File("./board.json");
     try (FileReader in = new FileReader(file);) {
-      boardList = new ArrayList<>(Arrays.asList(new Gson().fromJson(in, Board[].class)));
+      Board[] boards = new Gson().fromJson(in, Board[].class);
+      for (Board board : boards) {
+        boardList.add(board);
+      }
+
       System.out.printf("총 %d 개의 게시물 데이터를 로딩했습니다.\n", boardList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
