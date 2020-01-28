@@ -1,4 +1,4 @@
-# 28_1~2 - 파일 입출력 API의 활용
+# 28_1 - 파일 입출력 API의 활용
 
 ## 학습 목표 
 
@@ -106,15 +106,15 @@
 명령> 
 ```
 
-### 훈련 4: CSV 문자열 처리를 도메인 객체에 위임하라.
--  Board.java
-  - CSV 문자열 값을 가지고 Board 객체를 생성하는 valueOf() 메서드를 추가한다.
-  - CSV에 문자열을 저장하는 toCsvString() 메서드를 추가한다.
--  Member.java
-  - CSV 문자열 값을 가지고 Member 객체를 생성하는 valueOf() 메서드를 추가한다.
-  - CSV에 문자열을 저장하는 toCsvString() 메서드를 추가한다.
--  Lesson.java
-  - CSV 문자열 값을 가지고 Lesson 객체를 생성하는 valueOf() 메서드를 추가한다.
-  - CSV에 문자열을 저장하는 toCsvString() 메서드를 추가한다.
-  
+
+
+
+
+
+
+
+
+
+
+
 
