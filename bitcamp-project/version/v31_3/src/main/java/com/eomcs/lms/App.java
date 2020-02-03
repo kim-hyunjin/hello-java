@@ -176,8 +176,8 @@ public class App {
   public static void main(String[] args) {
     App app = new App();
     // 애플리케이션의 상태 정보를 받을 옵저버를 등록한다.
-    app.addApplicationContextListener(new GreetingListener());
     app.addApplicationContextListener(new DataLoaderListener());
+    app.addApplicationContextListener(new GreetingListener());
     app.service();
   }
 }
