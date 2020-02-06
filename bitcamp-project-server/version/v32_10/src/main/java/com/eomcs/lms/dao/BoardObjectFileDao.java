@@ -1,35 +1,34 @@
-package com.eomcs.lms.dao.json;
+package com.eomcs.lms.dao;
 
 import java.util.List;
-import com.eomcs.lms.dao.LessonDao;
-import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.domain.Board;
 
-public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements LessonDao{
+public class BoardObjectFileDao extends AbstractObjectFileDao<Board> implements BoardDao{
 
-  public LessonJsonFileDao(String filename) {
+  public BoardObjectFileDao(String filename)  {
     super(filename);
   }
 
   // 서블릿 객체들이 데이터를 다룰 때 사용할 메서드를 정의한다.
   @Override
-  public int insert(Lesson lesson) throws Exception {
+  public int insert(Board board) throws Exception {
 
-    if (indexOf(lesson.getNo()) > -1) { // 같은 번호의 게시물이 있다면,
+    if (indexOf(board.getNo()) > -1) { // 같은 번호의 게시물이 있다면,
       return 0;
     }
 
-    list.add(lesson); // 새 게시물을 등록한다.
+    list.add(board); // 새 게시물을 등록한다.
     saveData();
     return 1;
   }
 
   @Override
-  public List<Lesson> findAll() throws Exception {
+  public List<Board> findAll() throws Exception {
     return list;
   }
 
   @Override
-  public Lesson findByNo(int no) throws Exception {
+  public Board findByNo(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {
       return null;
@@ -38,12 +37,14 @@ public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements Le
   }
 
   @Override
-  public int update(Lesson lesson) throws Exception {
-    int index = indexOf(lesson.getNo());
+  public int update(Board board) throws Exception {
+    int index = indexOf(board.getNo());
+
     if (index == -1) {
       return 0;
     }
-    list.set(index, lesson); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
+
+    list.set(index, board); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
     saveData();
     return 1;
   }
@@ -54,6 +55,7 @@ public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements Le
     if (index == -1) {
       return 0;
     }
+
     list.remove(index);
     saveData();
     return 1;
@@ -68,6 +70,7 @@ public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements Le
     }
     return -1;
   }
+
 }
 
 

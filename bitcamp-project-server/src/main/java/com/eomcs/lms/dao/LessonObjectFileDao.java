@@ -1,31 +1,34 @@
 package com.eomcs.lms.dao;
 
 import java.util.List;
-import com.eomcs.lms.domain.Board;
+import com.eomcs.lms.domain.Lesson;
 
-public class BoardFileDao extends AbstractObjectFileDao<Board> {
+public class LessonObjectFileDao extends AbstractObjectFileDao<Lesson> implements LessonDao{
 
-  public BoardFileDao(String filename)  {
+  public LessonObjectFileDao(String filename) {
     super(filename);
   }
 
   // 서블릿 객체들이 데이터를 다룰 때 사용할 메서드를 정의한다.
-  public int insert(Board board) throws Exception {
+  @Override
+  public int insert(Lesson lesson) throws Exception {
 
-    if (indexOf(board.getNo()) > -1) { // 같은 번호의 게시물이 있다면,
+    if (indexOf(lesson.getNo()) > -1) { // 같은 번호의 게시물이 있다면,
       return 0;
     }
 
-    list.add(board); // 새 게시물을 등록한다.
+    list.add(lesson); // 새 게시물을 등록한다.
     saveData();
     return 1;
   }
 
-  public List<Board> findAll() throws Exception {
+  @Override
+  public List<Lesson> findAll() throws Exception {
     return list;
   }
 
-  public Board findByNo(int no) throws Exception {
+  @Override
+  public Lesson findByNo(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {
       return null;
@@ -33,24 +36,23 @@ public class BoardFileDao extends AbstractObjectFileDao<Board> {
     return list.get(index);
   }
 
-  public int update(Board board) throws Exception {
-    int index = indexOf(board.getNo());
-
+  @Override
+  public int update(Lesson lesson) throws Exception {
+    int index = indexOf(lesson.getNo());
     if (index == -1) {
       return 0;
     }
-
-    list.set(index, board); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
+    list.set(index, lesson); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
     saveData();
     return 1;
   }
 
+  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {
       return 0;
     }
-
     list.remove(index);
     saveData();
     return 1;
@@ -65,7 +67,6 @@ public class BoardFileDao extends AbstractObjectFileDao<Board> {
     }
     return -1;
   }
-
 }
 
 
