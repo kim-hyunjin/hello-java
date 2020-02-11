@@ -6,7 +6,7 @@ import java.net.URL;
 public class Exam04 {
 
   public static void main(String[] args) throws Exception {
-    // 웹 상에서 자원의 위치를 표현하는 방법 
+    // 웹 상에서 자원의 위치를 표현하는 방법
     URL url = new URL("http://www.bitcamp.co.kr/a/b/hello.html?name=hong&age=20&tel=111-1111");
 
     // URL 분석
@@ -14,7 +14,11 @@ public class Exam04 {
     System.out.printf("서버주소: %s\n", url.getHost());
     System.out.printf("포트번호: %d\n", url.getPort());
     System.out.printf("자원경로: %s\n", url.getPath());
-    System.out.printf("쿼리스트링: %s\n", url.getQuery());
+    System.out.printf("쿼리스트링: %s\n", url.getQuery()); // 없으면 null 리턴
+    // QueryString
+    // - 자원의 경로(예: /index.php) 다음 ?다음에 오는 파라미터이다.
+    // - 형식: 파라미터명=값&파라미터명=값&파라미터명=값
+    // https://search.naver.com/search.naver?sm=top_hty&fbm=0&ie=utf8&query=%EB%B9%84%ED%8A%B8%EC%BA%A0%ED%94%84
 
   }
 
