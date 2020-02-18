@@ -84,9 +84,14 @@ from test1
 where working='Y' or class='java100';
 
 /* java100기 학생 중에 재직자만 조회하라!*/
-select no, name, class, working
+select no, name
 from test1
 where working='Y' and class='java100';
+
+where 절을 통해 결과 데이터를 먼저 선택(selection)한 다음
+결과 데이터에서 결과로 가져올 컬럼을 선택(projection)한다.
+따라서 실행 순서는
+from => where => select
 
 /* 재직자가 아닌 사람만 조회하라!*/
 select no, name, class, working
@@ -173,9 +178,9 @@ insert into test1(name,class,working) values('s011', 'iotjava5', '1');
 insert into test1(name,class,working) values('s012', 'iotjava5', '1');
 insert into test1(name,class,working) values('s013', 'iotjava5', '1');
 
-/* class 이름이 java로 시작하는 모든 학생 조회하기
- * => % : 0개 이상의 문자 
- */
+class 이름이 java로 시작하는 모든 학생 조회하기
+=> % : 0개 이상의 문자 
+
 select *
 from test1
 where class like 'java%';
