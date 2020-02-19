@@ -117,10 +117,22 @@ select
     r.rno, 
     r.loc, 
     r.name
-from lect l right outer join room r on l.rno=r.rno;
+from lect l left outer join room r on l.rno=r.rno;
 /* 왼쪽 테이블인 lect를 기준으로 room 데이터를 연결한다. 
  * 만약 lect와 일치하는 데이터가 room에 없더라도 
  * lect 데이터를 출력한다!
+ */
+
+ select 
+    l.lno, 
+    l.titl, 
+    r.rno, 
+    r.loc, 
+    r.name
+from lect l right outer join room r on l.rno=r.rno;
+/* 오른쪽 테이블인 room을 기준으로 lect 데이터를 연결한다. 
+ * 만약 room과 일치하는 데이터가 lect에 없더라도 
+ * room 데이터를 출력한다!
  */
 
 
