@@ -45,6 +45,10 @@ public class ClientApp {
       commandStack.push(command);
       commandQueue.offer(command);
       processCommand(command);
+
+      if (command.endsWith("/server/stop")) {
+        processCommand(command);
+      }
     }
     keyboard.close();
   } // service()
