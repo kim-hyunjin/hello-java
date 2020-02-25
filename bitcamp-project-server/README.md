@@ -37,14 +37,13 @@
 사진 게시글을 입력할 때 사진 파일을 첨부할 수 있게 변경한다.
 
 - com.eomcs.lms.dao.mariadb.PhotoBoardDaoImpl 변경
-  - insert() 메서드 변경
-  - insert한 후에 auto-increment PK 값을 받아와 PhotoBoard에 넣는다.
-  
+  - insert() 메서드를 변경한다.
+  - insert 한 후에 자동 증가 PK 값을 리턴 받는다.
 - com.eomcs.lms.servlet.PhotoBoardAddServlet 변경
   - LessonDao 객체를 주입 받아 수업 번호의 유효성을 검사한다.
   - 사진 게시글을 입력 받을 때 첨부 파일도 입력 받는다.
 - com.eomcs.lms.ServerApp 변경
-  - `PhotoBoardListServlet` 객체를 생성하여 커맨드 맵에 보관한다.
+  - `PhotoBoardAddServlet` 객체에 LessonDao와 PhotoFileDao 객체를 주입한다. 
 
 `ClientApp` 실행 예:
 ```
@@ -68,3 +67,57 @@ a3.gif
 
 사진을 저장했습니다.
 ```
+    
+### 훈련3: '/photoboard/detail' 명령을 처리하라.
+
+사진 게시글을 출력할 때 첨부 파일 목록도 함께 출력한다.
+
+- com.eomcs.lms.dao.PhotoFileDao 인터페이스 변경
+  - 사진 파일 목록을 리턴하는 메서드를 추가한다.
+  - findAll(int boardNo)
+- com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 추가
+  - PhotoFileDao 인터페이스에 추가된 메서드를 구현한다.
+- com.eomcs.lms.servlet.PhotoBoardDetailServlet 변경
+  - PhotoFileDao 의존 객체를 주입받는다.
+  - 사진 게시글 다음에 첨부파일 목록을 출력한다.
+- com.eomcs.lms.ServerApp 변경
+  - `PhotoBoardDetailServlet` 객체에 PhotoFileDao 객체를 주입한다. 
+  
+`ClientApp` 실행 예:
+```
+명령> /photoboard/detail
+번호?
+7
+제목: 최종 발표
+작성일: 2018-11-14
+조회수: 0
+수업: 2
+사진 파일:
+> ppt1.jpeg
+> pp2.jpeg
+> pp3.jpeg
+```
+
+### 훈련4: PhotoFile 객체의 생성자를 추가하라.
+
+- 인스턴스의 초기 값을 설정할 수 있는 생성자를 추가한다.
+
+생성자를 통해 인스턴스의 초기 값을 설정하기 I:
+- com.eomcs.lms.domain.PhotoFile 변경
+  - PhotoFile(filepath, boardNO) 생성자 추가한다.
+- com.eomcs.lms.servlet.PhotoBoardAddServlet 변경
+  - PhotoFile(filepath, boardNo) 생성자를 사용한다.
+
+생성자를 통해 인스턴스의 초기 값을 설정하기 II:
+- com.eomcs.lms.domain.PhotoFile 변경
+  - PhotoFile(int no, filepath, boardNO) 생성자 추가한다.
+- com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 변경
+  - PhotoFile(no, filepath, boardNo) 생성자를 사용한다.
+
+셋터 메서드를 통해 인스턴스의 초기 값을 설정하기:
+- com.eomcs.lms.domain.PhotoFile 변경
+  - 셋터 메서드가 인스턴스 주소를 리턴하게 변경한다.
+- com.eomcs.lms.servlet.PhotoBoardAddServlet 변경
+  - PhotoFile 객체를 만들 때 셋터 메서드로 값을 설정한다.
+- com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 변경
+  - PhotoFile 객체를 만들 때 셋터 메서드로 값을 설정한다.
