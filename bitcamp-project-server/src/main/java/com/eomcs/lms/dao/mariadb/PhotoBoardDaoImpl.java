@@ -21,8 +21,17 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
   public int insert(PhotoBoard photoBoard) throws Exception {
     try (Statement stmt = con.createStatement()) {
 
-      return stmt.executeUpdate("insert into lms_photo(titl, lesson_id) values('"//
-          + photoBoard.getTitle() + "', " + photoBoard.getLesson().getNo() + ")");
+      int result = stmt.executeUpdate("insert into lms_photo(titl, lesson_id) values('"//
+          + photoBoard.getTitle() + "', " + photoBoard.getLesson().getNo() + ")",
+          Statement.RETURN_GENERATED_KEYS /* insert한 후에 pk값 리턴받기 */);
+
+      // auto-increment PK 값을 꺼내기 위한 준비를 한다.
+      try (ResultSet generatedKeySet = stmt.getGeneratedKeys()) {
+        generatedKeySet.next(); // PK 컬럼의 값을 가져온다.
+        photoBoard.setNo(generatedKeySet.getInt(1)); // 가져온 PK 컬럼의 값을 PhotoBoard 객체에 넣는다.
+      }
+
+      return result;
     }
   }
 
