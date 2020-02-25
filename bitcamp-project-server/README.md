@@ -121,3 +121,47 @@ a3.gif
   - PhotoFile 객체를 만들 때 셋터 메서드로 값을 설정한다.
 - com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 변경
   - PhotoFile 객체를 만들 때 셋터 메서드로 값을 설정한다.
+
+
+### 훈련5: '/photoboard/update' 명령을 처리하라.
+
+- com.eomcs.lms.dao.PhotoFileDao 인터페이스 변경
+  - 사진 파일을 삭제하는 메서드를 추가한다.
+  - deleteAll(int boardNo)
+- com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 변경
+  - PhotoFileDao 인터페이스에 추가된 메서드를 구현한다.
+- com.eomcs.lms.servlet.PhotoBoardUpdateServlet 변경
+  - 사진 게시글의 첨부파일을 변경한다.
+- com.eomcs.lms.ServerApp 변경
+  - `PhotoBoardUpdateServlet` 객체에 PhotoFileDao 객체를 주입한다. 
+
+`ClientApp` 실행 예:
+```
+명령> /photoboard/update
+번호?
+7
+제목(okok2)?
+최종 발표
+사진 파일:
+> aaa1.jpeg
+> aaa2.jpeg
+
+사진은 일부만 변경할 수 없습니다.
+전체를 새로 등록해야 합니다.
+사진을 변경하시겠습니까?(y/N)
+y
+최소 한 개의 사진 파일을 등록해야 합니다.
+파일명 입력 없이 그냥 엔터를 치면 파일 추가를 마칩니다.
+사진 파일?
+
+최소 한 개의 사진 파일을 등록해야 합니다.
+사진 파일?
+ppt1.jpeg
+사진 파일?
+pp2.jpeg
+사진 파일?
+pp3.jpeg
+사진 파일?
+
+사진을 변경했습니다.
+```

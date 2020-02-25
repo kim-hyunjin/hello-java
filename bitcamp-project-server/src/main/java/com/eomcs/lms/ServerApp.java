@@ -112,7 +112,7 @@ public class ServerApp {
         new PhotoBoardAddServlet(photoBoardDao, lessonDao, photoFileDao));
     servletMap.put("/photoBoard/list", new PhotoBoardListServlet(photoBoardDao, lessonDao));
     servletMap.put("/photoBoard/detail", new PhotoBoardDetailServlet(photoBoardDao, photoFileDao));
-    servletMap.put("/photoBoard/update", new PhotoBoardUpdateServlet(photoBoardDao));
+    servletMap.put("/photoBoard/update", new PhotoBoardUpdateServlet(photoBoardDao, photoFileDao));
     servletMap.put("/photoBoard/delete", new PhotoBoardDeleteServlet(photoBoardDao));
 
     try (ServerSocket serverSocket = new ServerSocket(9999)) {
