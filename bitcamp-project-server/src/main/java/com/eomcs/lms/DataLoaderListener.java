@@ -17,11 +17,12 @@ public class DataLoaderListener implements ApplicationContextListener {
   String jdbcUrl = "jdbc:mariadb://localhost:3306/studydb";
   String username = "study";
   String password = "1111";
-  ConnectionFactory conFactory = new ConnectionFactory(jdbcUrl, username, password);
 
   @Override
   public void contextInitialized(Map<String, Object> context) {
     System.out.println("데이터를 로딩합니다.");
+    ConnectionFactory conFactory = new ConnectionFactory(jdbcUrl, username, password);
+    context.put("connectionFactory", conFactory);
     context.put("boardDao", new BoardDaoImpl(conFactory));
     context.put("memberDao", new MemberDaoImpl(conFactory));
     context.put("lessonDao", new LessonDaoImpl(conFactory));

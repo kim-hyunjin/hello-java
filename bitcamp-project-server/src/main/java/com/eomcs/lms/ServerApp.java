@@ -40,6 +40,7 @@ import com.eomcs.lms.servlet.PhotoBoardDetailServlet;
 import com.eomcs.lms.servlet.PhotoBoardListServlet;
 import com.eomcs.lms.servlet.PhotoBoardUpdateServlet;
 import com.eomcs.lms.servlet.Servlet;
+import com.eomcs.util.ConnectionFactory;
 
 public class ServerApp {
 
@@ -87,6 +88,7 @@ public class ServerApp {
     PhotoBoardDao photoBoardDao = (PhotoBoardDao) context.get("photoBoardDao");
     PhotoFileDao photoFileDao = (PhotoFileDao) context.get("photoFileDao");
 
+    ConnectionFactory conFactory = (ConnectionFactory) context.get("connectionFactory");
 
     // 커맨드 객체 역할을 수행하는 서블릿 객체를 맵에 보관한다.
     servletMap.put("/board/list", new BoardListServlet(boardDao));
@@ -124,6 +126,7 @@ public class ServerApp {
         System.out.println("클라이언트와 연결되었음!");
         executorService.submit(() -> {
           processRequest(socket);
+          conFactory.removeConnection();
         });
         // 현재 서버 멈춤 상태라면,
         // 다음 클라이언트 요청을 받지 않고 종료한다.
