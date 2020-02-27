@@ -11,10 +11,11 @@ import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.sql.PlatformTransactionManager;
+import com.eomcs.sql.TransactionTemplate;
 import com.eomcs.util.Prompt;
 
 public class PhotoBoardAddServlet implements Servlet {
-  PlatformTransactionManager txManager;
+  TransactionTemplate transactionTemplate;
   PhotoBoardDao photoBoardDao;
   LessonDao lessonDao;
   PhotoFileDao photoFileDao;
@@ -25,7 +26,8 @@ public class PhotoBoardAddServlet implements Servlet {
     this.photoBoardDao = photoBoardDao;
     this.lessonDao = lessonDao;
     this.photoFileDao = photoFileDao;
-    this.txManager = txManager;
+    // 트랜잭션 관리자를 사용하여 트랜잭션을 처리할 도우미 객체를 준비한다.
+    this.transactionTemplate = new TransactionTemplate(txManager);
   }
 
   @Override
@@ -40,26 +42,24 @@ public class PhotoBoardAddServlet implements Servlet {
     }
 
     photoBoard.setLesson(lesson);
-    txManager.beginTransaction();
+    // 사용자로부터 사진 게시글에 첨부할 파일을 입력받는다.
+    List<PhotoFile> photoFiles = inputPhotoFiles(in, out);
 
-    try {
+    // 트랜잭션 도우미 객체를 이용하여 트랜잭션 작업을 처리해보자.
+    // => 트랜잭션으로 묶어서 처리할 작업은 TransactionCallback 규칙에 따라
+    // 객체를 만들어 parameter로 넘겨주면 된다.
+    // execute()안에 TransactionCallback 인터페이스의 doInTransaction() 구현
+    transactionTemplate.execute(() -> {
       if (photoBoardDao.insert(photoBoard) == 0) {
         throw new Exception("사진 게시물 등록에 실패했습니다.");
       }
-
-      List<PhotoFile> photoFiles = inputPhotoFiles(in, out);
-
       for (PhotoFile photoFile : photoFiles) {
         photoFile.setBoardNo(photoBoard.getNo());
         photoFileDao.insert(photoFile);
       }
       out.println("새 사진 게시물을 등록했습니다.");
-      txManager.commit();
-
-    } catch (Exception e) {
-      txManager.rollback();
-      out.println(e.getMessage());
-    }
+      return null;
+    });
   }
 
   private List<PhotoFile> inputPhotoFiles(Scanner in, PrintStream out) {

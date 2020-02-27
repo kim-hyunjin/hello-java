@@ -5,42 +5,31 @@ import java.util.Scanner;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.sql.PlatformTransactionManager;
+import com.eomcs.sql.TransactionTemplate;
 import com.eomcs.util.Prompt;
 
 public class PhotoBoardDeleteServlet implements Servlet {
-
-  PlatformTransactionManager txManager;
   PhotoBoardDao photoBoardDao;
   PhotoFileDao photoFileDao;
+  TransactionTemplate transactionTemplate;
 
-  public PhotoBoardDeleteServlet( //
-      PlatformTransactionManager txManager, //
-      PhotoBoardDao photoBoardDao, //
-      PhotoFileDao photoFileDao) {
-    this.txManager = txManager;
+  public PhotoBoardDeleteServlet(PhotoBoardDao photoBoardDao, PhotoFileDao photoFileDao,
+      PlatformTransactionManager txManager) {
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
+    this.transactionTemplate = new TransactionTemplate(txManager);
   }
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-
-    int no = Prompt.getInt(in, out, "번호? ");
-
-    txManager.beginTransaction();
-
-    try {
+    int no = Prompt.getInt(in, out, "번호?");
+    transactionTemplate.execute(() -> {
       photoFileDao.deleteAll(no);
-
       if (photoBoardDao.delete(no) == 0) {
-        throw new Exception("해당 번호의 사진 게시글이 없습니다.");
+        throw new Exception("삭제에 실패했습니다.");
       }
-      txManager.commit();
-      out.println("사진 게시글을 삭제했습니다.");
-
-    } catch (Exception e) {
-      txManager.rollback();
-      out.println(e.getMessage());
-    }
+      out.println("삭제했습니다.");
+      return null;
+    });
   }
 }

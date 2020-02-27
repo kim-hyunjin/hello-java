@@ -28,7 +28,6 @@ import com.eomcs.lms.servlet.LessonDeleteServlet;
 import com.eomcs.lms.servlet.LessonDetailServlet;
 import com.eomcs.lms.servlet.LessonListServlet;
 import com.eomcs.lms.servlet.LessonUpdateServlet;
-import com.eomcs.lms.servlet.LoginServlet;
 import com.eomcs.lms.servlet.MemberAddServlet;
 import com.eomcs.lms.servlet.MemberDeleteServlet;
 import com.eomcs.lms.servlet.MemberDetailServlet;
@@ -123,8 +122,6 @@ public class ServerApp {
     servletMap.put("/photoBoard/delete",
         new PhotoBoardDeleteServlet(photoBoardDao, photoFileDao, txManager));
 
-    servletMap.put("/auth/login", new LoginServlet(memberDao));
-
     try (ServerSocket serverSocket = new ServerSocket(9999)) {
 
       System.out.println("클라이언트 연결 대기중...");
@@ -148,6 +145,7 @@ public class ServerApp {
       }
 
     } catch (Exception e) {
+      System.out.println("서버 준비 중 오류 발생!");
       e.printStackTrace();
     }
 
@@ -200,7 +198,7 @@ public class ServerApp {
           servlet.service(in, out);
         } catch (Exception e) {
           out.println("요청 처리 중 오류 발생!");
-          out.println(e.getMessage());
+          e.printStackTrace();
         }
       } else { // 없다면? 간단한 안내 메시지를 응답한다.
         notFound(out);
