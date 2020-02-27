@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.sql;
 
 import java.sql.Array;
 import java.sql.Blob;
