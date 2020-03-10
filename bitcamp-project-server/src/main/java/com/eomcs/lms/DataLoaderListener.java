@@ -1,6 +1,10 @@
 package com.eomcs.lms;
 
+import java.io.InputStream;
 import java.util.Map;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
 import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
@@ -21,16 +25,31 @@ public class DataLoaderListener implements ApplicationContextListener {
 
   @Override
   public void contextInitialized(Map<String, Object> context) {
-    System.out.println("데이터를 로딩합니다.");
-    DataSource dataSource = new DataSource(jdbcUrl, username, password);
-    PlatformTransactionManager txManager = new PlatformTransactionManager(dataSource);
-    context.put("transactionManager", txManager);
-    context.put("dataSource", dataSource);
-    context.put("boardDao", new BoardDaoImpl(dataSource));
-    context.put("memberDao", new MemberDaoImpl(dataSource));
-    context.put("lessonDao", new LessonDaoImpl(dataSource));
-    context.put("photoBoardDao", new PhotoBoardDaoImpl(dataSource));
-    context.put("photoFileDao", new PhotoFileDaoImpl(dataSource));
+    try {
+      System.out.println("데이터를 로딩합니다.");
+
+      // 커넥션 팩토리 준비
+      DataSource dataSource = new DataSource(jdbcUrl, username, password);
+      context.put("dataSource", dataSource);
+
+      // mybatis 준비
+      InputStream inputStream = Resources.getResourceAsStream(//
+          "com/eomcs/lms/conf/mybatis-config.xml");
+      SqlSessionFactory sqlSessionFactory = //
+          new SqlSessionFactoryBuilder().build(inputStream);
+
+      context.put("boardDao", new BoardDaoImpl(sqlSessionFactory));
+      context.put("memberDao", new MemberDaoImpl(sqlSessionFactory));
+      context.put("lessonDao", new LessonDaoImpl(sqlSessionFactory));
+      context.put("photoBoardDao", new PhotoBoardDaoImpl(sqlSessionFactory));
+      context.put("photoFileDao", new PhotoFileDaoImpl(sqlSessionFactory));
+
+      // 트랜잭션 관리자 준비
+      PlatformTransactionManager txManager = new PlatformTransactionManager(dataSource);
+      context.put("transactionManager", txManager);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }// contextInitialized
 
   @Override

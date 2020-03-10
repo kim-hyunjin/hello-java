@@ -1,21 +1,17 @@
 package com.eomcs.lms.servlet;
 
 import java.io.PrintStream;
-import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.dao.PhotoBoardDao;
-import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.util.Prompt;
 
 public class PhotoBoardDetailServlet implements Servlet {
   PhotoBoardDao photoBoardDao;
-  PhotoFileDao photoFileDao;
 
-  public PhotoBoardDetailServlet(PhotoBoardDao photoBoardDao, PhotoFileDao photoFileDao) {
+  public PhotoBoardDetailServlet(PhotoBoardDao photoBoardDao) {
     this.photoBoardDao = photoBoardDao;
-    this.photoFileDao = photoFileDao;
   }
 
   @Override
@@ -32,8 +28,7 @@ public class PhotoBoardDetailServlet implements Servlet {
       out.printf("수업명: %s\n", photoBoard.getLesson().getTitle());
       out.println("사진파일: ");
 
-      List<PhotoFile> files = photoFileDao.findAll(photoBoard.getNo());
-      for (PhotoFile photoFile : files) {
+      for (PhotoFile photoFile : photoBoard.getFiles()) {
         out.printf("> %s\n", photoFile.getFilePath());
       }
     } else {

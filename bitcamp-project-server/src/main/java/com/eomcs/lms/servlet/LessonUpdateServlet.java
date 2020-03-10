@@ -27,16 +27,16 @@ public class LessonUpdateServlet implements Servlet {
     Lesson lesson = new Lesson();
     lesson.setNo(no);
     lesson.setTitle(
-        Prompt.getString(in, out, String.format("수업명(%s)?\n", old.getTitle()), old.getTitle()));
-    lesson.setDescription(Prompt.getString(in, out,
-        String.format("설명(%s)?\n", old.getDescription()), old.getDescription()));
-    lesson.setStartDate(Prompt.getDate(in, out, String.format("시작일(%s)?\n", old.getStartDate()),
+        Prompt.getString(in, out, String.format("수업명(%s)? ", old.getTitle()), old.getTitle()));
+    lesson.setDescription(Prompt.getString(in, out, String.format("설명(%s)? ", old.getDescription()),
+        old.getDescription()));
+    lesson.setStartDate(Prompt.getDate(in, out, String.format("시작일(%s)? ", old.getStartDate()),
         old.getStartDate().toString()));
-    lesson.setEndDate(Prompt.getDate(in, out, String.format("종료일(%s)?\n", old.getEndDate()),
+    lesson.setEndDate(Prompt.getDate(in, out, String.format("종료일(%s)? ", old.getEndDate()),
         old.getEndDate().toString()));
-    lesson.setTotalHours(Prompt.getInt(in, out, String.format("총수업시간(%d)?\n", old.getTotalHours()),
+    lesson.setTotalHours(Prompt.getInt(in, out, String.format("총수업시간(%d)? ", old.getTotalHours()),
         String.valueOf(old.getTotalHours())));
-    lesson.setDayHours(Prompt.getInt(in, out, String.format("일수업시간(%d)?\n", old.getDayHours()),
+    lesson.setDayHours(Prompt.getInt(in, out, String.format("일수업시간(%d)? ", old.getDayHours()),
         String.valueOf(old.getDayHours())));
 
     if (lessonDao.update(lesson) > 0) {

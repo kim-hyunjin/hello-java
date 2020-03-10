@@ -117,7 +117,7 @@ public class ServerApp {
     servletMap.put("/photoBoard/add",
         new PhotoBoardAddServlet(photoBoardDao, lessonDao, photoFileDao, txManager));
     servletMap.put("/photoBoard/list", new PhotoBoardListServlet(photoBoardDao, lessonDao));
-    servletMap.put("/photoBoard/detail", new PhotoBoardDetailServlet(photoBoardDao, photoFileDao));
+    servletMap.put("/photoBoard/detail", new PhotoBoardDetailServlet(photoBoardDao));
     servletMap.put("/photoBoard/update",
         new PhotoBoardUpdateServlet(photoBoardDao, photoFileDao, txManager));
     servletMap.put("/photoBoard/delete",
@@ -127,18 +127,18 @@ public class ServerApp {
 
     try (ServerSocket serverSocket = new ServerSocket(9999)) {
 
-      System.out.println("클라이언트 연결 대기중...");
+      // System.out.println("클라이언트 연결 대기중...");
 
       while (true) {
         Socket socket = serverSocket.accept();
-        System.out.println("클라이언트와 연결되었음!");
+        // System.out.println("클라이언트와 연결되었음!");
         executorService.submit(() -> {
           processRequest(socket);
           // 스레드에 보관된 커넥션 객체를 제거한다.
           // => 스레드에서 제거한 커넥션 객체는 다시 사용할 수 있도록
           // DataSource에 반납된다.
           dataSource.removeConnection();
-          System.out.println("----------------------------------------");
+          // System.out.println("----------------------------------------");
         });
         // 현재 서버 멈춤 상태라면,
         // 다음 클라이언트 요청을 받지 않고 종료한다.
