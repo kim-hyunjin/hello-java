@@ -4,30 +4,22 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import com.eomcs.lms.dao.PhotoBoardDao;
-import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
-import com.eomcs.sql.PlatformTransactionManager;
-import com.eomcs.sql.TransactionTemplate;
+import com.eomcs.lms.service.PhotoBoardService;
 import com.eomcs.util.Prompt;
 
 public class PhotoBoardUpdateServlet implements Servlet {
-  PhotoBoardDao photoBoardDao;
-  PhotoFileDao photoFileDao;
-  TransactionTemplate transactionTemplate;
+  PhotoBoardService photoBoardService;
 
-  public PhotoBoardUpdateServlet(PhotoBoardDao photoBoardDao, PhotoFileDao photoFileDao,
-      PlatformTransactionManager txManager) {
-    this.photoBoardDao = photoBoardDao;
-    this.photoFileDao = photoFileDao;
-    this.transactionTemplate = new TransactionTemplate(txManager);
+  public PhotoBoardUpdateServlet(PhotoBoardService photoBoardService) {
+    this.photoBoardService = photoBoardService;
   }
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
     int no = Prompt.getInt(in, out, "번호?");
-    PhotoBoard old = photoBoardDao.findByNo(no);
+    PhotoBoard old = photoBoardService.get(no);
 
     if (old == null) {
       out.println("해당 번호의 사진 게시글이 없습니다.");
@@ -47,21 +39,9 @@ public class PhotoBoardUpdateServlet implements Servlet {
       // 사용자가 입력한 파일 목록을 PhotoBoard 객체에 저장한다.
       photoBoard.setFiles(inputPhotoFiles(in, out));
     }
+    photoBoardService.update(photoBoard);
+    out.println("사진 게시글을 변경했습니다.");
 
-    transactionTemplate.execute(() -> {
-      if (photoBoardDao.update(photoBoard) == 0) {
-        throw new Exception("사진 게시글 변경에 실패했습니다.");
-      }
-
-      if (photoBoard.getFiles() != null) {
-        // 첨부파일을 변경할 시
-        photoFileDao.deleteAll(no);
-        photoFileDao.insert(photoBoard);
-      }
-
-      out.println("사진 게시글을 변경했습니다.");
-      return null;
-    });
   }
 
   private List<PhotoFile> inputPhotoFiles(Scanner in, PrintStream out) {

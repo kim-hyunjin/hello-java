@@ -5,51 +5,55 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.service.LessonService;
 import com.eomcs.util.Prompt;
 
 public class LessonSearchServlet implements Servlet {
 
-  LessonDao lessonDao;
+  LessonService lessonService;
 
-  public LessonSearchServlet(LessonDao lessonDao) {
-    this.lessonDao = lessonDao;
+  public LessonSearchServlet(LessonService lessonService) {
+    this.lessonService = lessonService;
   }
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-    HashMap<String, Object> map = new HashMap<>();
-
-    String keyword = Prompt.getString(in, out, "수업명 검색:");
+    HashMap<String, Object> params = new HashMap<>();
+    String keyword = Prompt.getString(in, out, "강의명 검색: ");
     if (keyword.length() > 0) {
-      map.put("title", keyword);
+      params.put("title", keyword);
     }
 
-    Date date = Prompt.getDate(in, out, "시작일 검색:");
+    Date date = Prompt.getDate(in, out, "시작일 검색: ");
     if (date != null) {
-      map.put("startDate", date);
+      params.put("startDate", date);
     }
 
-    date = Prompt.getDate(in, out, "종료일 검색:");
+    date = Prompt.getDate(in, out, "종료일 검색: ");
     if (date != null) {
-      map.put("endDate", date);
+      params.put("endDate", date);
     }
 
-    int value = Prompt.getInt(in, out, "총수업시간 검색:");
+    int value = Prompt.getInt(in, out, "총강의시간 검색: ");
     if (value > 0) {
-      map.put("totalHours", value);
+      params.put("totalHours", value);
     }
 
-    value = Prompt.getInt(in, out, "일수업시간 검색:");
+    value = Prompt.getInt(in, out, "일강의시간 검색: ");
     if (value > 0) {
-      map.put("dayHours", value);
+      params.put("dayHours", value);
     }
+    out.println("------------------------------");
+    out.println("[검색 결과]");
+    out.println();
 
-    List<Lesson> lessons = lessonDao.findByKeyword(map);
+    List<Lesson> lessons = lessonService.search(params);
     for (Lesson l : lessons) {
-      out.printf("%d, %s, %s ~ %s, %d, %d\n", l.getNo(), l.getTitle(), l.getStartDate(),
-          l.getEndDate(), l.getTotalHours(), l.getDayHours());
+      out.printf("%d, %s, %s ~ %s, %d\n", l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate(),
+          l.getTotalHours());
     }
   }
 }
+
+
