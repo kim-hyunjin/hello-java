@@ -19,46 +19,40 @@ import com.eomcs.sql.SqlSessionFactoryProxy;
 //
 public class DataLoaderListener implements ApplicationContextListener {
 
-  String jdbcUrl = "jdbc:mariadb://localhost:3306/studydb";
-  String username = "study";
-  String password = "1111";
-
   @Override
   public void contextInitialized(Map<String, Object> context) {
-    try {
-      System.out.println("데이터를 로딩합니다.");
 
-      // mybatis 준비
+    try {
+      // Mybatis 객체 준비
       InputStream inputStream = Resources.getResourceAsStream(//
           "com/eomcs/lms/conf/mybatis-config.xml");
 
-      // 트랜잭션 제어를 위해 프록시 객체 사용
-      SqlSessionFactory sqlSessionFactory =
-          new SqlSessionFactoryProxy(new SqlSessionFactoryBuilder().build(inputStream));
+      // 트랜잭션 제어를 위해 오리지널 객체를 프록시 객체에 담아 사용한다.
+      SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryProxy(//
+          new SqlSessionFactoryBuilder().build(inputStream));
 
+      // 이 메서드를 호출한 쪽(App)에서 DAO 객체를 사용할 수 있도록 Map 객체에 담아둔다.
       context.put("boardDao", new BoardDaoImpl(sqlSessionFactory));
-      context.put("memberDao", new MemberDaoImpl(sqlSessionFactory));
       context.put("lessonDao", new LessonDaoImpl(sqlSessionFactory));
+      context.put("memberDao", new MemberDaoImpl(sqlSessionFactory));
       context.put("photoBoardDao", new PhotoBoardDaoImpl(sqlSessionFactory));
       context.put("photoFileDao", new PhotoFileDaoImpl(sqlSessionFactory));
 
       // 트랜잭션 관리자 준비
-      PlatformTransactionManager txManager = new PlatformTransactionManager(sqlSessionFactory);
+      PlatformTransactionManager txManager = new PlatformTransactionManager(//
+          sqlSessionFactory);
       context.put("transactionManager", txManager);
 
-      // serverApp에서 SqlSession 객체를 꺼낼 수 있도록
-      // SqlSessionFactory를 저장한다.
+      // ServerApp에서 SqlSession 객체를 꺼낼 수 있도록,
+      // SqlSessionFactory 를 저장한다.
       context.put("sqlSessionFactory", sqlSessionFactory);
 
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }// contextInitialized
+  }
 
   @Override
-  public void contextDestroyed(Map<String, Object> context) {
-    System.out.println("데이터를 저장합니다.");
-
-  }// contextDestroyed
+  public void contextDestroyed(Map<String, Object> context) {}
 
 }

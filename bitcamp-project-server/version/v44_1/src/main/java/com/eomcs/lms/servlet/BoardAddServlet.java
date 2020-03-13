@@ -7,6 +7,7 @@ import com.eomcs.lms.service.BoardService;
 import com.eomcs.util.Prompt;
 
 public class BoardAddServlet implements Servlet {
+
   BoardService boardService;
 
   public BoardAddServlet(BoardService boardService) {
@@ -17,11 +18,7 @@ public class BoardAddServlet implements Servlet {
   public void service(Scanner in, PrintStream out) throws Exception {
     Board board = new Board();
     board.setTitle(Prompt.getString(in, out, "제목? "));
-
-    if (boardService.add(board) > 0) { // 등록했다면,
-      out.println("새 게시글을 등록했습니다.");
-    } else {
-      out.println("같은 번호의 게시물이 있습니다.");
-    }
+    boardService.add(board);
+    out.println("새 게시글을 등록했습니다.");
   }
 }

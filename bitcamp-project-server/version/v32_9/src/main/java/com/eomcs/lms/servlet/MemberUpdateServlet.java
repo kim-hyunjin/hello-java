@@ -19,6 +19,7 @@ public class MemberUpdateServlet implements Servlet {
 
     if (memberDao.update(member) > 0) {
       out.writeUTF("OK");
+
     } else {
       out.writeUTF("FAIL");
       out.writeUTF("해당 번호의 회원이 없습니다.");

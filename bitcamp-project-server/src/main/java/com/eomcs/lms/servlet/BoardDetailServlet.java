@@ -7,16 +7,16 @@ import com.eomcs.lms.service.BoardService;
 import com.eomcs.util.Prompt;
 
 public class BoardDetailServlet implements Servlet {
+
   BoardService boardService;
 
   public BoardDetailServlet(BoardService boardService) {
     this.boardService = boardService;
   }
 
-
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-    int no = Prompt.getInt(in, out, "번호?");
+    int no = Prompt.getInt(in, out, "번호? ");
 
     Board board = boardService.get(no);
 
@@ -25,7 +25,6 @@ public class BoardDetailServlet implements Servlet {
       out.printf("제목: %s\n", board.getTitle());
       out.printf("등록일: %s\n", board.getDate());
       out.printf("조회수: %d\n", board.getViewCount());
-
     } else {
       out.println("해당 번호의 게시물이 없습니다.");
     }

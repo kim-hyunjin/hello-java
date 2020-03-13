@@ -19,6 +19,7 @@ public class LessonUpdateServlet implements Servlet {
 
     if (lessonDao.update(lesson) > 0) {
       out.writeUTF("OK");
+
     } else {
       out.writeUTF("FAIL");
       out.writeUTF("해당 번호의 수업이 없습니다.");

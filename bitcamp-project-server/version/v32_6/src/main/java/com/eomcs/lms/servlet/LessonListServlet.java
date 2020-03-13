@@ -5,13 +5,13 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import com.eomcs.lms.domain.Lesson;
 
-public class LessonListServlet implements Servlet{
+public class LessonListServlet implements Servlet {
+
   List<Lesson> lessons;
 
   public LessonListServlet(List<Lesson> lessons) {
     this.lessons = lessons;
   }
-
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
@@ -19,5 +19,4 @@ public class LessonListServlet implements Servlet{
     out.reset();
     out.writeObject(lessons);
   }
-
 }

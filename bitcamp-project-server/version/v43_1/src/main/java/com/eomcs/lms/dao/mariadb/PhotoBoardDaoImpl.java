@@ -10,14 +10,16 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
 
   SqlSessionFactory sqlSessionFactory;
 
-  public PhotoBoardDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public PhotoBoardDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public int insert(PhotoBoard photoBoard) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      int count = sqlSession.insert("PhotoBoardMapper.insertPhotoBoard", photoBoard);
+      int count = sqlSession.insert(//
+          "PhotoBoardMapper.insertPhotoBoard", photoBoard);
       sqlSession.commit();
       return count;
     }
@@ -26,7 +28,8 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
   @Override
   public List<PhotoBoard> findAllByLessonNo(int lessonNo) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("PhotoBoardMapper.findPhotoBoardByLessonNo", lessonNo);
+      return sqlSession.selectList(//
+          "PhotoBoardMapper.selectPhotoBoard", lessonNo);
     }
   }
 
@@ -40,7 +43,8 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
   @Override
   public int update(PhotoBoard photoBoard) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      int count = sqlSession.update("PhotoBoardMapper.updatePhotoBoard", photoBoard);
+      int count = sqlSession.update(//
+          "PhotoBoardMapper.updatePhotoBoard", photoBoard);
       sqlSession.commit();
       return count;
     }

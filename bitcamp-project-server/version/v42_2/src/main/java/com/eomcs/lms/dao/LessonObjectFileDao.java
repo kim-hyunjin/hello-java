@@ -3,7 +3,7 @@ package com.eomcs.lms.dao;
 import java.util.List;
 import com.eomcs.lms.domain.Lesson;
 
-public class LessonObjectFileDao extends AbstractObjectFileDao<Lesson> implements LessonDao{
+public class LessonObjectFileDao extends AbstractObjectFileDao<Lesson> implements LessonDao {
 
   public LessonObjectFileDao(String filename) {
     super(filename);
@@ -13,11 +13,11 @@ public class LessonObjectFileDao extends AbstractObjectFileDao<Lesson> implement
   @Override
   public int insert(Lesson lesson) throws Exception {
 
-    if (indexOf(lesson.getNo()) > -1) { // 같은 번호의 게시물이 있다면,
+    if (indexOf(lesson.getNo()) > -1) { // 같은 번호의 수업이 있다면,
       return 0;
     }
 
-    list.add(lesson); // 새 게시물을 등록한다.
+    list.add(lesson); // 새 수업을 등록한다.
     saveData();
     return 1;
   }
@@ -39,9 +39,11 @@ public class LessonObjectFileDao extends AbstractObjectFileDao<Lesson> implement
   @Override
   public int update(Lesson lesson) throws Exception {
     int index = indexOf(lesson.getNo());
+
     if (index == -1) {
       return 0;
     }
+
     list.set(index, lesson); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
     saveData();
     return 1;
@@ -53,6 +55,7 @@ public class LessonObjectFileDao extends AbstractObjectFileDao<Lesson> implement
     if (index == -1) {
       return 0;
     }
+
     list.remove(index);
     saveData();
     return 1;

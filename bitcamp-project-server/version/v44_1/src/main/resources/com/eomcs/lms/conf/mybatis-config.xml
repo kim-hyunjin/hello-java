@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <properties resource="com/eomcs/lms/conf/jdbc.properties"></properties>
-  
+
   <typeAliases>
     <typeAlias type="com.eomcs.lms.domain.Board" alias="Board"/>
     <typeAlias type="com.eomcs.lms.domain.Lesson" alias="Lesson"/>
@@ -27,8 +27,8 @@
   
   <mappers>
     <mapper resource="com/eomcs/lms/mapper/BoardMapper.xml"/>
-    <mapper resource="com/eomcs/lms/mapper/MemberMapper.xml"/>
     <mapper resource="com/eomcs/lms/mapper/LessonMapper.xml"/>
+    <mapper resource="com/eomcs/lms/mapper/MemberMapper.xml"/>
     <mapper resource="com/eomcs/lms/mapper/PhotoBoardMapper.xml"/>
     <mapper resource="com/eomcs/lms/mapper/PhotoFileMapper.xml"/>
   </mappers>

@@ -2,19 +2,20 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.MemberFileDao;
+import com.eomcs.lms.dao.MemberObjectFileDao;
 
 public class MemberDeleteServlet implements Servlet {
 
-  MemberFileDao memberDao;
+  MemberObjectFileDao memberDao;
 
-  public MemberDeleteServlet(MemberFileDao memberDao) {
+  public MemberDeleteServlet(MemberObjectFileDao memberDao) {
     this.memberDao = memberDao;
   }
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
+
     if (memberDao.delete(no) > 0) {
       out.writeUTF("OK");
 

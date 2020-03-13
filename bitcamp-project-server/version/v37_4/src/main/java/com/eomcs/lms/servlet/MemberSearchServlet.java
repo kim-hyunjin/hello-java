@@ -22,10 +22,14 @@ public class MemberSearchServlet implements Servlet {
 
     String keyword = in.nextLine();
 
-    List<Member> members = memberDao.search(keyword);
+    List<Member> members = memberDao.findByKeyword(keyword);
     for (Member m : members) {
-      out.printf("%d, %s, %s, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(), m.getTel(),
-          m.getPhoto(), m.getRegisteredDate());
+      out.printf("%d, %s, %s, %s, %s\n", //
+          m.getNo(), //
+          m.getName(), //
+          m.getEmail(), //
+          m.getTel(), //
+          m.getRegisteredDate());
     }
   }
 }

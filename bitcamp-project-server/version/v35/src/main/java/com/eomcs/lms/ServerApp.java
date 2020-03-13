@@ -113,9 +113,8 @@ public class ServerApp {
         //
         executorService.submit(() -> {
           processRequest(socket);
+          System.out.println("--------------------------------------");
         });
-
-        System.out.println("--------------------------------------");
       }
 
     } catch (Exception e) {
@@ -124,9 +123,10 @@ public class ServerApp {
 
     notifyApplicationDestroyed();
 
-    // 스레드풀을 다 사용했으면 종료.
+    // 스레드풀을 다 사용했으면 종료하라고 해야 한다.
     executorService.shutdown();
-    // => 스레드풀에 소속된 스레드들의 작업이 모두 끝나면 종료한다.
+    // => 스레드풀을 당장 종료시키는 것이 아니다.
+    // => 스레드풀에 소속된 스레드들의 작업이 모두 끝나면 종료하는 뜻이다.
 
   } // service()
 
@@ -143,7 +143,6 @@ public class ServerApp {
       System.out.println("클라이언트가 보낸 메시지를 수신하였음!");
 
       if (request.equalsIgnoreCase("/server/stop")) {
-        System.out.println("서버를 종료합니다.");
         quit(out);
         return 9; // 서버를 종료한다.
       }

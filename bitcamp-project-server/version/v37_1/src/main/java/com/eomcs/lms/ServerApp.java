@@ -105,9 +105,8 @@ public class ServerApp {
 
         executorService.submit(() -> {
           processRequest(socket);
+          System.out.println("--------------------------------------");
         });
-
-        System.out.println("--------------------------------------");
       }
 
     } catch (Exception e) {
@@ -116,9 +115,10 @@ public class ServerApp {
 
     notifyApplicationDestroyed();
 
-    // 스레드풀을 다 사용했으면 종료.
+    // 스레드풀을 다 사용했으면 종료하라고 해야 한다.
     executorService.shutdown();
-    // => 스레드풀에 소속된 스레드들의 작업이 모두 끝나면 종료한다.
+    // => 스레드풀을 당장 종료시키는 것이 아니다.
+    // => 스레드풀에 소속된 스레드들의 작업이 모두 끝나면 종료하는 뜻이다.
 
   } // service()
 
@@ -131,25 +131,40 @@ public class ServerApp {
 
       // 클라이언트가 보낸 명령을 읽는다.
       String request = in.nextLine();
-      System.out.println(request);
-
-      // 클라이언트에게 응답하기
-      out.println("[현진] 안녕하세요!");
-      out.println("[현진] 반가워요!");
+      System.out.printf("=> %s\n", request);
+      
+      // 클라이언트에게 응답한다.
+      out.println("[강사] 안녕하세요!");
+      out.println("[강사] 반가워요!");
       out.println("!end!");
-
+      
       /*
-       * if (request.equalsIgnoreCase("/server/stop")) { System.out.println("서버를 종료합니다."); return 9;
-       * // 서버를 종료한다. } // 클라이언트의 요청을 처리할 객체를 찾는다. Servlet servlet = servletMap.get(request);
-       * 
-       * if (servlet != null) { // 클라이언트 요청을 처리할 객체를 찾았으면 작업을 실행시킨다. try { servlet.service(in, out);
-       * 
-       * } catch (Exception e) { // 요청한 작업을 수행하다가 오류 발생할 경우 그 이유를 간단히 응답한다. out.writeUTF("FAIL");
-       * out.writeUTF(e.getMessage());
-       * 
-       * // 서버쪽 화면에는 더 자세하게 오류 내용을 출력한다. System.out.println("클라이언트 요청 처리 중 오류 발생:");
-       * e.printStackTrace(); } } else { // 없다면? 간단한 아내 메시지를 응답한다. notFound(out); }
-       */
+      if (request.equalsIgnoreCase("/server/stop")) {
+        return 9; // 서버를 종료한다.
+      }
+
+      // 클라이언트의 요청을 처리할 객체를 찾는다.
+      Servlet servlet = servletMap.get(request);
+
+      if (servlet != null) {
+        // 클라이언트 요청을 처리할 객체를 찾았으면 작업을 실행시킨다.
+        try {
+          servlet.service(in, out);
+
+        } catch (Exception e) {
+          // 요청한 작업을 수행하다가 오류 발생할 경우 그 이유를 간단히 응답한다.
+          out.writeUTF("FAIL");
+          out.writeUTF(e.getMessage());
+
+          // 서버쪽 화면에는 더 자세하게 오류 내용을 출력한다.
+          System.out.println("클라이언트 요청 처리 중 오류 발생:");
+          e.printStackTrace();
+        }
+      } else { // 없다면? 간단한 아내 메시지를 응답한다.
+        notFound(out);
+      }
+      */
+      
       out.flush();
       System.out.println("클라이언트에게 응답하였음!");
 

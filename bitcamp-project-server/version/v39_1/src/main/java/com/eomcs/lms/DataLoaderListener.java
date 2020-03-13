@@ -13,23 +13,27 @@ import com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl;
 //
 public class DataLoaderListener implements ApplicationContextListener {
 
-  String jdbcUrl = "jdbc:mariadb://localhost:3306/studydb";
-  String username = "study";
-  String password = "1111";
-
   @Override
   public void contextInitialized(Map<String, Object> context) {
-    System.out.println("데이터를 로딩합니다.");
-    context.put("boardDao", new BoardDaoImpl(jdbcUrl, username, password));
-    context.put("memberDao", new MemberDaoImpl(jdbcUrl, username, password));
-    context.put("lessonDao", new LessonDaoImpl(jdbcUrl, username, password));
-    context.put("photoBoardDao", new PhotoBoardDaoImpl(jdbcUrl, username, password));
-    context.put("photoFileDao", new PhotoFileDaoImpl(jdbcUrl, username, password));
-  }// contextInitialized
+
+    try {
+      // DB 연결 정보
+      String jdbcUrl = "jdbc:mariadb://localhost:3306/studydb";
+      String username = "study";
+      String password = "1111";
+
+      // 이 메서드를 호출한 쪽(App)에서 DAO 객체를 사용할 수 있도록 Map 객체에 담아둔다.
+      context.put("boardDao", new BoardDaoImpl(jdbcUrl, username, password));
+      context.put("lessonDao", new LessonDaoImpl(jdbcUrl, username, password));
+      context.put("memberDao", new MemberDaoImpl(jdbcUrl, username, password));
+      context.put("photoBoardDao", new PhotoBoardDaoImpl(jdbcUrl, username, password));
+      context.put("photoFileDao", new PhotoFileDaoImpl(jdbcUrl, username, password));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   @Override
-  public void contextDestroyed(Map<String, Object> context) {
-    System.out.println("데이터를 저장합니다.");
-  }// contextDestroyed
-
+  public void contextDestroyed(Map<String, Object> context) {}
 }

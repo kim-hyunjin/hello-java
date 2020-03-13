@@ -19,9 +19,10 @@ public class LessonAddServlet implements Servlet {
 
     if (lessonDao.insert(lesson) > 0) {
       out.writeUTF("OK");
+
     } else {
       out.writeUTF("FAIL");
-      out.writeUTF("같은 번호의 게시물이 있습니다.");
+      out.writeUTF("같은 번호의 수업이 있습니다.");
     }
   }
 }

@@ -11,7 +11,8 @@ public class LessonDaoImpl implements LessonDao {
 
   SqlSessionFactory sqlSessionFactory;
 
-  public LessonDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public LessonDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
@@ -21,7 +22,6 @@ public class LessonDaoImpl implements LessonDao {
       int count = sqlSession.insert("LessonMapper.insertLesson", lesson);
       return count;
     }
-
   }
 
   @Override
@@ -34,14 +34,7 @@ public class LessonDaoImpl implements LessonDao {
   @Override
   public Lesson findByNo(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectOne("LessonMapper.findLesson", no);
-    }
-  }
-
-  @Override
-  public List<Lesson> findByKeyword(Map<String, Object> params) throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("LessonMapper.searchLesson", params);
+      return sqlSession.selectOne("LessonMapper.selectDetail", no);
     }
   }
 
@@ -58,6 +51,13 @@ public class LessonDaoImpl implements LessonDao {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       int count = sqlSession.delete("LessonMapper.deleteLesson", no);
       return count;
+    }
+  }
+
+  @Override
+  public List<Lesson> findByKeyword(Map<String, Object> params) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("LessonMapper.selectLesson", params);
     }
   }
 

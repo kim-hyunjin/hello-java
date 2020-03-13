@@ -17,16 +17,9 @@ public class LessonListServlet implements Servlet {
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
     List<Lesson> lessons = lessonDao.findAll();
-    for (Lesson le : lessons) { // 데이터를 한 개 가져왔으면 true를 리턴한다.
-      out.printf("%d, %s, %s, %s~%s, %d, %d\n", //
-          le.getNo(), //
-          le.getTitle(), //
-          le.getDescription(), //
-          le.getStartDate(), //
-          le.getEndDate(), //
-          le.getTotalHours(), //
-          le.getDayHours()//
-      );
+    for (Lesson l : lessons) {
+      out.printf("%d, %s, %s ~ %s, %d\n", l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate(),
+          l.getTotalHours());
     }
   }
 }

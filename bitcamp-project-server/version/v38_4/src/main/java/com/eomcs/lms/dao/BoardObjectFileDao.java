@@ -3,9 +3,9 @@ package com.eomcs.lms.dao;
 import java.util.List;
 import com.eomcs.lms.domain.Board;
 
-public class BoardObjectFileDao extends AbstractObjectFileDao<Board> implements BoardDao{
+public class BoardObjectFileDao extends AbstractObjectFileDao<Board> implements BoardDao {
 
-  public BoardObjectFileDao(String filename)  {
+  public BoardObjectFileDao(String filename) {
     super(filename);
   }
 
@@ -64,13 +64,12 @@ public class BoardObjectFileDao extends AbstractObjectFileDao<Board> implements 
   @Override
   protected <K> int indexOf(K key) {
     for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).getNo() == (int) key) {
+      if (list.get(i).getNo() == (int) key) { // K가 어떤 타입인지 형변환해서 사용하라.
         return i;
       }
     }
     return -1;
   }
-
 }
 
 

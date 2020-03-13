@@ -15,6 +15,7 @@ public class MemberDeleteServlet implements Servlet {
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
+
     if (memberDao.delete(no) > 0) {
       out.writeUTF("OK");
 

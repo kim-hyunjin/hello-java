@@ -9,8 +9,9 @@
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/util/Prompt.java 추가
-- src/main/java/com/eomcs/servlet/XxxServlet.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardAddServlet.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardUpdateServlet.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardDeleteServlet.java 변경
 
 ## 실습  
 

@@ -8,6 +8,10 @@ import com.eomcs.lms.domain.Lesson;
 
 public class LessonUpdateServlet implements Servlet {
 
+  // DAO 클래스를 구체적으로 지정하기 보다는
+  // 인터페이스를 지정함으로써
+  // 향후 다른 구현체로 교체하기 쉽도록 한다.
+  //
   LessonDao lessonDao;
 
   public LessonUpdateServlet(LessonDao lessonDao) {
@@ -16,70 +20,57 @@ public class LessonUpdateServlet implements Servlet {
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-    out.println("번호? \n!{}!");
+
+    out.println("번호? ");
+    out.println("!{}!");
+    out.flush();
     int no = Integer.parseInt(in.nextLine());
 
     Lesson old = lessonDao.findByNo(no);
     if (old == null) {
-      out.println("해당 번호의 수업 정보가 없습니다.");
+      out.println("해당 번호의 강의가 없습니다.");
       return;
     }
-    out.println("변경을 원치 않는 경우 엔터");
+
     Lesson lesson = new Lesson();
+
     lesson.setNo(no);
 
-    out.printf("수업명(%s)? \n!{}!\n", old.getTitle());
-    String title = in.nextLine();
-    if (title.length() == 0) {
-      lesson.setTitle(old.getTitle());
-    } else {
-      lesson.setTitle(title);
-    }
+    out.printf("강의명(%s)? \n", old.getTitle());
+    out.println("!{}!");
+    out.flush();
+    lesson.setTitle(in.nextLine());
 
-    out.printf("설명(%s)? \n!{}!\n", old.getDescription());
-    String description = in.nextLine();
-    if (description.length() == 0) {
-      lesson.setDescription(old.getDescription());
-    } else {
-      lesson.setDescription(description);
-    }
+    out.printf("내용(%s)? \n", old.getDescription());
+    out.println("!{}!");
+    out.flush();
+    lesson.setDescription(in.nextLine());
 
-    out.printf("시작일(%s)? \n!{}!\n", old.getStartDate());
-    String startDate = in.nextLine();
-    if (startDate.length() == 0) {
-      lesson.setStartDate(old.getStartDate());
-    } else {
-      lesson.setStartDate(Date.valueOf(startDate));
-    }
+    out.printf("강의 시작일(%s)? \n", old.getStartDate());
+    out.println("!{}!");
+    out.flush();
+    lesson.setStartDate(Date.valueOf(in.nextLine()));
 
-    out.printf("종료일(%s)? \n!{}!\n", old.getEndDate());
-    String endDate = in.nextLine();
-    if (endDate.length() == 0) {
-      lesson.setEndDate(old.getEndDate());
-    } else {
-      lesson.setEndDate(Date.valueOf(endDate));
-    }
+    out.printf("강의 종료일(%s)? \n", old.getEndDate());
+    out.println("!{}!");
+    out.flush();
+    lesson.setEndDate(Date.valueOf(in.nextLine()));
 
-    out.printf("총수업시간(%d)? \n!{}!\n", old.getTotalHours());
-    String totalHours = in.nextLine();
-    if (totalHours.length() == 0) {
-      lesson.setTotalHours(old.getTotalHours());
-    } else {
-      lesson.setTotalHours(Integer.parseInt(totalHours));
-    }
+    out.printf("총 강의시간(%d)? \n", old.getTotalHours());
+    out.println("!{}!");
+    out.flush();
+    lesson.setTotalHours(Integer.parseInt(in.nextLine()));
 
-    out.printf("일수업시간(%d)? \n!{}!\n", old.getDayHours());
-    String dayHours = in.nextLine();
-    if (dayHours.length() == 0) {
-      lesson.setDayHours(old.getDayHours());
-    } else {
-      lesson.setDayHours(Integer.parseInt(dayHours));
-    }
+    out.printf("일 강의시간(%d)? \n", old.getDayHours());
+    out.println("!{}!");
+    out.flush();
+    lesson.setDayHours(Integer.parseInt(in.nextLine()));
 
     if (lessonDao.update(lesson) > 0) {
-      out.println("수업 정보를 변경했습니다.");
+      out.println("강의를 변경했습니다.");
+
     } else {
-      out.println("수업 변경에 실패했습니다.");
+      out.println("변경에 실패했습니다.");
     }
   }
 }

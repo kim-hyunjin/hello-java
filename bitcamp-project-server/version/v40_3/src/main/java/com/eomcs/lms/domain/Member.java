@@ -19,6 +19,12 @@ public class Member implements Serializable {
   private String tel;
   private Date registeredDate;
 
+  @Override
+  public String toString() {
+    return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
+        + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + "]";
+  }
+
   public static Member valueOf(String csv) {
     String[] data = csv.split(",");
 
@@ -32,12 +38,6 @@ public class Member implements Serializable {
     member.setRegisteredDate(Date.valueOf(data[6]));
 
     return member;
-  }
-
-  @Override
-  public String toString() {
-    return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
-        + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + "]";
   }
 
   public String toCsvString() {
@@ -62,61 +62,45 @@ public class Member implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
     Member other = (Member) obj;
     if (email == null) {
-      if (other.email != null) {
+      if (other.email != null)
         return false;
-      }
-    } else if (!email.equals(other.email)) {
+    } else if (!email.equals(other.email))
       return false;
-    }
     if (name == null) {
-      if (other.name != null) {
+      if (other.name != null)
         return false;
-      }
-    } else if (!name.equals(other.name)) {
+    } else if (!name.equals(other.name))
       return false;
-    }
-    if (no != other.no) {
+    if (no != other.no)
       return false;
-    }
     if (password == null) {
-      if (other.password != null) {
+      if (other.password != null)
         return false;
-      }
-    } else if (!password.equals(other.password)) {
+    } else if (!password.equals(other.password))
       return false;
-    }
     if (photo == null) {
-      if (other.photo != null) {
+      if (other.photo != null)
         return false;
-      }
-    } else if (!photo.equals(other.photo)) {
+    } else if (!photo.equals(other.photo))
       return false;
-    }
     if (registeredDate == null) {
-      if (other.registeredDate != null) {
+      if (other.registeredDate != null)
         return false;
-      }
-    } else if (!registeredDate.equals(other.registeredDate)) {
+    } else if (!registeredDate.equals(other.registeredDate))
       return false;
-    }
     if (tel == null) {
-      if (other.tel != null) {
+      if (other.tel != null)
         return false;
-      }
-    } else if (!tel.equals(other.tel)) {
+    } else if (!tel.equals(other.tel))
       return false;
-    }
     return true;
   }
 

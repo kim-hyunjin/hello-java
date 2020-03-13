@@ -11,6 +11,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 public class SqlSessionProxy implements SqlSession {
+
   SqlSession original;
 
   public SqlSessionProxy(SqlSession original) {
@@ -20,14 +21,15 @@ public class SqlSessionProxy implements SqlSession {
   // close() 메서드를 변경한다.
   @Override
   public void close() {
-    // try-resources 문장에서 자동으로 close()를 호출할 때
+    // try-with-resources 문장에서 자동으로 close()를 호출할 때
     // SqlSession을 닫지 않게 변경한다.
-    // 계속해서 다른 DAO가 사용할 수 있기 때문이다.
+    // 왜? 계속해서 다른 DAO가 사용할 수 있기 때문이다.
+    //
     // original.close();
   }
 
-  // 대신 스레드의 모든 작업이 모두 끝났을 때 닫도록 한다.
-  // 이를 위해 메서드를 추가한다.
+  // 대신 스레드의 작업이 모두 끝났을 때 닫도록 한다.
+  // => 이를 진짜 닫는 일을 하는 메서드를 추가한다.
   public void realClose() {
     original.close();
   }
@@ -161,8 +163,6 @@ public class SqlSessionProxy implements SqlSession {
   public List<BatchResult> flushStatements() {
     return original.flushStatements();
   }
-
-
 
   @Override
   public void clearCache() {

@@ -19,9 +19,10 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public int insert(Member member) throws Exception {
-    try (Connection con = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection(); //
         PreparedStatement stmt = con.prepareStatement(//
-            "insert into lms_member(name, email, pwd, tel, photo) values(?, ?, ?, ?, ?)")) {
+            "insert into lms_member(name, email, pwd, tel, photo) "//
+                + "values(?,?,password(?),?,?)")) {
       stmt.setString(1, member.getName());
       stmt.setString(2, member.getEmail());
       stmt.setString(3, member.getPassword());
@@ -33,24 +34,20 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public List<Member> findAll() throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement(
-            "select member_id, name, email, pwd, cdt, tel, photo from lms_member");
-
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "select member_id, name, email, tel, cdt"//
+                + " from lms_member");
         ResultSet rs = stmt.executeQuery()) {
-
-      List<Member> list = new ArrayList<>();
-      // ResultSet 도구를 사용하여 데이터를 하나씩 가져온다.
-      while (rs.next()) { // 데이터를 한 개 가져왔으면 true를 리턴한다.
-        Member m = new Member();
-        m.setNo(rs.getInt("member_id"));
-        m.setName(rs.getString("name"));
-        m.setPassword(rs.getString("pwd"));
-        m.setEmail(rs.getString("email"));
-        m.setRegisteredDate(rs.getDate("cdt"));
-        m.setTel(rs.getString("tel"));
-        m.setPhoto(rs.getString("photo"));
-        list.add(m);
+      ArrayList<Member> list = new ArrayList<>();
+      while (rs.next()) {
+        Member member = new Member();
+        member.setNo(rs.getInt("member_id"));
+        member.setName(rs.getString("name"));
+        member.setEmail(rs.getString("email"));
+        member.setTel(rs.getString("tel"));
+        member.setRegisteredDate(rs.getDate("cdt"));
+        list.add(member);
       }
       return list;
     }
@@ -58,23 +55,22 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public Member findByNo(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt =
-            con.prepareStatement("select member_id, name, email, pwd, cdt, tel, photo"
-                + " from lms_member where member_id=?")) {
-
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "select member_id, name, email, pwd, tel, photo" //
+                + " from lms_member" //
+                + " where member_id=?")) {
       stmt.setInt(1, no);
       try (ResultSet rs = stmt.executeQuery()) {
-        if (rs.next()) { // 데이터를 한 개 가져왔으면 true를 리턴한다.
-          Member m = new Member();
-          m.setNo(rs.getInt("member_id"));
-          m.setName(rs.getString("name"));
-          m.setPassword(rs.getString("pwd"));
-          m.setEmail(rs.getString("email"));
-          m.setRegisteredDate(rs.getDate("cdt"));
-          m.setTel(rs.getString("tel"));
-          m.setPhoto(rs.getString("photo"));
-          return m;
+        if (rs.next()) {
+          Member member = new Member();
+          member.setNo(rs.getInt("member_id"));
+          member.setName(rs.getString("name"));
+          member.setEmail(rs.getString("email"));
+          member.setPassword(rs.getString("pwd"));
+          member.setTel(rs.getString("tel"));
+          member.setPhoto(rs.getString("photo"));
+          return member;
         } else {
           return null;
         }
@@ -84,14 +80,11 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public int update(Member member) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement("update lms_member set "//
-            + "name=?, "//
-            + "email=?, "//
-            + "pwd=password(?), "//
-            + "tel=?, "//
-            + "photo=?"//
-            + "where member_id=?")) {
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "update lms_member set" //
+                + " name=?, email=?, pwd=password(?), tel=?, photo=?"//
+                + " where member_id=?")) {
       stmt.setString(1, member.getName());
       stmt.setString(2, member.getEmail());
       stmt.setString(3, member.getPassword());
@@ -104,19 +97,21 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public int delete(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement("delete from lms_member where member_id=?")) {
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "delete from lms_member"//
+                + " where member_id=?")) {
       stmt.setInt(1, no);
       return stmt.executeUpdate();
     }
   }
 
   @Override
-  public List<Member> search(String keyword) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt =
-            con.prepareStatement("select member_id, name, email, pwd, cdt, tel, photo"//
-                + " from lms_member"//
+  public List<Member> findByKeyword(String keyword) throws Exception {
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "select member_id, name, email, tel, cdt" //
+                + " from lms_member" //
                 + " where name like ?"//
                 + " or email like ?"//
                 + " or tel like ?")) {
@@ -126,32 +121,28 @@ public class MemberDaoImpl implements MemberDao {
       stmt.setString(3, value);
 
       try (ResultSet rs = stmt.executeQuery()) {
-        List<Member> list = new ArrayList<>();
-        // ResultSet 도구를 사용하여 데이터를 하나씩 가져온다.
-        while (rs.next()) { // 데이터를 한 개 가져왔으면 true를 리턴한다.
-          Member m = new Member();
-          m.setNo(rs.getInt("member_id"));
-          m.setName(rs.getString("name"));
-          m.setPassword(rs.getString("pwd"));
-          m.setEmail(rs.getString("email"));
-          m.setRegisteredDate(rs.getDate("cdt"));
-          m.setTel(rs.getString("tel"));
-          m.setPhoto(rs.getString("photo"));
-          list.add(m);
+        ArrayList<Member> list = new ArrayList<>();
+        while (rs.next()) {
+          Member member = new Member();
+          member.setNo(rs.getInt("member_id"));
+          member.setName(rs.getString("name"));
+          member.setEmail(rs.getString("email"));
+          member.setTel(rs.getString("tel"));
+          member.setRegisteredDate(rs.getDate("cdt"));
+          list.add(member);
         }
         return list;
       }
     }
-  }// search
+  }
 
   @Override
-  public Member findByEamilAndPassword(String email, String password) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt =
-            con.prepareStatement("select member_id, name, email, pwd, cdt, tel, photo"//
-                + " from lms_member"//
-                + " where email = ?"//
-                + " and pwd = password(?)")) {
+  public Member findByEmailAndPassword(String email, String password) throws Exception {
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "select member_id, name, email, pwd, tel, photo" //
+                + " from lms_member" //
+                + " where email=? and pwd=password(?)")) {
       stmt.setString(1, email);
       stmt.setString(2, password);
       try (ResultSet rs = stmt.executeQuery()) {
@@ -159,9 +150,8 @@ public class MemberDaoImpl implements MemberDao {
           Member member = new Member();
           member.setNo(rs.getInt("member_id"));
           member.setName(rs.getString("name"));
-          member.setPassword(rs.getString("pwd"));
           member.setEmail(rs.getString("email"));
-          member.setRegisteredDate(rs.getDate("cdt"));
+          member.setPassword(rs.getString("pwd"));
           member.setTel(rs.getString("tel"));
           member.setPhoto(rs.getString("photo"));
           return member;
@@ -170,6 +160,5 @@ public class MemberDaoImpl implements MemberDao {
         }
       }
     }
-  }// findByEamilAndPassword
-
+  }
 }

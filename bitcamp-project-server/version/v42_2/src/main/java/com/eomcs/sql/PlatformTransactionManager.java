@@ -14,7 +14,7 @@ public class PlatformTransactionManager {
     // 현재 스레드에 보관된 커넥션을 가져온다.
     Connection con = dataSource.getConnection();
 
-    // 커넥션을 수동 커밋상태로 만든다.
+    // 커넥션을 수동 커밋 상태로 만든다.
     con.setAutoCommit(false);
   }
 

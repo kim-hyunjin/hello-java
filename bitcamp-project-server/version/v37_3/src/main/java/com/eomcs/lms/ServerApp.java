@@ -2,6 +2,7 @@
 package com.eomcs.lms;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -81,13 +82,13 @@ public class ServerApp {
     servletMap.put("/board/detail", new BoardDetailServlet(boardDao));
     servletMap.put("/board/update", new BoardUpdateServlet(boardDao));
     servletMap.put("/board/delete", new BoardDeleteServlet(boardDao));
-    //
+
     servletMap.put("/lesson/list", new LessonListServlet(lessonDao));
     servletMap.put("/lesson/add", new LessonAddServlet(lessonDao));
     servletMap.put("/lesson/detail", new LessonDetailServlet(lessonDao));
     servletMap.put("/lesson/update", new LessonUpdateServlet(lessonDao));
     servletMap.put("/lesson/delete", new LessonDeleteServlet(lessonDao));
-    //
+
     servletMap.put("/member/list", new MemberListServlet(memberDao));
     servletMap.put("/member/add", new MemberAddServlet(memberDao));
     servletMap.put("/member/detail", new MemberDetailServlet(memberDao));
@@ -104,16 +105,21 @@ public class ServerApp {
 
         executorService.submit(() -> {
           processRequest(socket);
+          System.out.println("--------------------------------------");
         });
       }
 
     } catch (Exception e) {
       System.out.println("서버 준비 중 오류 발생!");
-      e.printStackTrace();
     }
 
     notifyApplicationDestroyed();
+
+    // 스레드풀을 다 사용했으면 종료하라고 해야 한다.
     executorService.shutdown();
+    // => 스레드풀을 당장 종료시키는 것이 아니다.
+    // => 스레드풀에 소속된 스레드들의 작업이 모두 끝나면 종료하는 뜻이다.
+
   } // service()
 
 
@@ -125,40 +131,59 @@ public class ServerApp {
 
       // 클라이언트가 보낸 명령을 읽는다.
       String request = in.nextLine();
-      // System.out.println(request);
+      System.out.printf("=> %s\n", request);
 
+      // 클라이언트에게 응답한다.
       // if (request.equalsIgnoreCase("/server/stop")) {
-      // System.out.println("서버를 종료합니다.");
-      // return 9;
+      // return 9; // 서버를 종료한다. }
       // }
+
+      // 클라이언트의 요청을 처리할 객체를 찾는다.
       Servlet servlet = servletMap.get(request);
+
       if (servlet != null) {
         try {
+          // 클라이언트 요청을 처리할 객체를 찾았으면 작업을 실행시킨다.
           servlet.service(in, out);
+
         } catch (Exception e) {
+          // 요청한 작업을 수행하다가 오류 발생할 경우
+          // 그 이유를 간단히 응답한다.
           out.println("요청 처리 중 오류 발생!");
+          out.println(e.getMessage());
+
+          // 서버쪽 화면에는 더 자세하게 오류 내용을 출력한다.
+          System.out.println("클라이언트 요청 처리 중 오류 발생:");
           e.printStackTrace();
         }
-      } else { // 없다면? 간단한 아내 메시지를 응답한다.
+      } else { // 없다면? 간단한 안내 메시지를 응답한다.
         notFound(out);
       }
       out.println("!end!");
       out.flush();
       System.out.println("클라이언트에게 응답하였음!");
+
       return 0;
+
     } catch (Exception e) {
       System.out.println("예외 발생:");
       e.printStackTrace();
       return -1;
     }
-  }// processRequest
+  }
 
   private void notFound(PrintStream out) throws IOException {
     out.println("요청한 명령을 처리할 수 없습니다.");
   }
 
+  private void quit(ObjectOutputStream out) throws IOException {
+    out.writeUTF("OK");
+    out.flush();
+  }
+
   public static void main(String[] args) {
     System.out.println("서버 수업 관리 시스템입니다.");
+
     ServerApp app = new ServerApp();
     app.addApplicationContextListener(new DataLoaderListener());
     app.service();

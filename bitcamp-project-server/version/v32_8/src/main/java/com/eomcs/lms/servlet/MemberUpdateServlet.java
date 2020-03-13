@@ -2,14 +2,14 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.MemberFileDao;
+import com.eomcs.lms.dao.MemberObjectFileDao;
 import com.eomcs.lms.domain.Member;
 
 public class MemberUpdateServlet implements Servlet {
 
-  MemberFileDao memberDao;
+  MemberObjectFileDao memberDao;
 
-  public MemberUpdateServlet(MemberFileDao memberDao) {
+  public MemberUpdateServlet(MemberObjectFileDao memberDao) {
     this.memberDao = memberDao;
   }
 
@@ -19,6 +19,7 @@ public class MemberUpdateServlet implements Servlet {
 
     if (memberDao.update(member) > 0) {
       out.writeUTF("OK");
+
     } else {
       out.writeUTF("FAIL");
       out.writeUTF("해당 번호의 회원이 없습니다.");

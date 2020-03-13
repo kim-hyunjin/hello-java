@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 
 public class DataSource {
-
   String jdbcUrl;
   String username;
   String password;
@@ -23,41 +22,50 @@ public class DataSource {
   }
 
   public Connection getConnection() throws Exception {
+
+    // 먼저 스레드에 Connection 객체가 보관되어 있는지 알아 본다.
     Connection con = connectionLocal.get();
-    if (con != null) { // 보관된 커넥션 객체가 있다면 그 객체를 리턴한다.
-      // System.out.println("스레드에 보관된 커넥션 리턴");
-      return con;
-    }
-    // 스레드에 보관된 커넥션 객체가 없다면
-    // 기존에 반납된 커넥션 객체가 있는지 검사한다.
-    if (conList.size() > 0) {
-      // 1) 있다면 반납받은 커넥션을 리턴한다.
-      con = conList.remove(0);
-      // System.out.println("반납된 커넥션 재사용");
-    } else {
-      // 2) 없다면 새로 만들어 리턴한다.
-      con = new ConnectionProxy(DriverManager.getConnection(jdbcUrl, username, password));
-      // System.out.println("새 커넥션 생성");
+    if (con != null) { // 보관된게 있다면,
+      System.out.println("스레드에 보관된 Connection 객체 리턴!");
+      return con; // 보관된 Connection 객체를 리턴한다.
     }
 
-    // 리턴하기 전에 스레드에 보관한다.
+    // 스레드에 보관된 Connection 객체가 없다면,
+    // 기존에 반납한 Connection 객체가 있는지 검사한다.
+    if (conList.size() > 0) {
+
+      // 1) 있다면, 반납 받은 객체를 리턴한다.
+      con = conList.remove(0);
+      System.out.println("기존에 반납 받은 Connection 객체 재사용!");
+
+    } else {
+      // 2) 없다면, 새로 Connection 객체를 만들어 리턴한다.
+      con = new ConnectionProxy(DriverManager.getConnection( //
+          jdbcUrl, //
+          username, //
+          password));
+      System.out.println("새 Connection 객체 생성!");
+    }
+
+    // 물론 리턴하기 전에 스레드에 Connection 객체를 보관한다.
     connectionLocal.set(con);
 
-    // System.out.printf("DataSource: 현재 보관중인 커넥션 %d개\n", conList.size());
+    System.out.printf("DataSource: 현재 보관중인 객체 %d개\n", conList.size());
+
     return con;
   }
 
   public Connection removeConnection() {
-    // 스레드에 보관된 커넥션 객체를 제거한다.
+    // 스레드에 보관된 Connection 객체를 제거한다.
     Connection con = connectionLocal.get();
     if (con != null) {
       connectionLocal.remove();
-      // System.out.println("스레드에 보관된 커넥션 제거");
+      System.out.println("스레드에 보관된 Connection 객체 제거 했음!");
 
-      // 커넥션 객체는 다시 사용할 수 있게 반납한다.
+      // Connection 객체는 다시 사용할 수 있게 반납한다.
       conList.add(con);
     }
-    // System.out.printf("DataSource: 현재 보관중인 커넥션 %d개\n", conList.size());
+    System.out.printf("DataSource: 현재 보관중인 객체 %d개\n", conList.size());
     return con;
   }
 
@@ -67,7 +75,7 @@ public class DataSource {
       try {
         ((ConnectionProxy) conList.remove(0)).realClose();
       } catch (Exception e) {
-        //
+        // 커넥션을 닫다가 발생한 오류는 무시한다!
       }
     }
   }

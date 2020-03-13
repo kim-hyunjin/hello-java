@@ -11,6 +11,7 @@ public class ServerAppTest {
   public static void main(String[] args) {
     String serverAddr = null;
     int port = 0;
+
     Scanner keyScan = new Scanner(System.in);
 
     try {
@@ -26,8 +27,7 @@ public class ServerAppTest {
       return;
     }
 
-    try (
-        Socket socket = new Socket(serverAddr, port);
+    try (Socket socket = new Socket(serverAddr, port);
         PrintStream out = new PrintStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
@@ -40,14 +40,16 @@ public class ServerAppTest {
       System.out.println("서버에 메시지를 전송하였음!");
 
       String message = in.readUTF();
-      System.out.println("서버로부터 응답결과를 수신하였음!");
+      System.out.println("서버로부터 응답 결과를 수신하였음!");
+
       System.out.println("서버: " + message);
-      if(message.equals("OK")) {
-        @SuppressWarnings("unchecked")
+      if (message.equals("OK")) {
         List<Board> list = (List<Board>) in.readObject();
         for (Board b : list) {
           System.out.println(b);
         }
+      } else {
+        System.out.println(in.readUTF());
       }
 
       System.out.println("서버와 연결을 끊었음!");

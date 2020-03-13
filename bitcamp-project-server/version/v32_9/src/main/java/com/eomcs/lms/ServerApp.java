@@ -67,8 +67,8 @@ public class ServerApp {
 
     // DataLoaderListener가 준비한 DAO 객체를 꺼내 변수에 저장한다.
     BoardJsonFileDao boardDao = (BoardJsonFileDao) context.get("boardDao");
-    MemberJsonFileDao memberDao = (MemberJsonFileDao) context.get("memberDao");
     LessonJsonFileDao lessonDao = (LessonJsonFileDao) context.get("lessonDao");
+    MemberJsonFileDao memberDao = (MemberJsonFileDao) context.get("memberDao");
 
     // 커맨드 객체 역할을 수행하는 서블릿 객체를 맵에 보관한다.
     servletMap.put("/board/list", new BoardListServlet(boardDao));

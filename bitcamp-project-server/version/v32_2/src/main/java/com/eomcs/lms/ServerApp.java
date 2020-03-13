@@ -56,7 +56,7 @@ public class ServerApp {
 
       // 클라이언트에게 메시지를 전송한다.
       // => 클라이언트가 메시지를 모두 읽을 때까지 리턴하지 않는다.
-      out.println("Hi");
+      out.println("Hi(강사)");
       System.out.println("클라이언트로 메시지를 전송하였음!");
 
 

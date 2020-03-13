@@ -6,6 +6,7 @@ import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.domain.PhotoBoard;
 
 public class PhotoBoardDetailServlet implements Servlet {
+
   PhotoBoardDao photoBoardDao;
 
   public PhotoBoardDetailServlet(PhotoBoardDao photoBoardDao) {
@@ -14,7 +15,9 @@ public class PhotoBoardDetailServlet implements Servlet {
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-    out.println("번호? \n!{}!");
+    out.println("사진 게시글 번호? ");
+    out.println("!{}!");
+    out.flush();
     int no = Integer.parseInt(in.nextLine());
 
     PhotoBoard photoBoard = photoBoardDao.findByNo(no);
@@ -24,9 +27,9 @@ public class PhotoBoardDetailServlet implements Servlet {
       out.printf("제목: %s\n", photoBoard.getTitle());
       out.printf("등록일: %s\n", photoBoard.getCreatedDate());
       out.printf("조회수: %d\n", photoBoard.getViewCount());
-      out.printf("수업명: %s\n", photoBoard.getLesson().getTitle());
+      out.printf("수업: %s\n", photoBoard.getLesson().getTitle());
     } else {
-      out.println("해당 번호의 사진 게시물이 없습니다.");
+      out.println("해당 번호의 사진 게시글이 없습니다.");
     }
   }
 }

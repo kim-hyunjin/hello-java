@@ -35,12 +35,12 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public Member get(String email, String password) throws Exception {
-    return memberDao.findByEamilAndPassword(email, password);
+    return memberDao.findByEmailAndPassword(email, password);
   }
 
   @Override
   public List<Member> search(String keyword) throws Exception {
-    return memberDao.search(keyword);
+    return memberDao.findByKeyword(keyword);
   }
 
   @Override

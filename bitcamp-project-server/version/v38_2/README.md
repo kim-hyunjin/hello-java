@@ -8,14 +8,14 @@
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/domain/PhotoBoard.java 추가
-- src/main/java/com/eomcs/dao/PhotoBoardDao.java 추가
-- src/main/java/com/eomcs/dao/mariadb/PhotoBoardDaoImpl.java 추가
-- src/main/java/com/eomcs/servlet/PhotoBoardListServlet.java 추가
-- src/main/java/com/eomcs/servlet/PhotoBoardDetailServlet.java 추가
-- src/main/java/com/eomcs/servlet/PhotoBoardAddServlet.java 추가
-- src/main/java/com/eomcs/servlet/PhotoBoardUpdateServlet.java 추가
-- src/main/java/com/eomcs/servlet/PhotoBoardDeleteServlet.java 추가
+- src/main/java/com/eomcs/domain/PhotoFile.java 추가 
+- src/main/java/com/eomcs/dao/PhotoFileDao.java 추가
+- src/main/java/com/eomcs/dao/mariadb/PhotoFileDaoImpl.java 추가
+- src/main/java/com/eomcs/dao/mariadb/PhotoBoardDaoImpl.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardDetailServlet.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardAddServlet.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardUpdateServlet.java 변경
+- src/main/java/com/eomcs/servlet/PhotoBoardDeleteServlet.java 변경
 - src/main/java/com/eomcs/lms/DataLoaderListener.java 변경
 - src/main/java/com/eomcs/lms/ServerApp.java 변경
 
@@ -75,7 +75,7 @@ a3.gif
 - com.eomcs.lms.dao.PhotoFileDao 인터페이스 변경
   - 사진 파일 목록을 리턴하는 메서드를 추가한다.
   - findAll(int boardNo)
-- com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 추가
+- com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 변경
   - PhotoFileDao 인터페이스에 추가된 메서드를 구현한다.
 - com.eomcs.lms.servlet.PhotoBoardDetailServlet 변경
   - PhotoFileDao 의존 객체를 주입받는다.
@@ -98,7 +98,7 @@ a3.gif
 > pp3.jpeg
 ```
 
-### 훈련4: PhotoFile 객체의 생성자를 추가하라.
+### 훈련4: PhotoFile 객체의 생성자 및 셋터의 활용
 
 - 인스턴스의 초기 값을 설정할 수 있는 생성자를 추가한다.
 
@@ -121,11 +121,11 @@ a3.gif
   - PhotoFile 객체를 만들 때 셋터 메서드로 값을 설정한다.
 - com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl 변경
   - PhotoFile 객체를 만들 때 셋터 메서드로 값을 설정한다.
-
+  
 
 ### 훈련5: '/photoboard/update' 명령을 처리하라.
 
-사진 게시글을 변경할 때 첨부사진도 변경한다.
+사진 게시글을 변경할 때 첨부 파일도 변경한다.
 
 - com.eomcs.lms.dao.PhotoFileDao 인터페이스 변경
   - 사진 파일을 삭제하는 메서드를 추가한다.
@@ -168,17 +168,27 @@ pp3.jpeg
 사진을 변경했습니다.
 ```
 
-### 훈련 6: 'photoboard/delete' 명령을 처리하라.
+### 훈련6: '/photoboard/delete' 명령을 처리하라.
 
-사진 게시글을 삭제할 때 첨부사진도 삭제한다.
+사진 게시글을 삭제할 때 첨부 파일도 삭제한다.
 
 - com.eomcs.lms.servlet.PhotoBoardDeleteServlet 변경
+  - 첨부 파일 삭제를 할 때 사용할 PhotoFileDao 객체를 주입 받는다.
   - 사진 게시글을 삭제하기 전에 첨부 파일을 먼저 삭제한다.
-  - 그 후 사진 게시글 삭제.
+  - 그런 후 사진 게시글을 삭제한다. 
+- com.eomcs.lms.ServerApp 변경
+  - `PhotoBoardDeleteServlet` 객체에 PhotoFileDao 객체를 주입한다. 
   
+`ClientApp` 실행 예:
+```
+명령> /photoboard/delete
+번호?
+99
+해당 사진 게시글을 찾을 수 없습니다.
+
+명령> /photoboard/delete
+번호?
+7
+사진 게시글을 삭제했습니다.
+```
   
-
-
-
-
-

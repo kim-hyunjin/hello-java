@@ -11,7 +11,8 @@ public class MemberDaoImpl implements MemberDao {
 
   SqlSessionFactory sqlSessionFactory;
 
-  public MemberDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public MemberDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
@@ -34,7 +35,7 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public Member findByNo(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectOne("MemberMapper.findMember", no);
+      return sqlSession.selectOne("MemberMapper.selectDetail", no);
     }
   }
 
@@ -57,22 +58,19 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
-  public List<Member> search(String keyword) throws Exception {
+  public List<Member> findByKeyword(String keyword) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("MemberMapper.searchMember", keyword);
+      return sqlSession.selectList("MemberMapper.selectByKeyword", keyword);
     }
-  }// search
+  }
 
   @Override
-  public Member findByEamilAndPassword(String email, String password) throws Exception {
+  public Member findByEmailAndPassword(String email, String password) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-
-      HashMap<String, String> map = new HashMap<>();
-      map.put("email", email);
-      map.put("password", password);
-      return sqlSession.selectOne("MemberMapper.findByEamilAndPassword", map);
-
+      HashMap<String, Object> params = new HashMap<>();
+      params.put("email", email);
+      params.put("password", password);
+      return sqlSession.selectOne("MemberMapper.selectByEmailPassword", params);
     }
-  }// findByEamilAndPassword
-
+  }
 }

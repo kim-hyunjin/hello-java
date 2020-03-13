@@ -19,30 +19,31 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
 
   @Override
   public int insert(PhotoFile photoFile) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt =
-            con.prepareStatement("insert into lms_photo_file(photo_id, file_path) values(?, ?)")) {
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "insert into lms_photo_file(photo_id,file_path) values(?,?)")) {
       stmt.setInt(1, photoFile.getBoardNo());
-      stmt.setString(2, photoFile.getFilePath());
+      stmt.setString(2, photoFile.getFilepath());
       return stmt.executeUpdate();
     }
   }
 
   @Override
   public List<PhotoFile> findAll(int boardNo) throws Exception {
-    try (Connection con = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection(); //
         PreparedStatement stmt = con.prepareStatement(//
-            "select photo_file_id, photo_id, file_path"//
-                + " from lms_photo_file"//
-                + " where photo_id=?"//
-                + " order by photo_file_id asc");) {
+            "select photo_file_id, photo_id, file_path" //
+                + " from lms_photo_file" //
+                + " where photo_id=?" //
+                + " order by photo_file_id asc")) {
       stmt.setInt(1, boardNo);
       try (ResultSet rs = stmt.executeQuery()) {
-        List<PhotoFile> list = new ArrayList<>();
-        // ResultSet 도구를 사용하여 데이터를 하나씩 가져온다.
-        while (rs.next()) { // 데이터를 한 개 가져왔으면 true를 리턴한다.
-          list.add(new PhotoFile(rs.getInt("photo_file_id"), rs.getString("file_path"),
-              rs.getInt("photo_id")));
+        ArrayList<PhotoFile> list = new ArrayList<>();
+        while (rs.next()) {
+          list.add(new PhotoFile() //
+              .setNo(rs.getInt("photo_file_id")) //
+              .setFilepath(rs.getString("file_path")) //
+              .setBoardNo(rs.getInt("photo_id")));
         }
         return list;
       }
@@ -51,12 +52,12 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
 
   @Override
   public int deleteAll(int boardNo) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt =
-            con.prepareStatement("delete from lms_photo_file where photo_id=?")) {
+    try (Connection con = dataSource.getConnection(); //
+        PreparedStatement stmt = con.prepareStatement(//
+            "delete from lms_photo_file" //
+                + " where photo_id=?")) {
       stmt.setInt(1, boardNo);
       return stmt.executeUpdate();
     }
   }
-
 }

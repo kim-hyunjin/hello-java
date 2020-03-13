@@ -5,23 +5,6 @@ import java.sql.Date;
 import java.util.Scanner;
 
 public class Prompt {
-  public static String getString(Scanner in, PrintStream out, String title) {
-    out.println(title);
-    out.println("!{}!");
-    return in.nextLine();
-  }
-
-  public static String getString(Scanner in, PrintStream out, String title, String defaultValue) {
-    out.println(title);
-    out.println("!{}!");
-    String value = in.nextLine();
-    if (value.length() != 0) {
-      return value;
-    } else {
-      return defaultValue;
-    }
-  }
-
   public static int getInt(Scanner in, PrintStream out, String title) {
     try {
       return Integer.parseInt(getString(in, out, title));
@@ -38,6 +21,25 @@ public class Prompt {
     }
   }
 
+  public static String getString(Scanner in, PrintStream out, String title) {
+    out.println(title);
+    out.println("!{}!");
+    out.flush();
+    return in.nextLine();
+  }
+
+  public static String getString(Scanner in, PrintStream out, String title, String defaultValue) {
+    out.println(title);
+    out.println("!{}!");
+    out.flush();
+    String value = in.nextLine();
+
+    if (value.length() != 0) {
+      return value;
+    } else {
+      return defaultValue;
+    }
+  }
 
   public static Date getDate(Scanner in, PrintStream out, String title) {
     try {
@@ -54,5 +56,4 @@ public class Prompt {
       return null;
     }
   }
-
 }

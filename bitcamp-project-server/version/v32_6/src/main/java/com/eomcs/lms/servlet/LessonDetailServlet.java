@@ -5,13 +5,13 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import com.eomcs.lms.domain.Lesson;
 
-public class LessonDetailServlet implements Servlet{
+public class LessonDetailServlet implements Servlet {
+
   List<Lesson> lessons;
 
   public LessonDetailServlet(List<Lesson> lessons) {
     this.lessons = lessons;
   }
-
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
@@ -34,5 +34,4 @@ public class LessonDetailServlet implements Servlet{
       out.writeUTF("해당 번호의 수업이 없습니다.");
     }
   }
-
 }

@@ -85,11 +85,13 @@ public class ServerApp {
     servletMap.put("/board/detail", new BoardDetailServlet(boards));
     servletMap.put("/board/update", new BoardUpdateServlet(boards));
     servletMap.put("/board/delete", new BoardDeleteServlet(boards));
+
     servletMap.put("/lesson/list", new LessonListServlet(lessons));
     servletMap.put("/lesson/add", new LessonAddServlet(lessons));
     servletMap.put("/lesson/detail", new LessonDetailServlet(lessons));
     servletMap.put("/lesson/update", new LessonUpdateServlet(lessons));
     servletMap.put("/lesson/delete", new LessonDeleteServlet(lessons));
+
     servletMap.put("/member/list", new MemberListServlet(members));
     servletMap.put("/member/add", new MemberAddServlet(members));
     servletMap.put("/member/detail", new MemberDetailServlet(members));

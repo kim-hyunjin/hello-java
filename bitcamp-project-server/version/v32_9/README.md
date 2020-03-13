@@ -12,6 +12,11 @@
 - src/main/java/com/eomcs/lms/dao/json/BoardJsonFileDao.java 변경
 - src/main/java/com/eomcs/lms/dao/json/LessonJsonFileDao.java 변경
 - src/main/java/com/eomcs/lms/dao/json/MemberJsonFileDao.java 변경
+- src/main/java/com/eomcs/lms/servlet/BoardXxxServlet.java 변경
+- src/main/java/com/eomcs/lms/servlet/LessonXxxServlet.java 변경
+- src/main/java/com/eomcs/lms/servlet/MemberXxxServlet.java 변경
+- src/main/java/com/eomcs/lms/DataLoaderListener.java 변경
+- src/main/java/com/eomcs/lms/ServerApp.java 변경
 
 ## 실습  
 
@@ -38,7 +43,20 @@
   - 상속 받은 필드와 메서드를 사용한다.
   - indexOf()를 오버라이딩 한다.
 
+### 훈련 5: XxxObjectFileDao 대신 XxxJsonFileDao를 사용하도록 서블릿 클래스를 변경하라.
 
+- com.eomcs.lms.servlet.BoardXxxServlet 변경한다.
+- com.eomcs.lms.servlet.LessonXxxServlet 변경한다.
+- com.eomcs.lms.servlet.MemberXxxServlet 변경한다.
+
+### 훈련 6: 애플리케이션이 시작할 때 XxxObjectFileDao 대신 XxxJsonFileDao를 준비하라.
+
+- com.eomcs.lms.DataLoaderListener 변경한다.
+
+### 훈련 7: XxxObjectFileDao 대신 XxxJsonFileDao를 서블릿 객체에 주입하라.
+
+- com.eocms.lms.ServerApp 변경한다.
+ 
 
 
 

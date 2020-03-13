@@ -6,82 +6,106 @@
 <mapper namespace="MemberMapper">
 
   <resultMap type="Member" id="MemberMap">
-    <id column="member_id" property="no"/>
-    <result column="name" property="name"/>
-    <result column="email" property="email"/>
-    <result column="pwd" property="password"/>
-    <result column="cdt" property="registeredDate"/>
+    <id column="member_id"  property="no"/>
+    <result column="name"       property="name"/>
+    <result column="email"  property="email"/>
+    <result column="pwd"    property="password"/>
+    <result column="photo"    property="photo"/>
     <result column="tel" property="tel"/>
-    <result column="photo" property="photo"/>
+    <result column="cdt" property="registeredDate"/>
   </resultMap>
     
-  <select id="selectMember" resultMap="MemberMap">
-    select 
-    	member_id, 
-    	name, 
-    	email, 
-    	pwd, 
-    	cdt, 
-    	tel, 
-    	photo
-    from lms_member
-  </select>
-  
   <insert id="insertMember" parameterType="Member">
-  	insert into lms_member(name, email, pwd, tel, photo)
-  	values(
-  	#{name},
-  	#{email},
-  	#{password},
-  	#{tel},
-  	#{photo})
+    insert into lms_member(
+      name, 
+      email, 
+      pwd, 
+      tel, 
+      photo
+    ) values(
+      #{name},
+      #{email},
+      password(#{password}),
+      #{tel},
+      #{photo}
+    )
   </insert>
   
-  <select id="findMember" resultMap="MemberMap" parameterType="int">
-  	select 
-  		member_id, 
-  		name, 
-  		email, 
-  		pwd, 
-  		cdt, 
-  		tel, 
-  		photo
-    from lms_member 
-    where member_id=#{no}
+  <select id="selectMember" resultMap="MemberMap">
+    select 
+      member_id, 
+      name, 
+      email, 
+      tel, 
+      cdt
+    from 
+      lms_member
+  </select>
+
+  
+  <select id="selectDetail" resultMap="MemberMap" parameterType="int">
+    select 
+      member_id, 
+      name, 
+      email, 
+      pwd, 
+      tel, 
+      photo
+    from 
+      lms_member
+    where 
+      member_id=#{no}
   </select>
   
   <update id="updateMember" parameterType="Member">
-  	update lms_member set
-      name=#{name},
-      email=#{email},
-      pwd=password(#{password}),
-      tel=#{tel},
+    update lms_member set
+      name=#{name}, 
+      email=#{email}, 
+      pwd=password(#{password}), 
+      tel=#{tel}, 
       photo=#{photo}
-    where member_id=#{no}
+    where 
+      member_id=#{no}
   </update>
   
   <delete id="deleteMember" parameterType="int">
-  	delete from lms_member 
-  	where member_id=#{no}
+    delete from lms_member
+    where member_id=#{no}
   </delete>
   
-  <select id="searchMember" resultMap="MemberMap" parameterType="string">
-  	select member_id, name, email, pwd, cdt, tel, photo
-    from lms_member
-    where
-	    name like "%"#{str}"%"
-	    or email like "%"#{str}"%"
-	    or tel like "%"#{str}"%"
+  <select id="selectByKeyword" 
+    resultMap="MemberMap" 
+    parameterType="string">
+    <bind name="keywordPattern" value="'%' + _parameter + '%'"/>
+    select 
+      member_id, 
+      name, 
+      email, 
+      tel, 
+      cdt
+    from 
+      lms_member
+    where 
+      name like #{keywordPattern}
+      or email like #{keywordPattern}
+      or tel like #{keywordPattern}
   </select>
-
-	<select id="findByEmailAndPassword" resultMap="MemberMap" parameterType="map">
-		select member_id, name, email, pwd, cdt, tel, photo
-    from lms_member
-    where email = #{email}
-    	and pwd = password(#{password})
-	</select>
-
   
+  <select id="selectByEmailPassword" 
+    resultMap="MemberMap" 
+    parameterType="map">
+    select 
+      member_id, 
+      name, 
+      email, 
+      pwd, 
+      tel, 
+      photo
+    from lms_member
+    where 
+      email=#{email} 
+      and pwd=password(#{password})
+  </select>
 </mapper>
 
 

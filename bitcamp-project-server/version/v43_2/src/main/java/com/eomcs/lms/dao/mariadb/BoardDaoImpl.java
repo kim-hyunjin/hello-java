@@ -10,10 +10,10 @@ public class BoardDaoImpl implements BoardDao {
 
   SqlSessionFactory sqlSessionFactory;
 
-  public BoardDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public BoardDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
-
 
   @Override
   public int insert(Board board) throws Exception {
@@ -33,7 +33,7 @@ public class BoardDaoImpl implements BoardDao {
   @Override
   public Board findByNo(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectOne("BoardMapper.findBoard", no);
+      return sqlSession.selectOne("BoardMapper.selectDetail", no);
     }
   }
 
@@ -52,5 +52,4 @@ public class BoardDaoImpl implements BoardDao {
       return count;
     }
   }
-
 }

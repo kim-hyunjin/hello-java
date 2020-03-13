@@ -8,15 +8,17 @@ import com.eomcs.lms.service.PhotoBoardService;
 import com.eomcs.util.Prompt;
 
 public class PhotoBoardDetailServlet implements Servlet {
+
   PhotoBoardService photoBoardService;
 
-  public PhotoBoardDetailServlet(PhotoBoardService photoBoardService) {
+  public PhotoBoardDetailServlet( //
+      PhotoBoardService photoBoardService) {
     this.photoBoardService = photoBoardService;
   }
 
   @Override
   public void service(Scanner in, PrintStream out) throws Exception {
-    int no = Prompt.getInt(in, out, "번호?");
+    int no = Prompt.getInt(in, out, "사진 게시글 번호? ");
 
     PhotoBoard photoBoard = photoBoardService.get(no);
 
@@ -25,14 +27,15 @@ public class PhotoBoardDetailServlet implements Servlet {
       out.printf("제목: %s\n", photoBoard.getTitle());
       out.printf("등록일: %s\n", photoBoard.getCreatedDate());
       out.printf("조회수: %d\n", photoBoard.getViewCount());
-      out.printf("수업명: %s\n", photoBoard.getLesson().getTitle());
-      out.println("사진파일: ");
+      out.printf("수업: %s\n", photoBoard.getLesson().getTitle());
+      out.println("사진 파일:");
 
       for (PhotoFile photoFile : photoBoard.getFiles()) {
-        out.printf("> %s\n", photoFile.getFilePath());
+        out.printf("> %s\n", photoFile.getFilepath());
       }
+
     } else {
-      out.println("해당 번호의 사진 게시물이 없습니다.");
+      out.println("해당 번호의 사진 게시글이 없습니다.");
     }
   }
 }

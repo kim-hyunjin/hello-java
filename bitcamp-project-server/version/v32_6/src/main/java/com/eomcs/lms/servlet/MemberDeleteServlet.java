@@ -5,13 +5,13 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import com.eomcs.lms.domain.Member;
 
-public class MemberDeleteServlet implements Servlet{
+public class MemberDeleteServlet implements Servlet {
+
   List<Member> members;
 
   public MemberDeleteServlet(List<Member> members) {
     this.members = members;
   }
-
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
@@ -34,5 +34,4 @@ public class MemberDeleteServlet implements Servlet{
       out.writeUTF("해당 번호의 회원이 없습니다.");
     }
   }
-
 }

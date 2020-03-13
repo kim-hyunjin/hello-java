@@ -63,53 +63,39 @@ public class Lesson implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
     Lesson other = (Lesson) obj;
-    if (dayHours != other.dayHours) {
+    if (dayHours != other.dayHours)
       return false;
-    }
     if (description == null) {
-      if (other.description != null) {
+      if (other.description != null)
         return false;
-      }
-    } else if (!description.equals(other.description)) {
+    } else if (!description.equals(other.description))
       return false;
-    }
     if (endDate == null) {
-      if (other.endDate != null) {
+      if (other.endDate != null)
         return false;
-      }
-    } else if (!endDate.equals(other.endDate)) {
+    } else if (!endDate.equals(other.endDate))
       return false;
-    }
-    if (no != other.no) {
+    if (no != other.no)
       return false;
-    }
     if (startDate == null) {
-      if (other.startDate != null) {
+      if (other.startDate != null)
         return false;
-      }
-    } else if (!startDate.equals(other.startDate)) {
+    } else if (!startDate.equals(other.startDate))
       return false;
-    }
     if (title == null) {
-      if (other.title != null) {
+      if (other.title != null)
         return false;
-      }
-    } else if (!title.equals(other.title)) {
+    } else if (!title.equals(other.title))
       return false;
-    }
-    if (totalHours != other.totalHours) {
+    if (totalHours != other.totalHours)
       return false;
-    }
     return true;
   }
 

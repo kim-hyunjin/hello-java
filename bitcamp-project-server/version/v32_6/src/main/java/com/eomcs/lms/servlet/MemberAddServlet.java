@@ -5,13 +5,13 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import com.eomcs.lms.domain.Member;
 
-public class MemberAddServlet implements Servlet{
+public class MemberAddServlet implements Servlet {
+
   List<Member> members;
 
   public MemberAddServlet(List<Member> members) {
     this.members = members;
   }
-
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
@@ -33,5 +33,4 @@ public class MemberAddServlet implements Servlet{
       out.writeUTF("같은 번호의 회원이 있습니다.");
     }
   }
-
 }

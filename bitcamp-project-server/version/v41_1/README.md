@@ -59,3 +59,4 @@
   - 클라이언트에게 응답한 후 스레드에서 커넥션 객체를 제거한다.
   - 제거된 커넥션 객체는 재사용하기 위해 닫지 않는다.
   
+### 훈련7: /photoboard/add, /photoboard/update, /photoboard/delete을 테스트 해 보라.

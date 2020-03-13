@@ -17,6 +17,12 @@ public class Board implements Serializable {
   private int viewCount;
   private String writer;
 
+  @Override
+  public String toString() {
+    return "Board [no=" + no + ", title=" + title + ", date=" + date + ", viewCount=" + viewCount
+        + ", writer=" + writer + "]";
+  }
+
   // CSV 포맷:
   // - 번호,제목,등록일,조회수,작성자
   //
@@ -112,12 +118,6 @@ public class Board implements Serializable {
 
   public void setWriter(String writer) {
     this.writer = writer;
-  }
-
-  @Override
-  public String toString() {
-    return "Board [no=" + no + ", title=" + title + ", date=" + date + ", viewCount=" + viewCount
-        + ", writer=" + writer + "]";
   }
 
 }

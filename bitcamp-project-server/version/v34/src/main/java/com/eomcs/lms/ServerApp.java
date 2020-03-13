@@ -102,12 +102,11 @@ public class ServerApp {
 
         // 클라이언트의 요청을 처리하는 부분만
         // main 스레드에서 분리하여 별도의 스레드로 실행한다.
-        // => 스레드의 응답 지연에 대해 다른 스레드가 영향을 받지 않는다.
+        // 따라서 어떤 스레드의 응답 지연에 대해 다른 스레드가 영향을 받지 않는다.
         new Thread(() -> {
           processRequest(socket);
+          System.out.println("--------------------------------------");
         }).start();
-
-        System.out.println("--------------------------------------");
       }
 
     } catch (Exception e) {
@@ -131,7 +130,6 @@ public class ServerApp {
       System.out.println("클라이언트가 보낸 메시지를 수신하였음!");
 
       if (request.equalsIgnoreCase("/server/stop")) {
-        System.out.println("서버를 종료합니다.");
         quit(out);
         return 9; // 서버를 종료한다.
       }

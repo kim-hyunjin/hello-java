@@ -11,14 +11,16 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
 
   SqlSessionFactory sqlSessionFactory;
 
-  public PhotoFileDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public PhotoFileDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public int insert(PhotoBoard photoBoard) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      int count = sqlSession.insert("PhotoFileMapper.insertPhotoFile", photoBoard);
+      int count = sqlSession.insert(//
+          "PhotoFileMapper.insertPhotoFile", photoBoard);
       return count;
     }
   }
@@ -26,16 +28,17 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
   @Override
   public List<PhotoFile> findAll(int boardNo) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("PhotoFileMapper.selectPhotoFile", boardNo);
+      return sqlSession.selectList(//
+          "PhotoFileMapper.selectPhotoFile", boardNo);
     }
   }
 
   @Override
   public int deleteAll(int boardNo) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      int count = sqlSession.delete("PhotoFileMapper.deletePhotoFile", boardNo);
+      int count = sqlSession.delete(//
+          "PhotoFileMapper.deletePhotoFile", boardNo);
       return count;
     }
   }
-
 }

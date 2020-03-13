@@ -147,14 +147,6 @@ public class Lesson implements Serializable {
   public void setDayHours(int dayHours) {
     this.dayHours = dayHours;
   }
-
-
-  @Override
-  public String toString() {
-    return "Lesson [no=" + no + ", title=" + title + ", description=" + description + ", startDate="
-        + startDate + ", endDate=" + endDate + ", totalHours=" + totalHours + ", dayHours="
-        + dayHours + "]";
-  }
 }
 
 
