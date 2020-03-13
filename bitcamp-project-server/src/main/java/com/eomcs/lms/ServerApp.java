@@ -159,6 +159,7 @@ public class ServerApp {
 
     } catch (Exception e) {
       System.out.println("서버 준비 중 오류 발생!");
+      e.printStackTrace();
     }
 
 
