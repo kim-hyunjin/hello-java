@@ -19,7 +19,7 @@ public class PhotoBoardDetailServlet {
     this.photoBoardService = photoBoardService;
   }
 
-  @RequestMapping("/photoBoard/detail")
+  @RequestMapping("/photoboard/detail")
   public void service(Scanner in, PrintStream out) throws Exception {
     int no = Prompt.getInt(in, out, "사진 게시글 번호? ");
 

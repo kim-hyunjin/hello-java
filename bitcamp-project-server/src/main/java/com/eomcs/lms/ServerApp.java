@@ -16,6 +16,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.sql.SqlSessionFactoryProxy;
 import com.eomcs.util.ApplicationContext;
+import com.eomcs.util.RequestHandler;
+import com.eomcs.util.RequestMappingHandlerMapping;
 
 public class ServerApp {
 
@@ -31,6 +33,9 @@ public class ServerApp {
 
   // IoC 컨테이너 준비
   ApplicationContext iocContainer;
+
+  // request handler 맵퍼 준비
+  RequestMappingHandlerMapping handlerMapper;
 
   public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
@@ -59,6 +64,10 @@ public class ServerApp {
 
     // ApplicationContext (IoC 컨테이너)를 꺼낸다.
     iocContainer = (ApplicationContext) context.get("iocContainer");
+
+    // request handler mapper를 꺼낸다.
+    handlerMapper = //
+        (RequestMappingHandlerMapping) context.get("handlerMapper");
 
     // IoC 컨테이너에서 SqlSessionFactory를 꺼낸다.
     SqlSessionFactory sqlSessionFactory = //
@@ -93,6 +102,7 @@ public class ServerApp {
       System.out.println("서버 준비 중 오류 발생!");
     }
 
+
     // 스레드풀을 다 사용했으면 종료하라고 해야 한다.
     executorService.shutdown();
     // => 스레드풀을 당장 종료시키는 것이 아니다.
@@ -123,6 +133,7 @@ public class ServerApp {
     System.out.println("서버 종료!");
   } // service()
 
+
   void processRequest(Socket clientSocket) {
 
     try (Socket socket = clientSocket;
@@ -137,11 +148,13 @@ public class ServerApp {
         return;
       }
 
-      // Servlet servlet = (Servlet) iocContainer.getBean(request);
-      Object servlet = null;
-      if (servlet != null) {
+      RequestHandler requestHandler = handlerMapper.getHandler(request);
+
+      if (requestHandler != null) {
         try {
-          // servlet.service(in, out);
+          requestHandler.getMethod().invoke( //
+              requestHandler.getBean(), //
+              in, out);
 
         } catch (Exception e) {
           out.println("요청 처리 중 오류 발생!");

@@ -24,7 +24,7 @@ public class PhotoBoardListServlet {
     this.lessonService = lessonService;
   }
 
-  @RequestMapping("/photoBoard/list")
+  @RequestMapping("/photoboard/list")
   public void service(Scanner in, PrintStream out) throws Exception {
 
     int lessonNo = Prompt.getInt(in, out, "수업번호? ");

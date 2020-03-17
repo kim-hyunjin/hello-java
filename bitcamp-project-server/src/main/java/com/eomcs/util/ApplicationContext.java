@@ -46,13 +46,15 @@ public class ApplicationContext {
   }
 
   public String[] getBeanNamesForAnnotation(Class<? extends Annotation> annotationType) {
-    // 특정 애노테이션이 붙은 객체를 찾아 보자
+    // 특정 애노테이션이 붙은 객체를 찾아 보자.
 
     // => 객체 이름을 저장할 목록을 준비한다.
     ArrayList<String> beanNames = new ArrayList<>();
 
+    // => 객체풀에서 전체 객체의 이름을 꺼낸다.
     Set<String> beanNameSet = objPool.keySet();
     for (String beanName : beanNameSet) {
+      // 객체풀에서 이름을 이용하여 객체를 한 꺼낸다.
       Object obj = objPool.get(beanName);
 
       // 해당 객체에 파라미터로 지정한 애노테이션이 붙었는지 알아낸다.
@@ -63,9 +65,8 @@ public class ApplicationContext {
 
     // ArrayList에서 문자열을 배열로 받는다.
     String[] names = new String[beanNames.size()];
-    beanNames.toArray();
+    beanNames.toArray(names);
     return names;
-
   }
 
   public void printBeans() {
@@ -177,9 +178,8 @@ public class ApplicationContext {
     File[] files = path.listFiles(file -> {
       if (file.isDirectory() //
           || (file.getName().endsWith(".class")//
-              && !file.getName().contains("$"))) {
+              && !file.getName().contains("$")))
         return true;
-      }
       return false;
     });
     for (File f : files) {

@@ -20,6 +20,7 @@ import com.eomcs.util.ApplicationContext;
 import com.eomcs.util.Component;
 import com.eomcs.util.RequestHandler;
 import com.eomcs.util.RequestMapping;
+import com.eomcs.util.RequestMappingHandlerMapping;
 
 // 애플리케이션이 시작되거나 종료될 때
 // 데이터를 로딩하고 저장하는 일을 한다.
@@ -68,8 +69,11 @@ public class ContextLoaderListener implements ApplicationContextListener {
       // ServerApp이 사용할 수 있게 context 맵에 담아 둔다.
       context.put("iocContainer", appCtx);
 
+      System.out.println("----------------------------");
+
       // @Component 애노테이션이 붙은 객체를 찾는다.
-      RequestMappingHandlerMapping
+      RequestMappingHandlerMapping handlerMapper = //
+          new RequestMappingHandlerMapping();
       String[] beanNames = appCtx.getBeanNamesForAnnotation(Component.class);
       for (String beanName : beanNames) {
         Object component = appCtx.getBean(beanName);
@@ -78,9 +82,16 @@ public class ContextLoaderListener implements ApplicationContextListener {
         Method method = getRequestHandler(component.getClass());
         if (method != null) {
           // 클라이언트 명령을 처리하는 메서드 정보를 준비한다.
-          RequestHandler requestHandler = new RequestHandler(method, beanName, component);
+          RequestHandler requestHandler = new RequestHandler(method, component);
+
+          // 명령을 처리할 메서드를 찾을 수 있도록
+          // 명령 이름으로 메서드 정보를 저장한다.
+          handlerMapper.addHandler(requestHandler.getPath(), requestHandler);
         }
       }
+
+      // ServerApp 에서 request handler를 사용할 수 있도록 공유한다.
+      context.put("handlerMapper", handlerMapper);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -98,6 +109,7 @@ public class ContextLoaderListener implements ApplicationContextListener {
         return m;
       }
     }
+
     return null;
   }
 

@@ -4,17 +4,23 @@ import java.lang.reflect.Method;
 
 public class RequestHandler {
   Object bean;
-  String name;
+  String path;
   Method method;
 
   public RequestHandler() {
 
   }
 
-  public RequestHandler(Method method, String beanName, Object bean) {
+  public RequestHandler(Method method, Object bean) {
     this.method = method;
-    this.name = beanName;
     this.bean = bean;
+    this.path = getPath(method);
+  }
+
+  private String getPath(Method method) {
+    // 메서드에 붙은 @RequestMapping 애노테이션을 추출한다.
+    RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
+    return requestMapping.value();
   }
 
   public Object getBean() {
@@ -25,14 +31,6 @@ public class RequestHandler {
     this.bean = bean;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public Method getMethod() {
     return method;
   }
@@ -41,4 +39,11 @@ public class RequestHandler {
     this.method = method;
   }
 
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
 }

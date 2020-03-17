@@ -26,7 +26,7 @@ public class PhotoBoardAddServlet {
     this.lessonService = lessonService;
   }
 
-  @RequestMapping("/photoBoard/add")
+  @RequestMapping("/photoboard/add")
   public void service(Scanner in, PrintStream out) throws Exception {
 
     PhotoBoard photoBoard = new PhotoBoard();
