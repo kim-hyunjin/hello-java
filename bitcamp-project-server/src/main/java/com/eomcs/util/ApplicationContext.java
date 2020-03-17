@@ -1,6 +1,7 @@
 package com.eomcs.util;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -42,6 +43,29 @@ public class ApplicationContext {
             clazz.getName());
       }
     }
+  }
+
+  public String[] getBeanNamesForAnnotation(Class<? extends Annotation> annotationType) {
+    // 특정 애노테이션이 붙은 객체를 찾아 보자
+
+    // => 객체 이름을 저장할 목록을 준비한다.
+    ArrayList<String> beanNames = new ArrayList<>();
+
+    Set<String> beanNameSet = objPool.keySet();
+    for (String beanName : beanNameSet) {
+      Object obj = objPool.get(beanName);
+
+      // 해당 객체에 파라미터로 지정한 애노테이션이 붙었는지 알아낸다.
+      if (obj.getClass().getAnnotation(annotationType) != null) {
+        beanNames.add(beanName);
+      }
+    }
+
+    // ArrayList에서 문자열을 배열로 받는다.
+    String[] names = new String[beanNames.size()];
+    beanNames.toArray();
+    return names;
+
   }
 
   public void printBeans() {
@@ -153,8 +177,9 @@ public class ApplicationContext {
     File[] files = path.listFiles(file -> {
       if (file.isDirectory() //
           || (file.getName().endsWith(".class")//
-              && !file.getName().contains("$")))
+              && !file.getName().contains("$"))) {
         return true;
+      }
       return false;
     });
     for (File f : files) {

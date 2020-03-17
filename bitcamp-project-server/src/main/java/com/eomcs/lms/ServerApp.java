@@ -14,7 +14,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.context.ApplicationContextListener;
-import com.eomcs.lms.servlet.Servlet;
 import com.eomcs.sql.SqlSessionFactoryProxy;
 import com.eomcs.util.ApplicationContext;
 
@@ -138,11 +137,11 @@ public class ServerApp {
         return;
       }
 
-      Servlet servlet = (Servlet) iocContainer.getBean(request);
-
+      // Servlet servlet = (Servlet) iocContainer.getBean(request);
+      Object servlet = null;
       if (servlet != null) {
         try {
-          servlet.service(in, out);
+          // servlet.service(in, out);
 
         } catch (Exception e) {
           out.println("요청 처리 중 오류 발생!");
