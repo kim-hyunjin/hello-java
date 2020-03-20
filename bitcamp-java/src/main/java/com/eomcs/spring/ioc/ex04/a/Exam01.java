@@ -10,7 +10,7 @@ public class Exam01 {
     ApplicationContext iocContainer =
         new ClassPathXmlApplicationContext("com/eomcs/spring/ioc/ex04/a/application-context.xml");
 
-    // 객체가 생성될 때 생성자와 셋터가 호출되는 것을 확인한다.
+    // 객체가 생성될 때 생성자와 세터가 호출되는 것을 확인한다.
   }
 
 }
