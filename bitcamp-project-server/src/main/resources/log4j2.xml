@@ -10,7 +10,7 @@
     <Logger name="com.eomcs.lms.dao" level="debug" additivity="false">
       <AppenderRef ref="console"/>
     </Logger>
-    <Root level="info" additivity="false">
+    <Root level="debug" additivity="false">
       <AppenderRef ref="console" />
     </Root>
   </Loggers>
