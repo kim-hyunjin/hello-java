@@ -238,8 +238,12 @@ public class ServerApp {
         String[] kv = entry.split("=");
         // 웹브라우저가 URL 인코딩하여 보낸 데이터를
         // 디코딩하여 String 객체로 만든다.
-        String value = URLDecoder.decode(kv[1], "UTF-8");
-        params.put(kv[0], value);
+        if (kv.length > 1) {
+          String value = URLDecoder.decode(kv[1], "UTF-8");
+          params.put(kv[0], value);
+        } else {
+          params.put(kv[0], "");
+        }
       }
     }
     return params;
