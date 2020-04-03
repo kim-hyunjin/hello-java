@@ -7,6 +7,23 @@
   version="4.0"
   metadata-complete="false">
 
+<!-- 리스너 등록 -->
+<listener>
+  <listener-class>com.eomcs.web.ex02.Listener01</listener-class>
+</listener>
+
+<!-- 필터 등록 -->
+<filter>
+  <filter-name>Filter01</filter-name>
+  <filter-class>com.eomcs.web.ex02.Filter01</filter-class>
+</filter>
+
+<!-- 필터를 적용할 URL을 적용 -->
+<filter-mapping>
+  <filter-name>Filter01</filter-name>
+  <url-pattern>/ex02/s1</url-pattern>
+</filter-mapping>
+
 <!-- 서블릿 등록 -->
 <servlet>
   <servlet-name>Servlet01</servlet-name>

@@ -16,23 +16,34 @@ import javax.servlet.ServletResponse;
 //
 // 필터 배포하기
 // => DD 파일(web.xml)에 설정하거나 애노테이션으로 설정하면 된다.
-// => 다음과 같이 애노테이션으로 할 수도 있다.
-
-// @WebFilter("/ex02/*")
-public class Filter02 implements Filter {
+//
+// 필터의 용도
+// => 서블릿을 실행하기 전후에 필요한 작업을 수행
+// => 서블릿 실행 전
+// - 웹브라우저가 보낸 암호화된 파라미터 값을 서블릿으로 전달하기 전에 암호 해제하기
+// - 웹브라우저가 보낸 압축된 데이터를 서블릿으로 전달하기 전에 압축 해제하기
+// - 서블릿의 실행을 요청할 권한이 있는지 검사하기
+// - 로그인 사용자인지 검사하기
+// - 로그 남기기
+// => 서블릿 실행 후
+// - 클라이언트로 보낼 데이터를 압축하기
+// - 클라이언트로 보낼 데이터를 암호화시키기
+//
+public class Filter01 implements Filter {
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     // 필터 객체를 생성한 후 제일 처음으로 호출된다.
     // 필터가 사용할 자원을 이 메서드에서 준비한다.
-    System.out.println("Filter02.init()");
+    // => 웹 애플리케이션이 시작할 때 필터는 자동 생성된다.
+    System.out.println("Filter01.init()");
   }
 
   @Override
   public void destroy() {
     // 웹 애플리케이션이 종료될 때 호출된다.
     // init()에서 준비한 자원을 해제한다.
-    System.out.println("Filter02.destroy()");
+    System.out.println("Filter01.destroy()");
   }
 
   @Override
@@ -42,13 +53,15 @@ public class Filter02 implements Filter {
     // => 단 필터를 설정할 때 지정된 URL의 요청에만 호출된다.
     // => 서블릿이 실행되기 전에 필터가 먼저 실행된다.
     // => 서블릿을 실행한 후 다시 필터로 리턴한다.
-    System.out.println("Filter02.doFilter() : 시작");
+    System.out.println("Filter01.doFilter() : 시작");
 
     // 다음 필터를 실행하거나 요청한 서블릿을 실행하려면 다음 코드를 반드시 실행해야 한다.
+    // 만약 다음 필터가 없으면, 서블릿의 service() 메서드 호출
+    // 호출 끝나면 리턴한다.
     chain.doFilter(request, response);
 
     // 체인에 연결된 필터나 서블릿이 모두 실행된 다음에 다시 이 필터로 리턴될 것이다.
-    System.out.println("Filter02.doFilter() : 종료");
+    System.out.println("Filter01.doFilter() : 종료");
   }
 }
 
