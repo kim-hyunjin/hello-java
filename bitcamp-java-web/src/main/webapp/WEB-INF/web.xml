@@ -36,6 +36,13 @@
     <servlet-name>Servlet03</servlet-name>
     <servlet-class>com.eomcs.web.ex01.Servlet03</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ex04.Servlet05</servlet-name>
+    <servlet-class>com.eomcs.web.ex04.Servlet05</servlet-class>
+    <multipart-config>
+      <max-file-size>10000000</max-file-size>
+    </multipart-config>
+  </servlet>
   
 <!-- 서블릿을 실행할 때 사용할 URL path를 설정 -->
   <servlet-mapping>
@@ -49,5 +56,9 @@
   <servlet-mapping>
     <servlet-name>Servlet03</servlet-name>
     <url-pattern>/ex01/s03</url-pattern>
-  </servlet-mapping>  
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ex04.Servlet05</servlet-name>
+    <url-pattern>/ex04/s5</url-pattern>
+  </servlet-mapping>
 </web-app>

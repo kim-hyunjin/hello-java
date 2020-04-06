@@ -24,7 +24,7 @@ public class Servlet03 extends GenericServlet {
     // 첨부 파일의 데이터는 받을 수 없다.
     //
     // 테스트
-    // - http://localhost:8080/java-web/ex04/test03.html 실행
+    // - http://localhost:9999/bitcamp-java-web/ex04/test03.html 실행
     //
 
     req.setCharacterEncoding("UTF-8");
@@ -38,8 +38,10 @@ public class Servlet03 extends GenericServlet {
     out.printf("이름=%s\n", name);
     out.printf("나이=%d\n", age);
 
-    // test03.html에서 파일을 전송할 때 multipart/form-data 형식이 아니기 때문에
-    // 첨파 파일의 데이터를 받을 수 없다.
+    // GET 요청이나 일반 POST 요청을 한 경우에는
+    // 파일이 이름만 넘어오고 데이터는 넘어오지 않는다.
+
+    // 피일의 데이터를 전송하려면, <form>태그에 enctype을 multipart/form-data로 해야 한다.
     out.printf("사진=%s\n", photo);
   }
 }

@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 // 멀티파트 형식의 데이터를 처리할 서블릿으로 선언하라.
-// => web.xml에 설정할 수도 있고, 다음과 같이 애노테이션으로 설정할 수도 있다.
+// 1) DD 파일(web.xml)에 설정하기
+// => web.xml에 설정할 수도 있다.
+
+// 2) 애노테이션으로 설정하기
 //
 // @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 // @WebServlet("/ex04/s5")
@@ -31,7 +34,7 @@ public class Servlet05 extends GenericServlet {
       throws ServletException, IOException {
 
     // 테스트
-    // - http://localhost:8080/java-web/ex04/test05.html 실행
+    // - http://localhost:9999/bitcamp-java-web/ex04/test05.html 실행
     //
 
     // Servlet 3.0의 멀티파트 처리 기능을 이용할 때는

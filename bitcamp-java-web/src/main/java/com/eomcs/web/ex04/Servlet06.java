@@ -24,7 +24,7 @@ public class Servlet06 extends GenericServlet {
     // - 웹 페이지의 폼(method='POST' 일 때)에서 전송 버튼을 클릭하면 POST 요청을 보낸다.
     //
     // 테스트
-    // - http://localhost:8080/java-web/ex04/test06.html 실행
+    // - http://localhost:9999/bitcamp-java-web/ex04/test06.html 실행
     //
 
     // 같은 이름으로 여러 개의 데이터를 보낼 수 있다.

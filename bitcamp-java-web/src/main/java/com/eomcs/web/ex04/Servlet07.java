@@ -24,7 +24,7 @@ public class Servlet07 extends GenericServlet {
     // - 웹 페이지의 폼(method='POST' 일 때)에서 전송 버튼을 클릭하면 POST 요청을 보낸다.
     //
     // 테스트
-    // - http://localhost:8080/java-web/ex04/test07.html 실행
+    // - http://localhost:9999/bitcamp-java-web/ex04/test07.html 실행
     //
 
     // 파라미터 이름만 넘어갈 때 getParameter()의 리턴 값은 빈 문자열 객체이다.
