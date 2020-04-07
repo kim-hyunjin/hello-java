@@ -1,8 +1,7 @@
 // 컨텍스트 초기화 파라미터 - web.xml에서 설정하기
-package bitcamp.ex06;
+package com.eomcs.web.ex06;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,20 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ex06/s5")
 @SuppressWarnings("serial")
 public class Servlet05 extends HttpServlet {
-  
+
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    
+
     // 컨텍스트 초기화 파라미터 값을 꺼내려면 ServletContext 객체가 있어야 한다.
     ServletContext sc = this.getServletContext();
-    
-    resp.setContentType("text/plain;charset=UTF-8");
-    PrintWriter out = resp.getWriter();
-    out.printf("driver=%s\n", sc.getInitParameter("jdbc.driver"));
-    out.printf("url=%s\n", sc.getInitParameter("jdbc.url"));
-    out.printf("username=%s\n", sc.getInitParameter("jdbc.username"));
-    out.printf("password=%s\n", sc.getInitParameter("jdbc.password"));
+
+    System.out.printf("driver=%s\n", sc.getInitParameter("jdbc.driver"));
+    System.out.printf("url=%s\n", sc.getInitParameter("jdbc.url"));
+    System.out.printf("username=%s\n", sc.getInitParameter("jdbc.username"));
+    System.out.printf("password=%s\n", sc.getInitParameter("jdbc.password"));
   }
 }
 
