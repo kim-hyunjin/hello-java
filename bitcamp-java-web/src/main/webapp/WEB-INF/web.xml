@@ -5,7 +5,7 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
   version="4.0"
   metadata-complete="false">
-
+  
   <context-param>
       <param-name>jdbc.driver</param-name>
       <param-value>org.mariadb.jdbc.Driver</param-value>
@@ -110,5 +110,12 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+  <!-- 세션의 타임아웃 설정하기 
+       단위는 분이다. -->
+  
+  <session-config>
+    <session-timeout>1</session-timeout>
+  </session-config>
   
 </web-app>
