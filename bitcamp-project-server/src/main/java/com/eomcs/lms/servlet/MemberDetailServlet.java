@@ -2,29 +2,28 @@ package com.eomcs.lms.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
 @WebServlet("/member/detail")
-public class MemberDetailServlet extends GenericServlet {
+public class MemberDetailServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(ServletRequest req, ServletResponse res)
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-
     try {
-      res.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = res.getWriter();
+      resp.setContentType("text/html;charset=UTF-8");
+      PrintWriter out = resp.getWriter();
 
-      ServletContext servletContext = req.getServletContext();
+      ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
       MemberService memberService = iocContainer.getBean(MemberService.class);
@@ -42,7 +41,7 @@ public class MemberDetailServlet extends GenericServlet {
       out.println("<h1>회원 상세정보</h1>");
 
       if (member != null) {
-        out.println("<form action='update'>");
+        out.println("<form action='update' method='post'>");
         out.printf("번호: <input name='no' type='text' readonly value='%d'><br>\n", //
             member.getNo());
         out.printf("이름: <input name='name' type='text' value='%s'><br>\n", //
