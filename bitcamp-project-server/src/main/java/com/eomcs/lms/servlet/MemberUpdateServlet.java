@@ -20,8 +20,6 @@ public class MemberUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
     try {
       req.setCharacterEncoding("utf-8");
-
-
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -34,18 +32,16 @@ public class MemberUpdateServlet extends HttpServlet {
       member.setPhoto(req.getParameter("photo"));
       member.setTel(req.getParameter("tel"));
 
-
       if (memberService.update(member) > 0) {
         resp.sendRedirect("list");
-
       } else {
-        req.getSession().setAttribute("errorMessage", "회원 정보 변경에 실패했습니다.");
-        req.getSession().setAttribute("url", "member/list");
-        resp.sendRedirect("../error");
+        throw new Exception("회원 정보 변경에 실패했습니다.");
       }
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

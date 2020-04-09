@@ -13,7 +13,7 @@ public class ErrorServlet extends HttpServlet{
   private static final long serialVersionUID = 1L;
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+  protected void service(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
     resp.setContentType("text/html;charset=UTF-8");
@@ -27,8 +27,8 @@ public class ErrorServlet extends HttpServlet{
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>오류 내용</h1>");
-    out.printf("<p>%s</p>", (String) req.getSession().getAttribute("errorMessage"));
-    String url = (String) req.getSession().getAttribute("url");
+    out.printf("<p>%s</p>", ((Exception) req.getAttribute("error")).getMessage());
+    String url = (String) req.getAttribute("url");
     if (url != null) {
       out.printf("<p><a href='%s'>뒤로 가기</a></p>", url);
     }

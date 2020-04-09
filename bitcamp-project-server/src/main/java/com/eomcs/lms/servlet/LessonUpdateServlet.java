@@ -21,8 +21,6 @@ public class LessonUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
     try {
       req.setCharacterEncoding("utf-8");
-
-
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -37,19 +35,16 @@ public class LessonUpdateServlet extends HttpServlet {
       lesson.setTotalHours(Integer.parseInt(req.getParameter("totalHours")));
       lesson.setDayHours(Integer.parseInt(req.getParameter("dayHours")));
 
-
-
       if (lessonService.update(lesson) > 0) {
         resp.sendRedirect("list");
-
       } else {
-        req.getSession().setAttribute("errorMessage", "수업 정보 변경에 실패했습니다.");
-        req.getSession().setAttribute("url", "lesson/list");
-        resp.sendRedirect("../error");
+        throw new Exception("수업 정보 변경에 실패했습니다.");
       }
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

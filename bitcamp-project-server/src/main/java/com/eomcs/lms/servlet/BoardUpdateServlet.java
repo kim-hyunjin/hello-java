@@ -43,7 +43,7 @@ public class BoardUpdateServlet extends HttpServlet {
       out.println("<h1>게시물 변경</h1>");
 
       if (board == null) {
-        out.println("<p>해당 번호의 게시글이 없습니다.</p>");
+        throw new Exception("해당 번호의 게시글이 없습니다.");
       } else {
         out.println("<form action='update' method='post'>");
         out.printf("번호: <input name='no' readonly type='text' value='%d'><br>\n", //
@@ -60,8 +60,11 @@ public class BoardUpdateServlet extends HttpServlet {
       }
       out.println("</body>");
       out.println("</html>");
+
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 
@@ -83,13 +86,13 @@ public class BoardUpdateServlet extends HttpServlet {
       if (boardService.update(board) > 0) {
         response.sendRedirect("list");
       } else {
-        request.getSession().setAttribute("errorMessage", "변경할 게시물 번호가 유효하지 않습니다.");
-        request.getSession().setAttribute("url", "board/list");
-        response.sendRedirect("../error");
+        throw new Exception("변경할 게시물 번호가 유효하지 않습니다.");
       }
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

@@ -64,7 +64,9 @@ public class BoardAddServlet extends HttpServlet {
       // 리다이렉트 메시지를 받기 전의 URL(/bitcamp-project-server/board/add)을 기준으로 계산한 경로이다.
       // => (/bitcamp-project-server/board/list)
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

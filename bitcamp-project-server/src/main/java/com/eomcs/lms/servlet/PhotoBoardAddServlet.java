@@ -61,61 +61,57 @@ public class PhotoBoardAddServlet extends HttpServlet {
       out.println("</html>");
 
     } catch (Exception e) {
-      req.getSession().setAttribute("errorMessage", "수업 번호가 유효하지 않습니다.");
-      req.getSession().setAttribute("url", "lesson/list");
-      resp.sendRedirect("../error");
+      req.setAttribute("error", e);
+      req.setAttribute("url", "lesson/list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    try {
-      req.setCharacterEncoding("utf-8");
 
+    req.setCharacterEncoding("utf-8");
+    int lessonNo = Integer.parseInt(req.getParameter("lessonNo"));
+
+    try {
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
-
       LessonService lessonService = iocContainer.getBean(LessonService.class);
       PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
 
-      int lessonNo = Integer.parseInt(req.getParameter("lessonNo"));
-      try {
-        Lesson lesson = lessonService.get(lessonNo);
-        if (lesson == null) {
-          req.getSession().setAttribute("url", "lesson/list");
-          throw new Exception("수업번호가 유효하지 않습니다.");
-        }
-
-        PhotoBoard photoBoard = new PhotoBoard();
-        photoBoard.setTitle(req.getParameter("title"));
-        photoBoard.setLesson(lesson);
-
-        ArrayList<PhotoFile> photoFiles = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-          String filepath = req.getParameter("photo" + i);
-          if (filepath.length() > 0) {
-            photoFiles.add(new PhotoFile().setFilepath(filepath));
-          }
-        }
-
-        if (photoFiles.size() == 0) {
-          req.getSession().setAttribute("url", "photoboard/list?lessonNo="+lessonNo);
-          throw new Exception("최소 한 개의 사진 파일을 등록해야 합니다.");
-        }
-
-        photoBoard.setFiles(photoFiles);
-        photoBoardService.add(photoBoard);
-
-        resp.sendRedirect("lesson/detail?no="+lessonNo);
-      }catch(Exception e) {
-        req.getSession().setAttribute("errorMessage", e.getMessage());
-        resp.sendRedirect("../error");
+      Lesson lesson = lessonService.get(lessonNo);
+      if (lesson == null) {
+        throw new Exception("수업번호가 유효하지 않습니다.");
       }
 
+      PhotoBoard photoBoard = new PhotoBoard();
+      photoBoard.setTitle(req.getParameter("title"));
+      photoBoard.setLesson(lesson);
+
+      ArrayList<PhotoFile> photoFiles = new ArrayList<>();
+      for (int i = 1; i <= 5; i++) {
+        String filepath = req.getParameter("photo" + i);
+        if (filepath.length() > 0) {
+          photoFiles.add(new PhotoFile().setFilepath(filepath));
+        }
+      }
+
+      if (photoFiles.size() == 0) {
+        throw new Exception("최소 한 개의 사진 파일을 등록해야 합니다.");
+      }
+
+      photoBoard.setFiles(photoFiles);
+      photoBoardService.add(photoBoard);
+
+      resp.sendRedirect("list?lessonNo=" + lessonNo);
+
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", //
+          "photoboard/list?lessonNo=" + lessonNo);
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

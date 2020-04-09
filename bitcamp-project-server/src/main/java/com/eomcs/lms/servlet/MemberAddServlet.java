@@ -46,8 +46,6 @@ public class MemberAddServlet extends HttpServlet {
       throws ServletException, IOException {
     try {
       req.setCharacterEncoding("utf-8");
-
-
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -64,7 +62,9 @@ public class MemberAddServlet extends HttpServlet {
       resp.sendRedirect("list");
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

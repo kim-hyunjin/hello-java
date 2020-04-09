@@ -20,6 +20,7 @@ public class PhotoBoardDetailServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    int no = Integer.parseInt(req.getParameter("no"));
     try {
       resp.setContentType("text/html;charset=UTF-8");
       PrintWriter out = resp.getWriter();
@@ -29,7 +30,6 @@ public class PhotoBoardDetailServlet extends HttpServlet {
           (ApplicationContext) servletContext.getAttribute("iocContainer");
 
       PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
-      int no = Integer.parseInt(req.getParameter("no"));
 
       PhotoBoard photoBoard = photoBoardService.get(no);
 
@@ -73,12 +73,13 @@ public class PhotoBoardDetailServlet extends HttpServlet {
         out.println("</form>");
 
       } else {
-        out.println("<p>해당 번호의 사진 게시글이 없습니다.</p>");
+        throw new Exception("해당 번호의 사진 게시글이 없습니다.");
       }
       out.println("</body>");
       out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "detail?no=" + no);
     }
   }
 }

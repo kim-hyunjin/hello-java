@@ -39,50 +39,47 @@ public class PhotoBoardListServlet extends HttpServlet {
       out.println("  <title>강의 사진 목록</title>");
       out.println("</head>");
       out.println("<body>");
-      try {
-        int lessonNo = Integer.parseInt(req.getParameter("lessonNo"));
-        Lesson lesson = lessonService.get(lessonNo);
-        if (lesson == null) {
-          throw new Exception("수업 번호가 유효하지 않습니다.");
-        }
 
-        out.printf("  <h1>강의 사진 - %s</h1>", lesson.getTitle());
-        out.printf("  <a href='add?lessonNo=%d'>새 사진</a><br>\n", //
-            lessonNo);
-        out.println("  <table border='1'>");
-        out.println("  <tr>");
-        out.println("    <th>번호</th>");
-        out.println("    <th>제목</th>");
-        out.println("    <th>등록일</th>");
-        out.println("    <th>조회수</th>");
-        out.println("  </tr>");
-
-        List<PhotoBoard> photoBoards = photoBoardService.listLessonPhoto(lessonNo);
-        for (PhotoBoard photoBoard : photoBoards) {
-          out.printf("  <tr>"//
-              + "<td>%d</td> "//
-              + "<td><a href='detail?no=%d'>%s</a></td> "//
-              + "<td>%s</td> "//
-              + "<td>%d</td>"//
-              + "</tr>\n", //
-              photoBoard.getNo(), //
-              photoBoard.getNo(), //
-              photoBoard.getTitle(), //
-              photoBoard.getCreatedDate(), //
-              photoBoard.getViewCount() //
-              );
-        }
-        out.println("</table>");
-
-      } catch (Exception e) {
-        req.getSession().setAttribute("errorMessage", e.getMessage());
-        req.getSession().setAttribute("url", "lesson/list");
-        resp.sendRedirect("../error");
+      int lessonNo = Integer.parseInt(req.getParameter("lessonNo"));
+      Lesson lesson = lessonService.get(lessonNo);
+      if (lesson == null) {
+        throw new Exception("수업 번호가 유효하지 않습니다.");
       }
+
+      out.printf("  <h1>강의 사진 - <a href='../lesson/detail?no=%d'>%s</a></h1>", //
+          lessonNo, lesson.getTitle());
+      out.printf("  <a href='add?lessonNo=%d'>새 사진</a><br>\n", //
+          lessonNo);
+      out.println("  <table border='1'>");
+      out.println("  <tr>");
+      out.println("    <th>번호</th>");
+      out.println("    <th>제목</th>");
+      out.println("    <th>등록일</th>");
+      out.println("    <th>조회수</th>");
+      out.println("  </tr>");
+
+      List<PhotoBoard> photoBoards = photoBoardService.listLessonPhoto(lessonNo);
+      for (PhotoBoard photoBoard : photoBoards) {
+        out.printf("  <tr>"//
+            + "<td>%d</td> "//
+            + "<td><a href='detail?no=%d'>%s</a></td> "//
+            + "<td>%s</td> "//
+            + "<td>%d</td>"//
+            + "</tr>\n", //
+            photoBoard.getNo(), //
+            photoBoard.getNo(), //
+            photoBoard.getTitle(), //
+            photoBoard.getCreatedDate(), //
+            photoBoard.getViewCount() //
+            );
+      }
+      out.println("</table>");
       out.println("</body>");
       out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "lesson/list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

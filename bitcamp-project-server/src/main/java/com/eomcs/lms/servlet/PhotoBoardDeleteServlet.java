@@ -18,8 +18,6 @@ public class PhotoBoardDeleteServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {
-
-
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -31,13 +29,13 @@ public class PhotoBoardDeleteServlet extends HttpServlet {
         photoBoardService.delete(no);
         resp.sendRedirect("list?lessonNo="+Integer.parseInt(req.getParameter("lessonNo")));
       } catch (Exception e) {
-        req.getSession().setAttribute("errorMessage", "사진 삭제에 실패했습니다.");
-        req.getSession().setAttribute("url", "list?lessonNo="+Integer.parseInt(req.getParameter("lessonNo")));
-        resp.sendRedirect("../error");
+        throw new Exception("사진 삭제에 실패했습니다.");
       }
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "list?lessonNo="+Integer.parseInt(req.getParameter("lessonNo")));
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

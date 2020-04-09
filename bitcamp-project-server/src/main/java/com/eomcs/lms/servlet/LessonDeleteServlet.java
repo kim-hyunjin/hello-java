@@ -18,27 +18,22 @@ public class LessonDeleteServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {
-
-
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
 
       LessonService lessonService = iocContainer.getBean(LessonService.class);
-
-
-
       int no = Integer.parseInt(req.getParameter("no"));
       if (lessonService.delete(no) > 0) { // 삭제했다면,
         resp.sendRedirect("list");
       } else {
-        req.getSession().setAttribute("errorMessage", "수업 삭제에 실패했습니다.");
-        req.getSession().setAttribute("url", "lesson/list");
-        resp.sendRedirect("../error");
+        throw new Exception("수업 삭제에 실패했습니다.");
       }
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "list");
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }

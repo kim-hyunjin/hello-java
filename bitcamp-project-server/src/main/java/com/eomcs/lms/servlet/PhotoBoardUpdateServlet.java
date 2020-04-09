@@ -20,6 +20,8 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    int no = Integer.parseInt(req.getParameter("no"));
+    int lessonNo = 0;
     try {
       req.setCharacterEncoding("utf-8");
       ServletContext servletContext = getServletContext();
@@ -28,7 +30,6 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
 
       PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
 
-      int no = Integer.parseInt(req.getParameter("no"));
       PhotoBoard photoBoard = photoBoardService.get(no);
       photoBoard.setTitle(req.getParameter("title"));
 
@@ -46,17 +47,18 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
         photoBoard.setFiles(null);
       }
 
+      lessonNo = photoBoard.getLesson().getNo();
       try {
         photoBoardService.update(photoBoard);
-        resp.sendRedirect("list?lessonNo="+photoBoard.getLesson().getNo());
+        resp.sendRedirect("list?lessonNo="+lessonNo);
       } catch (Exception e) {
-        req.getSession().setAttribute("errorMessage", "해당 사진 게시물이 존재하지 않습니다.");
-        req.getSession().setAttribute("url", "list?lessonNo="+photoBoard.getLesson().getNo());
-        resp.sendRedirect("../error");
+        throw new Exception("해당 사진 게시물이 존재하지 않습니다.");
       }
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      req.setAttribute("error", e);
+      req.setAttribute("url", "photoboard/list?lessonNo=" + lessonNo);
+      req.getRequestDispatcher("/error").forward(req, resp);
     }
   }
 }
