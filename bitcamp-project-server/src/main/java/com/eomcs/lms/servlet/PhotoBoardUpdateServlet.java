@@ -20,10 +20,10 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    req.setCharacterEncoding("utf-8");
     int no = Integer.parseInt(req.getParameter("no"));
     int lessonNo = 0;
     try {
-      req.setCharacterEncoding("utf-8");
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");

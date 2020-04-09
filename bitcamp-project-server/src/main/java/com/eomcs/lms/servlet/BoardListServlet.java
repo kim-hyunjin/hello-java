@@ -30,13 +30,9 @@ public class BoardListServlet extends HttpServlet {
 
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("  <meta charset='UTF-8'>");
-      out.println("  <title>게시글 목록</title>");
-      out.println("</head>");
-      out.println("<body>");
+
+      request.getRequestDispatcher("/header").include(request, response);
+
       out.println("  <h1>게시글</h1>");
       out.println("  <a href='add'>새 글</a><br>");
       out.println("  <table border='1'>");
@@ -64,8 +60,7 @@ public class BoardListServlet extends HttpServlet {
       }
       out.println("</table>");
 
-      out.println("</body>");
-      out.println("</html>");
+      request.getRequestDispatcher("/footer").include(request, response);
     } catch (Exception e) {
       throw new ServletException(e);
     }

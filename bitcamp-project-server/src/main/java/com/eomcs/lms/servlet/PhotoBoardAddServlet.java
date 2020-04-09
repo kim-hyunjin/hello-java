@@ -83,6 +83,7 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
       Lesson lesson = lessonService.get(lessonNo);
       if (lesson == null) {
+        req.setAttribute("url", "lesson/list");
         throw new Exception("수업번호가 유효하지 않습니다.");
       }
 
@@ -99,6 +100,8 @@ public class PhotoBoardAddServlet extends HttpServlet {
       }
 
       if (photoFiles.size() == 0) {
+        req.setAttribute("url", //
+            "add?lessonNo=" + lessonNo);
         throw new Exception("최소 한 개의 사진 파일을 등록해야 합니다.");
       }
 
@@ -109,8 +112,6 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     } catch (Exception e) {
       req.setAttribute("error", e);
-      req.setAttribute("url", //
-          "photoboard/list?lessonNo=" + lessonNo);
       req.getRequestDispatcher("/error").forward(req, resp);
     }
   }

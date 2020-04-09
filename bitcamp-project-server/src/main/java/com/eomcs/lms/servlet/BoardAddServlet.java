@@ -22,21 +22,14 @@ public class BoardAddServlet extends HttpServlet {
 
     resp.setContentType("text/html;charset=UTF-8");
     PrintWriter out = resp.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<meta charset='UTF-8'>");
-    out.println("<title>게시글 입력</title>");
-    out.println("</head>");
-    out.println("<body>");
+    req.getRequestDispatcher("/header").include(req, resp);
     out.println("<h1>게시물 입력</h1>");
     out.println("<form action='add' method='post'>");
     out.println("내용:<br>");
     out.println("<textarea name='title' rows='5' cols='60'></textarea><br>");
     out.println("<button>등록</button>");
     out.println("</form>");
-    out.println("</body>");
-    out.println("</html>");
+    req.getRequestDispatcher("/footer").include(req, resp);
   }
 
   @Override
