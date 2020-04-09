@@ -75,7 +75,9 @@ public class PhotoBoardListServlet extends HttpServlet {
         out.println("</table>");
 
       } catch (Exception e) {
-        out.printf("<p>%s</p>\n", e.getMessage());
+        req.getSession().setAttribute("errorMessage", e.getMessage());
+        req.getSession().setAttribute("url", "lesson/list");
+        resp.sendRedirect("../error");
       }
       out.println("</body>");
       out.println("</html>");

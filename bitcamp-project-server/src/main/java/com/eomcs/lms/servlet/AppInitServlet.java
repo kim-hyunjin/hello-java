@@ -21,12 +21,12 @@ public class AppInitServlet extends HttpServlet {
     try {
       ApplicationContext iocContainer = new AnnotationConfigApplicationContext(//
           AppConfig.class);
-      printBeans(iocContainer);
+      //printBeans(iocContainer);
 
       ServletContext servletContext = getServletContext();
       servletContext.setAttribute("iocContainer", iocContainer);
 
-      logger.debug("----------------------------");
+      //logger.debug("----------------------------");
 
     } catch (Exception e) {
       e.printStackTrace();

@@ -75,32 +75,19 @@ public class BoardUpdateServlet extends HttpServlet {
 
       BoardService boardService = iocContainer.getBean(BoardService.class);
       request.setCharacterEncoding("utf-8");
-      response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
 
       Board board = new Board();
       board.setNo(Integer.parseInt(request.getParameter("no")));
       board.setTitle(request.getParameter("title"));
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<meta http-equiv='refresh' content='2;url=list'>");
-      out.println("<title>게시글 변경</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>게시물 변경 결과</h1>");
-
-      if (boardService.update(board) > 0) { // 변경했다면,
-        out.println("<p>게시글을 변경했습니다.</p>");
-
+      if (boardService.update(board) > 0) {
+        response.sendRedirect("list");
       } else {
-        out.println("<p>해당 번호의 게시글이 없습니다.</p>");
+        request.getSession().setAttribute("errorMessage", "변경할 게시물 번호가 유효하지 않습니다.");
+        request.getSession().setAttribute("url", "board/list");
+        response.sendRedirect("../error");
       }
 
-      out.println("</body>");
-      out.println("</html>");
     } catch (Exception e) {
       throw new ServletException(e);
     }

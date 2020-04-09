@@ -1,7 +1,6 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,9 +22,6 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
     try {
       req.setCharacterEncoding("utf-8");
-      resp.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = resp.getWriter();
-
       ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -50,26 +46,15 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
         photoBoard.setFiles(null);
       }
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.printf("<meta http-equiv='refresh' content='2;url=list?lessonNo=%d'>", //
-          photoBoard.getLesson().getNo());
-      out.println("<title>사진 변경</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>사진 변경 결과</h1>");
-
       try {
         photoBoardService.update(photoBoard);
-        out.println("<p>사진을 변경했습니다.</p>");
+        resp.sendRedirect("list?lessonNo="+photoBoard.getLesson().getNo());
       } catch (Exception e) {
-        out.println("<p>해당 사진 게시물이 존재하지 않습니다.</p>");
+        req.getSession().setAttribute("errorMessage", "해당 사진 게시물이 존재하지 않습니다.");
+        req.getSession().setAttribute("url", "list?lessonNo="+photoBoard.getLesson().getNo());
+        resp.sendRedirect("../error");
       }
 
-      out.println("</body>");
-      out.println("</html>");
     } catch (Exception e) {
       throw new ServletException(e);
     }
