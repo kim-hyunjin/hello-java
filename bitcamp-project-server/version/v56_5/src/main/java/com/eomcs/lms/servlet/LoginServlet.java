@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,10 +55,6 @@ public class LoginServlet extends HttpServlet {
 
       String email = request.getParameter("email");
       String password = request.getParameter("password");
-
-      Cookie cookie = new Cookie("email", email);
-      cookie.setMaxAge(60*60*24*30);
-      response.addCookie(cookie);
 
       Member member = memberService.get(email, password);
 
