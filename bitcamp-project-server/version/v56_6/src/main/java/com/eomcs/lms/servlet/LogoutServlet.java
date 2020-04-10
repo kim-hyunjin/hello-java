@@ -1,25 +1,23 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/footer")
-public class FooterServlet extends HttpServlet {
+@WebServlet("/auth/logout")
+public class LogoutServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  protected void service(HttpServletRequest req, HttpServletResponse resp)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    resp.setContentType("test/html;charset=utf-8");
-    PrintWriter out = resp.getWriter();
-    out.println("</div>");
-    out.println("</body>");
-    out.println("</html>");
-
+    request.getSession().invalidate();
+    response.sendRedirect("../index.html");
   }
+
+
+
 }
