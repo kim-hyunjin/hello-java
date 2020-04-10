@@ -2,18 +2,23 @@ package com.eomcs.lms.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.PhotoBoardService;
 
 @WebServlet("/photoboard/update")
+@MultipartConfig(maxFileSize = 5000000)
 public class PhotoBoardUpdateServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
@@ -36,11 +41,15 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       photoBoard.setTitle(request.getParameter("title"));
 
       ArrayList<PhotoFile> photoFiles = new ArrayList<>();
-      for (int i = 1; i <= 5; i++) {
-        String filepath = request.getParameter("photo" + i);
-        if (filepath.length() > 0) {
-          photoFiles.add(new PhotoFile().setFilepath(filepath));
+      Collection<Part> parts = request.getParts();
+      String dirPath = getServletContext().getRealPath("/upload/photoboard");
+      for (Part part : parts) {
+        if(!part.getName().equals("photo")|| part.getSize() <= 0) {
+          continue;
         }
+        String filename = UUID.randomUUID().toString();
+        part.write(dirPath+"/"+filename);
+        photoFiles.add(new PhotoFile().setFilepath(filename));
       }
 
       if (photoFiles.size() > 0) {

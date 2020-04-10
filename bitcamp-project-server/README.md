@@ -1,18 +1,30 @@
-# 56_6 - Cookie를 활용하여 사용자 이메일을 보관하기
+# 56_8 - 파일 업로드 기능 추가 
 
 ## 학습목표
 
-- Cookie를 활용할 수 있다.
+- multipart 형식으로 파일을 업로드하고 처리할 수 있다.
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/lms/servlet/LoginServlet.java 변경
+- src/main/java/com/eomcs/lms/filter/AuthFilter.java 추가
 
 
 ## 실습  
 
-### 훈련1: 로그인 처리 후에 이메일을 쿠키로 웹브라우저에게 보내기
+### 훈련1: 회원 추가에 파일 업로드 기능을 추가한다.
 
-- com.eomcs.lms.servlet.LoginServlet 변경
-  - 로그인을 처리할 때 클라이언트가 보낸 이메일을 쿠키로 보관하게 한다.
+- com.eomcs.lms.servlet.MemberAddServlet 변경
+  - 입력폼에 multipart/form-data 인코딩 적용한다.
+  - 서블릿 3.0에 추가된 멀티파트 데이터 처리 기능 활용하여 파일을 저장한다.
+
+### 훈련2: 회원 조회에 사진을 출력한다.
+
+- com.eomcs.lms.servlet.MemberDetailServlet 변경
+  - img 태그를 이용하여 사진을 출력한다.
+  - 사진을 변경할 수 있도록 변경폼을 multipart/form-data로 설정한다. 
+
+### 훈련3: 회원 변경에 파일 업로드 기능을 추가한다.
+
+- com.eomcs.lms.servlet.MemberUpdateServlet 변경
+  - 멀티파트 형식으로 넘어온 데이터를 처리한다.
   
