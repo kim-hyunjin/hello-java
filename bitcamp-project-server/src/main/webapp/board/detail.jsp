@@ -14,5 +14,4 @@
 <p><a href='delete?no=<%=board.getNo()%>'>삭제</a> 
 <a href='update?no=<%=board.getNo()%>'>변경</a></p>
 </div>
-</body>
-</html>
+<jsp:include page="/footer.jsp"/>

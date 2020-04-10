@@ -12,5 +12,4 @@
 <button>등록</button>
 </form>
 </div>
-</body>
-</html>
+<jsp:include page="/footer.jsp"/>

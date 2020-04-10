@@ -22,5 +22,4 @@ if (board == null) {%>
 </form>
 </div>
 <%}%>
-</body>
-</html>
+<jsp:include page="/footer.jsp"/>>
