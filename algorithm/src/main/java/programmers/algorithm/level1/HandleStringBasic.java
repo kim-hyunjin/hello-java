@@ -6,18 +6,15 @@ package programmers.algorithm.level1;
 // s는 길이 1 이상, 길이 8 이하인 문자열입니다.
 public class HandleStringBasic {
   public boolean solution(String s) {
-    boolean answer = true;
-    char tmp;
     if(!(s.length() == 4 || s.length() == 6)) { // 문자열 s의 길이가 4 혹은 6이 아닌 경우 false
       return false;
     }
     for (int i = 0; i < s.length(); i++) {
-      tmp = s.charAt(i);
-      if (Character.isDigit(tmp) == false) { // 문자가 숫자가 아닌 경우 false
-        answer = false;
+      if (!Character.isDigit(s.charAt(i))) { // 문자가 숫자가 아닌 경우 false
+        return false;
       }
     }
-    return answer;
+    return true;
   }
 
   public boolean solution2(String s) {

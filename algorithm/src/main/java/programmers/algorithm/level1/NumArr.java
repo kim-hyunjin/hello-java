@@ -33,6 +33,33 @@ public class NumArr {
     return answer;
   }
 
+  public int[] solution2(int[] arr, int divisor) {
+    Arrays.sort(arr);
+    int size = 0;
+    for (int num : arr) {
+      if(num%divisor == 0) {
+        size++;
+      }
+    }
+    if (size == 0) {
+      return new int[] {-1};
+    }
+    int count = 0;
+    int[] newArr = new int[size];
+    for(int num : arr) {
+      if (num % divisor == 0) {
+        newArr[count++] = num;
+      }
+    }
+    return newArr;
+  }
+
+  public int[] solution3(int[] arr, int divisor) {
+    int[] result = Arrays.stream(arr).filter(i -> i%divisor == 0).sorted().toArray();
+    return result.length == 0 ? new int[] {-1} : result;
+  }
+
+
   public static  int[] divisible(int[] array, int divisor) {
     //ret에 array에 포함된 정수중, divisor로 나누어 떨어지는 숫자를 순서대로 넣으세요.
     int count=0,two=0;
