@@ -4,8 +4,6 @@
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
-<%@ page import="bitcamp.vo.Board"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,16 +40,4 @@ for (Object n : list) {
 
 </body>
 </html>
-<%--
-jsp:useBean (계속)
-
-1) type 속성 
-   - 보관소에서 꺼낸 객체의 타입을 지정할 때 사용한다.
-
- --%>
-
-
-
-
-
 
