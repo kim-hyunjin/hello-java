@@ -27,18 +27,12 @@ public class PhotoBoardDetailServlet extends HttpServlet {
       int no = Integer.parseInt(request.getParameter("no"));
 
       PhotoBoard photoBoard = photoBoardService.get(no);
-      if (photoBoard == null) {
-        throw new Exception("<p>해당 번호의 사진게시물이 없습니다.</p>");
-      }
       request.setAttribute("photoBoard", photoBoard);
-      
-      response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/photoboard/detail.jsp").include(request, response);
+      request.setAttribute("viewUrl", "/photoboard/detail.jsp");
 
     } catch (Exception e) {
       request.setAttribute("error", e);
       request.setAttribute("url", "list?lessonNo=" + lessonNo);
-      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

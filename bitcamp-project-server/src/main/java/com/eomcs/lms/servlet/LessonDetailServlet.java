@@ -27,18 +27,12 @@ public class LessonDetailServlet extends HttpServlet {
 
       int no = Integer.parseInt(request.getParameter("no"));
       Lesson lesson = lessonService.get(no);
-      if (lesson == null) {
-        throw new Exception("<p>해당 번호의 수업이 없습니다.</p>");
-      }
       request.setAttribute("lesson", lesson);
-      
-      response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/lesson/detail.jsp").include(request, response);
+      request.setAttribute("viewUrl", "/lesson/detail.jsp");
 
     } catch (Exception e) {
       request.setAttribute("error", e);
       request.setAttribute("url", "list");
-      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }
