@@ -16,7 +16,7 @@
 </pre>
 
 <h2>HTTP 요청하기</h2>
-<c:url value="http://localhost:8888/bitcamp-java-web/jstl/ex10_sub.jsp" 
+<c:url value="http://localhost:9999/bitcamp-java-web/jstl/ex10_sub.jsp" 
        var="url1">
     <c:param name="name" value="홍길동"/>
     <c:param name="age" value="20"/>

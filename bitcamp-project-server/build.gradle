@@ -23,6 +23,9 @@ dependencies {
   // log4j 1.2.x 라이브러리
   //implementation 'log4j:log4j:1.2.17'
   
+   // jstl
+  implementation 'jstl:jstl:1.2'
+  
   // log4j 2.x 라이브러리
   implementation 'org.apache.logging.log4j:log4j-core:2.13.1'
   

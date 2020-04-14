@@ -3,10 +3,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/header.jsp"/>
 
-<h1>사진 상세정보(JSP + EL)</h1>
+<h1>사진 상세정보(JSP + EL + JSTL)</h1>
 <form action='update' method='post' enctype='multipart/form-data'>
 번호: <input name='no' type='text' readonly value='${photoBoard.no}'><br>
 내용:<br>
@@ -17,15 +18,10 @@
 <hr>
 사진 파일:<br>
 <p>
-<%
-PhotoBoard photoBoard = (PhotoBoard) request.getAttribute("photoBoard");
-for (PhotoFile photoFile : photoBoard.getFiles()) {
-  pageContext.setAttribute("photoFile", photoFile);
-%>
-<img src='../upload/photoboard/${photoFile.filepath}' height='80'>
-<%
-}
-%>
+<c:set var="photoBoard" value="${photoBoard}"/>
+<c:forEach items="${photoBoard.getFiles()}" var="photoFile">
+  <img src='../upload/photoboard/${photoFile.filepath}' height='80'>
+</c:forEach>
 </p>
 사진: <input name='photo' type='file'><br>
 사진: <input name='photo' type='file'><br>

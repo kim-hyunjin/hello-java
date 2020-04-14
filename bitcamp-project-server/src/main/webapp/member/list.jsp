@@ -3,10 +3,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/header.jsp"/>
 
-  <h1>회원(JSP + EL)</h1>
+  <h1>회원(JSP + EL + JSTL)</h1>
   <a href='add'>새 회원</a><br>
   <table border='1'>
   <tr>
@@ -17,14 +18,7 @@
     <th>등록일</th>
   </tr>
   
-<jsp:useBean id="list" 
-  type="java.util.List<Member>"
-  class="java.util.ArrayList"
-  scope="request"/>
-<% 
-  for(Member item : list) {
-    pageContext.setAttribute("item", item);
-%>
+<c:forEach items="${list}"  var="item">
   <tr>
     <td>${item.no}</td> 
     <td><a href='detail?no=${item.no}'>${item.name}</a></td> 
@@ -32,9 +26,7 @@
     <td>${item.tel}</td>
     <td>${item.registeredDate}</td>
   </tr>
-<%
-  }
-%>
+</c:forEach>
   </table>
 <hr>
 <form action='search' method='get'>
