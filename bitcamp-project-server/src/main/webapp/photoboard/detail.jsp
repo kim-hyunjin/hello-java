@@ -8,6 +8,8 @@
 <jsp:include page="/header.jsp"/>
 
 <h1>사진 상세정보(JSP + EL + JSTL)</h1>
+
+<c:if test="${not empty photoBoard}">
 <form action='update' method='post' enctype='multipart/form-data'>
 번호: <input name='no' type='text' readonly value='${photoBoard.no}'><br>
 내용:<br>
@@ -17,12 +19,13 @@
 수업: ${photoBoard.lesson.title}<br>
 <hr>
 사진 파일:<br>
+
 <p>
-<c:set var="photoBoard" value="${photoBoard}"/>
-<c:forEach items="${photoBoard.getFiles()}" var="photoFile">
-  <img src='../upload/photoboard/${photoFile.filepath}' height='80'>
+<c:forEach items="${photoBoard.files}" var="photoFile">
+<img src='${pageContext.servletContext.contextPath}/upload/photoboard/${photoFile.filepath}' height='80'>
 </c:forEach>
 </p>
+
 사진: <input name='photo' type='file'><br>
 사진: <input name='photo' type='file'><br>
 사진: <input name='photo' type='file'><br>
@@ -31,6 +34,11 @@
 <p><button>변경</button>
 <a href='delete?no=${photoBoard.no}&lessonNo=${photoBoard.lesson.no}'>삭제</a></p>
 </form>
+</c:if>
+
+<c:if test="${empty photoBoard}">
+<p>해당 사진게시물이 없습니다.</p>
+</c:if>
 
 <jsp:include page="/footer.jsp"/>
     

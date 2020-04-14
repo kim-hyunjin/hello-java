@@ -18,7 +18,7 @@
     <th>등록일</th>
   </tr>
   
-<c:forEach items="${list}"  var="item">
+<c:forEach items="${list}" var="item">
   <tr>
     <td>${item.no}</td> 
     <td><a href='detail?no=${item.no}'>${item.name}</a></td> 
@@ -27,6 +27,7 @@
     <td>${item.registeredDate}</td>
   </tr>
 </c:forEach>
+
   </table>
 <hr>
 <form action='search' method='get'>

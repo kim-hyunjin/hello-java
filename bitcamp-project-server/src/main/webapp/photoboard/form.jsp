@@ -5,7 +5,7 @@
 
 <jsp:include page="/header.jsp"/>
 
-<h1>사진 입력(JSP + EL + JSTL)</h1>
+<h1>사진 입력(JSP + EL)</h1>
 <form action='add' method='post' enctype='multipart/form-data'>
 강의번호: <input name='lessonNo' type='text' value='${lesson.no}' readonly><br>
 강의명: ${lesson.title}<br>

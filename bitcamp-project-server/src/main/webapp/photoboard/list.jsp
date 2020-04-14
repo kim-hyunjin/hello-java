@@ -26,6 +26,7 @@
     <td>${item.viewCount}</td>
   </tr>
 </c:forEach>
+
   </table>
 
 <jsp:include page="/footer.jsp"/>

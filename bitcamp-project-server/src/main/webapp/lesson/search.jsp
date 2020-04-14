@@ -15,7 +15,8 @@
     <th>기간</th>
     <th>총강의시간</th>
   </tr>
-<c:forEach items="${list}" var="item" >
+  
+<c:forEach items="${list}" var="item">
     <tr>
       <td>${item.no}</td> 
       <td><a href='detail?no=${item.no}'>${item.title}</a></td> 
@@ -23,6 +24,7 @@
       <td>${item.totalHours}</td>
     </tr>
 </c:forEach>
+
   </table>
 
 <jsp:include page="/footer.jsp"/>
