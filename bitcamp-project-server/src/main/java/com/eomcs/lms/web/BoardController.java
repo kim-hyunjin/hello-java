@@ -1,8 +1,8 @@
 package com.eomcs.lms.web;
 
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.eomcs.lms.domain.Board;
@@ -16,19 +16,16 @@ public class BoardController {
   BoardService boardService;
 
   @RequestMapping("/board/add")
-  public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    if(request.getMethod().equals("GET")) {
+  public String add(HttpServletRequest request, Board board) throws Exception {
+    if (request.getMethod().equals("GET")) {
       return "/board/form.jsp";
     }
-    Board board = new Board();
-    board.setTitle(request.getParameter("title"));
     boardService.add(board);
     return "redirect:list";
   }
 
   @RequestMapping("/board/delete")
-  public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int no = Integer.parseInt(request.getParameter("no"));
+  public String delete(int no) throws Exception {
     if (boardService.delete(no) > 0) {
       return "redirect:list";
     } else {
@@ -37,36 +34,33 @@ public class BoardController {
   }
 
   @RequestMapping("/board/detail")
-  public String detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int no = Integer.parseInt(request.getParameter("no"));
+  public String detail(int no, Map<String, Object> model) throws Exception {
     Board board = boardService.get(no);
-    request.setAttribute("board", board);
+    model.put("board", board);
     return "/board/detail.jsp";
   }
 
   @RequestMapping("/board/list")
-  public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String list(Map<String, Object> model) throws Exception {
     List<Board> boards = boardService.list();
-    request.setAttribute("list", boards);
+    model.put("list", boards);
     return "/board/list.jsp";
   }
 
   @RequestMapping("/board/update")
-  public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    if(request.getMethod().equals("GET")) {
-      int no = Integer.parseInt(request.getParameter("no"));
-      Board board = boardService.get(no);
-      request.setAttribute("board", board);
+  public String update(//
+      HttpServletRequest request, //
+      Board board, //
+      Map<String, Object> model) throws Exception {
+
+    if (request.getMethod().equals("GET")) {
+      model.put("board", boardService.get(board.getNo()));
       return "/board/updateform.jsp";
     }
-    Board board = new Board();
-    board.setNo(Integer.parseInt(request.getParameter("no")));
-    board.setTitle(request.getParameter("title"));
     if (boardService.update(board) > 0) {
       return "redirect:list";
     } else {
       throw new Exception("변경할 게시물 번호가 유효하지 않습니다.");
     }
   }
-
 }

@@ -1,7 +1,12 @@
 plugins {
     id 'java'
-    id 'eclipse-wtp' // 'eclipse'플러그인 기능을 포함한다. 추가로 이클립스 웹 프로젝트용 설정 파일을 생성한다.
-    id 'war' // 배치 관련 기능을 처리한다.
+    
+    id 'eclipse-wtp'
+    // => 'eclipse' 플러그인 기능을 포함한다.
+    // => 이클립스 웹 프로젝트용 설정 파일을 생성한다.
+
+    id 'war'
+    // => 배치 관련 기능을 처리한다.
 }
 
 tasks.withType(JavaCompile) {
@@ -20,11 +25,11 @@ repositories {
 }
 
 dependencies {
+  // Reflection API를 좀 더 쉽게 사용하게 도와주는 유틸리티
+  implementation 'org.reflections:reflections:0.9.12'
+
   // log4j 1.2.x 라이브러리
   //implementation 'log4j:log4j:1.2.17'
-  
-   // jstl
-  implementation 'jstl:jstl:1.2'
   
   // log4j 2.x 라이브러리
   implementation 'org.apache.logging.log4j:log4j-core:2.13.1'
@@ -61,6 +66,9 @@ dependencies {
   //
   compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
   
+  // JSTL API 및 구현 라이브러리
+  implementation 'jstl:jstl:1.2'
+    
   implementation 'com.google.guava:guava:28.1-jre'
   testImplementation 'junit:junit:4.12'
 }

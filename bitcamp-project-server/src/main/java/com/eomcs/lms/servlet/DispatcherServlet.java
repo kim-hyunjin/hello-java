@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +25,13 @@ public class DispatcherServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   static Logger logger = LogManager.getLogger(DispatcherServlet.class);
+
   RequestMappingHandlerMapping handlerMapper = null;
 
   @Override
   public void init() throws ServletException {
-    handlerMapper = (RequestMappingHandlerMapping) getServletContext().getAttribute("handlerMapper");
+    handlerMapper = (RequestMappingHandlerMapping) getServletContext()//
+        .getAttribute("handlerMapper");
     logger.debug("init() 호출됨!");
     logger.debug(handlerMapper);
   }
@@ -43,18 +48,28 @@ public class DispatcherServlet extends HttpServlet {
       // 해당 서블릿을 실행한다.
       response.setContentType("text/html;charset=UTF-8");
 
-      // 인클루딩 서블릿에서 쿠키 정보를 담을 수 있도록 맵 객체를 준비한다.
+      // 인클루딩 서블릿에서 쿠키 정보를 담을 수 있도록 리스트 객체를 준비한다.
       ArrayList<Cookie> cookies = new ArrayList<>();
       request.setAttribute("cookies", cookies);
 
-      // 클라이언트요청을 처리할 request handler를 찾아 호출한다.
+      // 클라이언트 요청을 처리할 request handler를 찾아 호출한다.
       RequestHandler requestHandler = handlerMapper.getHandler(pathInfo);
 
       String viewUrl = null;
-      if(requestHandler != null) {
+
+      if (requestHandler != null) {
+        // Request Handler의 메서드 호출
         try {
-          viewUrl = (String) requestHandler.getMethod().invoke(requestHandler.getBean(), request, response);
-        } catch(Exception e) {
+          Map<String, Object> model = requestHandler.invoke(request, response);
+          viewUrl = (String) model.get("viewUrl");
+
+          // 요청 핸들러의 작업 결과를 꺼내서 JSP가 사용할 수 있도록
+          // ServletRequest 보관소에 저장한다.
+          Set<Entry<String, Object>> entrySet = model.entrySet();
+          for (Entry<String, Object> entry : entrySet) {
+            request.setAttribute(entry.getKey(), entry.getValue());
+          }
+        } catch (Exception e) {
           StringWriter out = new StringWriter();
           e.printStackTrace(new PrintWriter(out));
           request.setAttribute("errorDetail", out.toString());
@@ -66,17 +81,18 @@ public class DispatcherServlet extends HttpServlet {
         throw new Exception("해당 명령을 지원하지 않습니다.");
       }
 
-      // 인클루딩 서블릿을 실행한 후에 쿠키가 있는지 조사해서 있다면 응답헤더에 쿠키를 추가한다.
-      if(cookies.size() > 0) {
-        for(Cookie cookie : cookies) {
+      // 인클루딩 서블릿을 실행한 후에 쿠키가 있는지 조사해서 있다면
+      // 응답헤더에 쿠기를 추가한다.
+      if (cookies.size() > 0) {
+        for (Cookie cookie : cookies) {
           response.addCookie(cookie);
         }
       }
 
-      // 페이지 컨트롤러가 refresh URL을 설정했다면
+      // 페이지 컨트롤러가 refresh URL을 설정했다면,
       // 응답헤더에 추가한다.
-      String refreshUrl = (String)request.getAttribute("refreshUrl");
-      if(refreshUrl != null) {
+      String refreshUrl = (String) request.getAttribute("refreshUrl");
+      if (refreshUrl != null) {
         response.setHeader("Refresh", refreshUrl);
       }
 
@@ -86,7 +102,7 @@ public class DispatcherServlet extends HttpServlet {
       } else {
         request.getRequestDispatcher(viewUrl).include(request, response);
       }
-    } catch(Exception e) {
+    } catch (Exception e) {
       throw new ServletException(e);
     }
   }

@@ -34,13 +34,16 @@ public class PhotoBoardController {
       return "/photoboard/form.jsp";
     }
     int lessonNo = Integer.parseInt(request.getParameter("lessonNo"));
+
     Lesson lesson = lessonService.get(lessonNo);
     if (lesson == null) {
       throw new Exception("수업 번호가 유효하지 않습니다.");
     }
+
     PhotoBoard photoBoard = new PhotoBoard();
     photoBoard.setTitle(request.getParameter("title"));
     photoBoard.setLesson(lesson);
+
     ArrayList<PhotoFile> photoFiles = new ArrayList<>();
     Collection<Part> parts = request.getParts();
     String dirPath = request.getServletContext().getRealPath("/upload/photoboard");
@@ -53,12 +56,16 @@ public class PhotoBoardController {
       part.write(dirPath + "/" + filename);
       photoFiles.add(new PhotoFile().setFilepath(filename));
     }
+
     if (photoFiles.size() == 0) {
       throw new Exception("최소 한 개의 사진 파일을 등록해야 합니다.");
     }
+
     photoBoard.setFiles(photoFiles);
     photoBoardService.add(photoBoard);
+
     return "redirect:list?lessonNo=" + lessonNo;
+
   }
 
   @RequestMapping("/photoboard/delete")
@@ -85,6 +92,7 @@ public class PhotoBoardController {
       throw new Exception("수업 번호가 유효하지 않습니다.");
     }
     request.setAttribute("lesson", lesson);
+
     List<PhotoBoard> photoBoards = photoBoardService.listLessonPhoto(lessonNo);
     request.setAttribute("list", photoBoards);
     return "/photoboard/list.jsp";
@@ -95,6 +103,7 @@ public class PhotoBoardController {
     int no = Integer.parseInt(request.getParameter("no"));
     PhotoBoard photoBoard = photoBoardService.get(no);
     photoBoard.setTitle(request.getParameter("title"));
+
     ArrayList<PhotoFile> photoFiles = new ArrayList<>();
     Collection<Part> parts = request.getParts();
     String dirPath = request.getServletContext().getRealPath("/upload/photoboard");
@@ -107,11 +116,13 @@ public class PhotoBoardController {
       part.write(dirPath + "/" + filename);
       photoFiles.add(new PhotoFile().setFilepath(filename));
     }
+
     if (photoFiles.size() > 0) {
       photoBoard.setFiles(photoFiles);
     } else {
       photoBoard.setFiles(null);
     }
+
     int lessonNo = photoBoard.getLesson().getNo();
     photoBoardService.update(photoBoard);
     return "redirect:list?lessonNo=" + lessonNo;

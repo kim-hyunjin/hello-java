@@ -56,6 +56,8 @@ public class ContextLoaderListener implements ServletContextListener {
 
       logger.debug("----------------------------");
 
+      logger.debug("@RequestMapping 메서드를 찾기");
+
       // @Component 애노테이션이 붙은 객체를 찾는다.
       RequestMappingHandlerMapping handlerMapper = //
           new RequestMappingHandlerMapping();
@@ -67,23 +69,38 @@ public class ContextLoaderListener implements ServletContextListener {
         Iterator<Method> handlers = getRequestHandlers(component.getClass());
         while (handlers.hasNext()) {
           // 클라이언트 명령을 처리하는 메서드 정보를 준비한다.
-          RequestHandler requestHandler = new RequestHandler(handlers.next(), component);
+          RequestHandler requestHandler = //
+              new RequestHandler(handlers.next(), component);
+
           // 명령을 처리할 메서드를 찾을 수 있도록
           // 명령 이름으로 메서드 정보를 저장한다.
           handlerMapper.addHandler(requestHandler.getPath(), requestHandler);
 
-          // @RequestMapping 메서드가 들어있는 클래스 이름을 로그로 남겨보자
-          logger.debug(String.format("%s ==> %s.%s()", requestHandler.getPath(),
-              component.getClass().getName(),
+          // @RequestMapping 메서드가 들어있는 클래스 이름을 로그로 남긴다.
+          logger.debug(String.format("%s ==> %s.%s()", //
+              requestHandler.getPath(), //
+              component.getClass().getName(), //
               requestHandler.getMethod().getName()));
         }
       }
 
       // ServerApp 에서 request handler를 사용할 수 있도록 공유한다.
       servletContext.setAttribute("handlerMapper", handlerMapper);
+
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  private void printBeans(ApplicationContext appCtx) {
+    logger.debug("Spring IoC 컨테이너에 들어있는 객체들:");
+    String[] beanNames = appCtx.getBeanDefinitionNames();
+    for (String beanName : beanNames) {
+      logger.debug(String.format("%s =======> %s", //
+          beanName, //
+          appCtx.getBean(beanName).getClass().getName()));
+    }
+
   }
 
   private Iterator<Method> getRequestHandlers(Class<?> type) {
@@ -98,19 +115,7 @@ public class ContextLoaderListener implements ServletContextListener {
         handlers.add(m);
       }
     }
-
     return handlers.iterator();
-  }
-
-  private void printBeans(ApplicationContext appCtx) {
-    logger.debug("Spring IoC 컨테이너에 들어있는 객체들:");
-    String[] beanNames = appCtx.getBeanDefinitionNames();
-    for (String beanName : beanNames) {
-      logger.debug(String.format("%s =======> %s", //
-          beanName, //
-          appCtx.getBean(beanName).getClass().getName()));
-    }
-
   }
 
   @Override
