@@ -80,7 +80,7 @@ public class RequestHandler {
     String viewUrl = (String) method.invoke(//
         bean, // 메서드를 호출할 때 사용하는 인스턴스
         getArguments(params, request, response, model) // 메서드에 넘겨 줄 값들
-    );
+        );
 
     // request handler를 호출하면,
     // model 객체에는 request handler가 담은 값이 보관되어 있다.
@@ -99,7 +99,7 @@ public class RequestHandler {
     //
     Reflections reflections = new Reflections(type, // 클래스 타입
         new MethodParameterNamesScanner() // 파라미터 이름 탐색 플러그인 장착
-    );
+        );
     List<String> paramNames = reflections.getMethodParamNames(method);
 
     logger.debug(String.format("%s.%s(", bean.getClass().getName(), method.getName()));
@@ -215,23 +215,59 @@ public class RequestHandler {
     }
 
     if (paramType == byte.class || paramType == Byte.class) {
-      return Byte.parseByte(value);
+      try {
+        return Byte.parseByte(value);
+      } catch (Exception e) {
+        return (byte)0;
+      }
     } else if (paramType == short.class || paramType == Short.class) {
-      return Short.parseShort(value);
+      try {
+        return Short.parseShort(value);
+      } catch (Exception e) {
+        return (short) 0;
+      }
     } else if (paramType == int.class || paramType == Integer.class) {
-      return Integer.parseInt(value);
+      try {
+        return Integer.parseInt(value);
+      } catch (Exception e) {
+        return 0;
+      }
     } else if (paramType == long.class || paramType == Long.class) {
-      return Long.parseLong(value);
+      try {
+        return Long.parseLong(value);
+      } catch (Exception e) {
+        return (long)0;
+      }
     } else if (paramType == float.class || paramType == Float.class) {
-      return Float.parseFloat(value);
+      try {
+        return Float.parseFloat(value);
+      } catch (Exception e) {
+        return 0.0f;
+      }
     } else if (paramType == double.class || paramType == Double.class) {
-      return Double.parseDouble(value);
+      try {
+        return Double.parseDouble(value);
+      } catch (Exception e) {
+        return 0.0;
+      }
     } else if (paramType == char.class || paramType == Character.class) {
-      return value.charAt(0);
+      try {
+        return value.charAt(0);
+      } catch (Exception e) {
+        return (char) 0;
+      }
     } else if (paramType == boolean.class || paramType == Boolean.class) {
-      return Boolean.parseBoolean(value);
+      try {
+        return Boolean.parseBoolean(value);
+      } catch (Exception e) {
+        return false;
+      }
     } else if (paramType == java.util.Date.class || paramType == java.sql.Date.class) {
-      return java.sql.Date.valueOf(value); // 문자열 형식: "yyyy-MM-dd" 이어야 한다.
+      try {
+        return java.sql.Date.valueOf(value); // 문자열 형식: "yyyy-MM-dd" 이어야 한다.
+      } catch(Exception e) {
+        return null;
+      }
     }
     return value;
   }
