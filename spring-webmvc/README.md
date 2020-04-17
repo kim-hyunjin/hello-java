@@ -104,6 +104,10 @@ Spring WebMVC 프레임워크 학습 예제
 - WebApplicationInitializerImpl 변경
   - 직접 인터페이스를 구현하는 대신에 추상 클래스를 상속 받아 적절한 메서드를 오버라이딩 한다.
   - AbstractAnnotationConfigDispatcherServletInitializer 클래스 상속 받기
+    - 이 클래스는 미리 AnnotationConfigWebApplicationContext IoC 컨테이너를 준비했다.
+    - 따라서 IoC 컨테이너를 따로 설정할 필요가 없다.
+    - 또한 DispatcherServlet을 등록하는 코드가 이미 작성되어 있기 때문에 따로 등록할 필요가 없다.
+    - 즉 인터페이스를 직접 구현하는 것 보다 편하다.
 
 ## src-11 : WebApplicationInitializer 구현체를 통해 DispatcherServlet 등록하기 III
 
