@@ -1,23 +1,26 @@
 package com.eomcs.lms.web;
 
 import java.util.ArrayList;
-import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
 @Controller
+@RequestMapping("/auth")
 public class AuthController {
 
   @Autowired
   MemberService memberService;
 
-  @RequestMapping("/auth/form")
-  public String form(HttpServletRequest request, Map<String, Object> model) {
+  @GetMapping("form")
+  public void form(HttpServletRequest request, Model model) {
     String email = "";
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
@@ -28,12 +31,11 @@ public class AuthController {
         }
       }
     }
-    model.put("email", email);
-    return "/auth/form.jsp";
+    model.addAttribute("email", email);
   }
 
-  @RequestMapping("/auth/login")
-  public String login(HttpServletRequest request, //
+  @PostMapping("/auth/login")
+  public void login(HttpServletRequest request, //
       String email, String password, String saveEmail) throws Exception {
 
     Cookie cookie = new Cookie("email", email);
@@ -52,20 +54,18 @@ public class AuthController {
     Member member = memberService.get(email, password);
     if (member != null) {
       request.getSession().setAttribute("loginUser", member);
-      request.setAttribute("refreshUrl", "2;url=../../index.html");
+      request.setAttribute("refreshUrl", "2;url=../../../index.html");
       // 인클루딩 되는 서블릿은 응답 헤더를 추가할 수 없다.
       // 따라서 프론트 컨트롤러에게 추가해달라고 요청해야 한다.
     } else {
       request.getSession().invalidate();
       request.setAttribute("refreshUrl", "2;url=login");
     }
-
-    return "/auth/login.jsp";
   }
 
-  @RequestMapping("/auth/logout")
+  @GetMapping("/auth/logout")
   public String logout(HttpServletRequest request) {
     request.getSession().invalidate();
-    return "redirect:../../index.html";
+    return "redirect:../../../index.html";
   }
 }

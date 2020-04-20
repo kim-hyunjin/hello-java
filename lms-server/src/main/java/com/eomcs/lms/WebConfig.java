@@ -12,9 +12,9 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addFormatters(FormatterRegistry registry) {
-      DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
-      registrar.setUseIsoFormat(true);
-      registrar.registerFormatters(registry);
+    DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+    registrar.setUseIsoFormat(true);
+    registrar.registerFormatters(registry);
   }
 
 }

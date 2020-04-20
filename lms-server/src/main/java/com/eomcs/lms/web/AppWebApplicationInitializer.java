@@ -40,4 +40,5 @@ public class AppWebApplicationInitializer
   protected String getServletName() {
     return "app";
   }
+
 }
