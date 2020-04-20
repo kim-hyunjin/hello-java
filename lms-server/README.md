@@ -1,9 +1,10 @@
-# 59_1 - Spring WebMVC 적용하기
+# 59_2 - Spring WebMVC 적용하기2 - 페이지 컨트롤러, MultipartResolver, ViewResolver
 
 ## 학습목표
 
-- Spring WebMVC 프레임워크를 프로젝트에 적용할 수 있다.
-- Spring WebMVC 프레임워크의 규칙에 따라 웹 애플리케이션을 작성할 수 있다.
+- @RequestMappng, @GetMapping, @PostMapping의 사용법을 안다.
+- 멀티파트 데이터를 처리하기 위해 multipartResolver를 설정할 수 있다.
+- ViewResolver를 교체할 수 있따.
 
 
 ## 실습 소스 및 결과
@@ -20,7 +21,11 @@
 
 ## 실습  
 
-### 훈련1: Spring WebMVC 프레임워크를 프로젝트에 적용한다.
+### 훈련1: WebApplicationInitializer를 사용하여 DispatcherServlet을 설정한다.
+
+ - com.eomcs.lms.web.AppWebApplicationInitializer 추가
+
+### 훈련1: ViewResolver를 InternalResourceViewResolver로 교체할 수 있다.
 
 - 라이브러리 가져오기
   - search.maven.org 에서 'spring-webmvc' 검색한다.
