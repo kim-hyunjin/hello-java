@@ -1,7 +1,6 @@
 package com.eomcs.lms.web;
 
 import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,24 +58,25 @@ public class LessonController {
   }
 
   @GetMapping("search")
-  public void search(Lesson lesson, Map<String, Object> model) throws Exception {
+  public void search(String title, String startDate, String endDate, String totalHours,
+      String dayHours, Model model) throws Exception {
     HashMap<String, Object> map = new HashMap<>();
+    if (title.length() > 0) {
+      map.put("title", title);
+    }
+    if (startDate.length() > 0) {
+      map.put("startDate", startDate);
+    }
+    if (endDate.length() > 0) {
+      map.put("endDate", endDate);
+    }
+    if (totalHours.length() > 0) {
+      map.put("totalHours", totalHours);
+    }
+    if (dayHours.length() > 0) {
+      map.put("dayHours", dayHours);
+    }
 
-    if (lesson.getTitle().length() > 0) {
-      map.put("title", lesson.getTitle());
-    }
-    if (lesson.getStartDate() != null) {
-      map.put("startDate", lesson.getStartDate().toString());
-    }
-    if (lesson.getEndDate() != null) {
-      map.put("endDate", lesson.getEndDate().toString());
-    }
-    if (lesson.getTotalHours() > 0) {
-      map.put("totalHours", lesson.getTotalHours());
-    }
-    if (lesson.getDayHours() > 0) {
-      map.put("dayHours", lesson.getDayHours());
-    }
-    model.put("list", lessonService.search(map));
+    model.addAttribute("list", lessonService.search(map));
   }
 }
