@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Controller01_1 {
 
   // 테스트:
-  //   http://localhost:8080/java-spring-webmvc/app2/c01_1/h1
+  // http://localhost:8080/java-spring-webmvc/app2/c01_1/h1
   @GetMapping("h1")
-  //@ResponseBody // 뷰 이름을 리턴 할 때는 이 애노테이션을 붙이면 안된다.
+  // @ResponseBody // 뷰 이름을 리턴 할 때는 이 애노테이션을 붙이면 안된다.
   public String handler1(Model model) {
 
     model.addAttribute("name", "홍길동");
-    model.addAttribute("age", 20);
+    model.addAttribute("age", 20); // request conte
 
     return "/jsp/c01_1.jsp";
     // 기본 ViewResolver는 리턴 값으로 URL을 받아
     // 웹 애플리케이션 디렉토리에서 JSP를 찾는다.
     // 웹 애프리케이션이 경로가 /bitcamp-java-spring-webmvc 라면, JSP 경로는 다음과 같다.
-    //   /bitcamp-java-spring-webmvc/jsp/c01_1.jsp
+    // /bitcamp-java-spring-webmvc/jsp/c01_1.jsp
   }
 
   // 테스트:
-  //   http://localhost:8080/java-spring-webmvc/app2/c01_1/h2
+  // http://localhost:8080/java-spring-webmvc/app2/c01_1/h2
   @GetMapping("h2")
   public void handler2(Model model) {
     model.addAttribute("name", "홍길동2");
@@ -44,9 +44,9 @@ public class Controller01_1 {
   }
 
   // 테스트:
-  //   http://localhost:8080/java-spring-webmvc/app2/c01_1/h3
+  // http://localhost:8080/java-spring-webmvc/app2/c01_1/h3
   @GetMapping("h3")
-  public String handler3(Map<String,Object> map) {
+  public String handler3(Map<String, Object> map) {
 
     map.put("name", "홍길동3");
     map.put("age", 40);
@@ -66,25 +66,14 @@ public class Controller01_1 {
     //
     // 웹 브라우저에서 다음 URL의 JSP를 요청해보라!
     // 1) http://localhost:8888/bitcamp-java-spring-webmvc/jsp/c01_1.jsp
-    //    => 클라이언트가 요청할 수 있다.
+    // => 클라이언트가 요청할 수 있다.
     // 2) http://localhost:8888/bitcamp-java-spring-webmvc/WEB-INF/jsp/c01_1.jsp
-    //    => 클라이언트가 요청할 수 없다.
-    //    => /WEB-INF 폴더에 있는 자원들은 클라이언트에서 직접 요청할 수 없다.
-    //    => 그래서 잘못된 요청을 막을 수 있다.
-    //       실무에서는 이 방법을 사용한다.
+    // => 클라이언트가 요청할 수 없다.
+    // => /WEB-INF 폴더에 있는 자원들은 클라이언트에서 직접 요청할 수 없다.
+    // => 그래서 잘못된 요청을 막을 수 있다.
+    // 실무에서는 이 방법을 사용한다.
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
