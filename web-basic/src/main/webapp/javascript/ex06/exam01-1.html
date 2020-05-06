@@ -5,12 +5,15 @@
 <title>ex06</title>
 </head>
 <body>
-<h1>이벤트 - 리스너 등록하기</h1>
-<button id="btn1" onclick="var str='Hello'; window.alert(str);">버튼1</button><br>
-<button id="btn2">버튼2</button><br>
-<button id="btn3">버튼3</button><br>
+	<h1>이벤트 - 리스너 등록하기</h1>
+	<button id="btn1" onclick="var str='Hello'; window.alert(str);">버튼1</button>
+	<br>
+	<button id="btn2">버튼2</button>
+	<br>
+	<button id="btn3">버튼3</button>
+	<br>
 
-<script>
+	<script>
 "use strict"
 
 // 이벤트(event)
@@ -48,10 +51,20 @@
 var btn2 = document.getElementById("btn2");
 //var btn2 = document.querySelector("#btn2"); // 둘 중 아무거나 사용하면 된다.
 
-btn2.onclick = function() {
+function f1() {
     var str = "Hello2!";
     window.alert(str);
+    console.log(this); // this는 이 함수가 소속된 객체를 통해 호출될 때 그 객체를 가리킨다.
 };
+btn2.onclick = f1; // 함수의 주소를 객체 프로퍼티에 저장하는 순간 그 객체에 소속된다.
+
+/*
+ * btn2.onclink = function() {
+	    var str = "Hello2!";
+	    window.alert(str);
+	    console.log(this);
+	};
+ */
 
 // 방법3:
 // => addEventListener(이벤트명, 리스너);
@@ -64,16 +77,20 @@ btn3.addEventListener("click", () => {
     var str = "Hi1!!";
     window.alert(str); 
 });
-btn3.addEventListener("click", () => {
-    console.log(this);
+
+btn3.addEventListener("click", function() {
+	  console.log(this); // 일반 함수 문법으로 정의한 리스너의 소속은 태그 객체이다.
     var str = "Hi2!!";
     window.alert(str);
 });
-btn3.addEventListener("click", function() {
-  console.log(this); // 일반 함수 문법으로 정의한 리스너의 소속은 태그 객체이다.
+
+btn3.addEventListener("click", btn3Click);
+
+function btn3Click() {
+    console.log(this);
     var str = "Hi3!!";
     window.alert(str);
-});
+};
 
 </script>
 </body>

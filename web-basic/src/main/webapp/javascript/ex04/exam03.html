@@ -13,7 +13,7 @@
 var obj = new Object();
 
 obj.name = "홍길동";
-obj.f1 = () => console.log("f1()....");
+obj.f1 = () => console.log("f1()...."); // 함수의 주소를 객체에 저장
 
 var obj2 = new Object();
 obj2.v1 = 100;
@@ -26,7 +26,8 @@ obj.other = obj2;
 
 // 객체의 프로퍼티 값 꺼내기
 console.log(obj.name);
-console.log(obj.other.v1);
+obj.f1();
+console.log(obj.other.v1); // 자바의 OGNL(Object Graph Navigation Language)와 비슷하다.
 console.log(obj.other.v2);
 console.log(obj.other.v3);
 
