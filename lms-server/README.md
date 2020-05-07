@@ -1,36 +1,45 @@
-# 59_2 - Spring WebMVC 적용하기2 - 페이지 컨트롤러, MultipartResolver, ViewResolver
+# 60_1 - 뷰 컴포넌트에 Tiles 기술 적용하기
 
 ## 학습목표
 
-- @RequestMappng, @GetMapping, @PostMapping의 사용법을 안다.
-- 멀티파트 데이터를 처리하기 위해 multipartResolver를 설정할 수 있다.
-- ViewResolver를 교체할 수 있따.
+- Tiles를 설정할 수 있다.
+- Tiles를 JSP와 결합하여 뷰 컴포넌트를 구성할 수 있다.
 
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/lms/ContextLoaderListener.java 삭제
-- src/main/java/com/eomcs/lms/servlet/DispatcherServlet.java 삭제
-- src/main/java/com/eomcs/lms/filter/CharacterEncodingFilter.java 삭제
-- src/main/java/com/eomcs/util/RequestHandler.java 삭제
-- src/main/java/com/eomcs/util/RequestMapping.java 삭제
-- src/main/java/com/eomcs/util/RequestMappingHandlerMapping.java 삭제
-- src/main/java/com/eomcs/lms/web/XxxController.java 변경
-- src/main/webapp/WEB-INF/web.xml 변경
+- 
 
 
 ## 실습  
 
-### 훈련1: WebApplicationInitializer를 사용하여 DispatcherServlet을 설정한다.
+### 훈련1: Tiles 라이브러리를 프로젝트에 추가하기
 
- - com.eomcs.lms.web.AppWebApplicationInitializer 추가
- - com.eomcs.lms.AppConfig 변경
-   - ViewResolver 객체 등록
-   - MultipartResolver 객체 등록
-   - WebMVC 관련 애노테이션 처리할 객체 등록 : @EnableWebMVC
+ - build.gradle 변경
+   - 'tiles-jsp' 라이브러리를 dependency에 추가한다.
+   - 'gradle eclipse'를 실행하여 이클립스 설정 파일을 갱신한다.
+   - 이클립스 IDE에서 프로젝트를 리프레쉬 한다.
+   
+### 훈련2: Spring WebMVC에 Tiles View 뷰를 추가하기
 
-### 훈련2: JSP 파일을 /WEB-INF/jsp/ 폴더로 옮긴다.
-  - src/main/webapp/**/*.jsp 를 /WEB-INF/jsp/ 로 옮긴다.
-  
-### 훈련3: 페이지 컨트롤러의 
+- com.eomcs.lms.web.AppWebConfig 변경
+- TilesView 템플릿 엔진을 추가한다.
 
+### 훈련3: Tiles 탬플릿 설정하기
+
+- com.eomcs.lms.web.AppWebConfig 변경
+  - Tiles의 템플릿을 설정하는 TilesConfigurer를 추가한다.
+
+### 훈련4: TilesView 템플릿 엔진이 사용할 설정 파일 준비
+-/webapp/WEB-INF/defs/tiles.xml 생성
+  - 탬플릿의 레이아웃을 정의한다.
+
+### 훈련5: TilesView 템플릿 엔진이 사용할 템플릿 JSP 파일을 준비
+-/webapp/WEB-INF/tiles/template.jsp 생성
+-/webapp/WEB-INF/tiles/header.jsp 생성
+-/webapp/WEB-INF/tiles/footer.jsp 생성
+
+### 훈련6: body에 삽입될 JSP를 준비
+- /webapp/WEB-INF/jsp 폴더를 복사해 /WEB-INF/views 이름으로 저장
+
+   
