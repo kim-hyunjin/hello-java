@@ -53,4 +53,9 @@ public class MemberServiceImpl implements MemberService {
   public int update(Member member) throws Exception {
     return memberDao.update(member);
   }
+
+  @Override
+  public Member get(String email) throws Exception {
+    return memberDao.findByEmail(email);
+  }
 }

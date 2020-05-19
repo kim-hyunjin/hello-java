@@ -22,7 +22,7 @@
       tel,
   </sql>
   
-  <insert id="insert" parameterType="Member">
+  <insert id="insert" parameterType="Member"  useGeneratedKeys="true" keyColumn="member_id" keyProperty="no">
     insert into lms_member(
       name, 
       email, 
@@ -102,6 +102,15 @@
     where 
       email=#{email} 
       and pwd=password(#{password})
+  </select>
+  
+  <select id="findByEmail" 
+    resultMap="MemberMap" 
+    parameterType="map">
+    select *
+    from lms_member
+    where 
+      email=#{email} 
   </select>
 </mapper>
 
