@@ -1,1 +1,1 @@
-# java, Spring 기초 학습
+# Java, Spring 기초 학습
